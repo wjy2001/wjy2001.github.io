@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="使用egg操作minio，实现文件上传下载12345678910111213141516const Minio &#x3D; require(&amp;#x27;minio&amp;#x27;);&#x2F;&#x2F;引用npm Minio包const bucket &#x3D; &quot;test&quot;&#x2F;&#x2F;使用的桶（test是公有的）（browse是私有的）&#x2F;&#x2F;其中公有的能使用文件地址直接下载，私有的需要通过自己的下载接口const min">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用egg操作minio，实现文件上传下载">
+<meta property="og:url" content="http://example.com/2021/11/19/%E4%BD%BF%E7%94%A8egg%E6%93%8D%E4%BD%9Cminio%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD/index.html">
+<meta property="og:site_name" content="wangjunyi">
+<meta property="og:description" content="使用egg操作minio，实现文件上传下载12345678910111213141516const Minio &#x3D; require(&amp;#x27;minio&amp;#x27;);&#x2F;&#x2F;引用npm Minio包const bucket &#x3D; &quot;test&quot;&#x2F;&#x2F;使用的桶（test是公有的）（browse是私有的）&#x2F;&#x2F;其中公有的能使用文件地址直接下载，私有的需要通过自己的下载接口const min">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-19T10:51:22.124Z">
+<meta property="article:modified_time" content="2021-11-19T10:53:27.829Z">
+<meta property="article:author" content="王均易">
+<meta property="article:tag" content="egg">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/11/19/%E4%BD%BF%E7%94%A8egg%E6%93%8D%E4%BD%9Cminio%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>使用egg操作minio，实现文件上传下载 | wangjunyi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">wangjunyi</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/%E4%BD%BF%E7%94%A8egg%E6%93%8D%E4%BD%9Cminio%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="王均易">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangjunyi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用egg操作minio，实现文件上传下载
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-19 18:51:22 / 修改时间：18:53:27" itemprop="dateCreated datePublished" datetime="2021-11-19T18:51:22+08:00">2021-11-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="使用egg操作minio，实现文件上传下载"><a href="#使用egg操作minio，实现文件上传下载" class="headerlink" title="使用egg操作minio，实现文件上传下载"></a>使用egg操作minio，实现文件上传下载</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const Minio = require(&#x27;minio&#x27;);//引用npm Minio包</span><br><span class="line">const bucket = &quot;test&quot;//使用的桶（test是公有的）（browse是私有的）</span><br><span class="line">//其中公有的能使用文件地址直接下载，私有的需要通过自己的下载接口</span><br><span class="line">const minioClient = new Minio.Client(&#123;//minio的参数</span><br><span class="line">    endPoint: &#x27;101.200.87.232&#x27;,</span><br><span class="line">    port: 9000,</span><br><span class="line">    useSSL: false,</span><br><span class="line">    accessKey: &#x27;账号&#x27;,</span><br><span class="line">    secretKey: &#x27;密码&#x27;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const metaData = &#123;//上传中的数据格式，根据文件类型，可能会有变化</span><br><span class="line">    &#x27;Content-Type&#x27;: &#x27;application/octet-stream&#x27;,</span><br><span class="line">    &#x27;X-Amz-Meta-Testing&#x27;: 1234,</span><br><span class="line">    example: 5678,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="上传代码"><a href="#上传代码" class="headerlink" title="上传代码"></a>上传代码</h3><p>上传方式是POST请求，数据使用file</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">index</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; ctx &#125; = <span class="built_in">this</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> file = ctx.request.files[<span class="number">0</span>]; <span class="comment">// file包含了文件名，文件类型，大小，路径等信息，可以自己打印下看看</span></span><br><span class="line">            <span class="keyword">const</span> params = ctx.query; <span class="comment">// file包含了文件名，文件类型，大小，路径等信息，可以自己打印下看看，由于编码问题，使用postman上传的文件名中的中文会被转换成乱码。但使用elelmentUI则不会。</span></span><br><span class="line">            params.filename = params.filename || file.filename</span><br><span class="line">            <span class="keyword">let</span> errmsg = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">            minioClient.fPutObject(bucket, params.filename, file.filepath, metaData, <span class="function"><span class="keyword">function</span> (<span class="params">err, etag</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                    errmsg = err.message;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">if</span> (errmsg != <span class="string">&#x27;&#x27;</span>) &#123;</span><br><span class="line">                <span class="built_in">this</span>.error(errmsg);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">this</span>.success(<span class="string">&#x27;http://101.200.87.232:9000/test/&#x27;</span> + params.filename);</span><br><span class="line">            <span class="comment">//返回给前端一个url，由于我的test仓库是公有的，访问此url，能直接下载或展示文件。</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="built_in">this</span>.error(error.message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="下载代码"><a href="#下载代码" class="headerlink" title="下载代码"></a>下载代码</h3><p>把桶设置成公有的，在上传接口中返回的url就是下载链接</p>
+<p>下面是私有情况下的下载方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">indexget</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// minioClient.fGetObject(&#x27;test&#x27;, &#x27;111.png&#x27;, &#x27;D:\\222.png&#x27;, function (err, etag) &#123;</span></span><br><span class="line">        <span class="comment">//     if (err) &#123;</span></span><br><span class="line">        <span class="comment">//         return console.log(err);</span></span><br><span class="line">        <span class="comment">//     &#125;</span></span><br><span class="line">        <span class="comment">//     console.log(&#x27;done&#x27;);</span></span><br><span class="line">        <span class="comment">// &#125;);</span></span><br><span class="line">        <span class="comment">//fGetObject：会把文件保存在本地</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">const</span> &#123; ctx &#125; = <span class="built_in">this</span>;</span><br><span class="line">        <span class="keyword">const</span> params = ctx.query;<span class="comment">//接受下载文件在minio中的文件名</span></span><br><span class="line">        <span class="keyword">const</span> kkk = <span class="keyword">await</span> minioClient.getObject(bucket, params.filename)</span><br><span class="line">        <span class="comment">//此方法是官方提供，会返回，文件相关数据。</span></span><br><span class="line">        <span class="comment">//由于官方的方法是异步的，不能通过阻塞线程的方式等待此方法调用完毕后，返回文件。必须使用await</span></span><br><span class="line">        ctx.attachment(params.filename);<span class="comment">//下载的文件名</span></span><br><span class="line">        ctx.set(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;application/octet-stream&#x27;</span>);</span><br><span class="line">        ctx.body = kkk</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="另外上传文件出现问题-413-Request-Entity-Too-Large"><a href="#另外上传文件出现问题-413-Request-Entity-Too-Large" class="headerlink" title="另外上传文件出现问题 413 Request Entity Too Large"></a>另外上传文件出现问题 413 Request Entity Too Large</h3><p>这个是由于Nginx默认的request body为1M</p>
+<blockquote>
+<p>解决方案<br>找到自己主机的nginx.conf配置文件，打开<br>在http{}中加入 client_max_body_size 10m;<br>然后重启nginx</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/egg/" rel="tag"># egg</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/19/js%E4%B8%AD%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B9%E6%B3%95/" rel="prev" title="js中判断数组中是否包含某元素的方法">
+      <i class="fa fa-chevron-left"></i> js中判断数组中是否包含某元素的方法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/19/docker%E5%AE%89%E8%A3%85%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%ACminio/" rel="next" title="docker安装指定版本minio">
+      docker安装指定版本minio <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8egg%E6%93%8D%E4%BD%9Cminio%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.</span> <span class="nav-text">使用egg操作minio，实现文件上传下载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E4%BB%A3%E7%A0%81"><span class="nav-number">1.0.1.</span> <span class="nav-text">上传代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%BB%A3%E7%A0%81"><span class="nav-number">1.0.2.</span> <span class="nav-text">下载代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%A6%E5%A4%96%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98-413-Request-Entity-Too-Large"><span class="nav-number">1.0.3.</span> <span class="nav-text">另外上传文件出现问题 413 Request Entity Too Large</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">王均易</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王均易</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
