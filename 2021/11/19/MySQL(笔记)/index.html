@@ -20,30 +20,42 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="选择有时候比努力更重要">
-<meta property="og:type" content="website">
-<meta property="og:title" content="wangjunyi">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="MySQL（软件系统）总结软件架构MySQL是C&#x2F;S架构的软件 软件的架构有：B&#x2F;S、C&#x2F;S ——B&#x2F;S：B:浏览器，S:服务器（网页上直接能运行，如京东，淘宝） ——C&#x2F;S：C:客户端，S:服务器（需要安装或下载客户端的软件） 数据库的基本分类关系型数据库：MySQL、Oracle、DB2…… 非关系型数据库：Mongo dB、Redis…… SQL脚本1、一堆SQL代码，后缀为.sql的文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL（软件系统）总结">
+<meta property="og:url" content="http://example.com/2021/11/19/MySQL(%E7%AC%94%E8%AE%B0)/index.html">
 <meta property="og:site_name" content="wangjunyi">
-<meta property="og:description" content="选择有时候比努力更重要">
+<meta property="og:description" content="MySQL（软件系统）总结软件架构MySQL是C&#x2F;S架构的软件 软件的架构有：B&#x2F;S、C&#x2F;S ——B&#x2F;S：B:浏览器，S:服务器（网页上直接能运行，如京东，淘宝） ——C&#x2F;S：C:客户端，S:服务器（需要安装或下载客户端的软件） 数据库的基本分类关系型数据库：MySQL、Oracle、DB2…… 非关系型数据库：Mongo dB、Redis…… SQL脚本1、一堆SQL代码，后缀为.sql的文件">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/王均易/AppData/Roaming/Typora/typora-user-images/image-20210102140918977.png">
+<meta property="og:image" content="c:/Users/王均易/AppData/Roaming/Typora/typora-user-images/image-20210102140841660.png">
+<meta property="og:image" content="c:/Users/王均易/AppData/Roaming/Typora/typora-user-images/image-20210102145040748.png">
+<meta property="og:image" content="c:/Users/王均易/AppData/Roaming/Typora/typora-user-images/image-20210102145055883.png">
+<meta property="og:image" content="c:/Users/王均易/AppData/Roaming/Typora/typora-user-images/image-20210102145449359.png">
+<meta property="og:image" content="c:/Users/王均易/AppData/Roaming/Typora/typora-user-images/image-20210102162950812.png">
+<meta property="og:image" content="c:/Users/王均易/AppData/Roaming/Typora/typora-user-images/image-20210102162858473.png">
+<meta property="og:image" content="c:/Users/王均易/AppData/Roaming/Typora/typora-user-images/image-20210102163034641.png">
+<meta property="article:published_time" content="2021-11-19T10:59:06.711Z">
+<meta property="article:modified_time" content="2021-11-19T10:59:30.922Z">
 <meta property="article:author" content="王均易">
+<meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/王均易/AppData/Roaming/Typora/typora-user-images/image-20210102140918977.png">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2021/11/19/MySQL(%E7%AC%94%E8%AE%B0)/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>wangjunyi</title>
+  <title>MySQL（软件系统）总结 | wangjunyi</title>
   
 
 
@@ -156,9 +168,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -174,10 +187,9 @@
       <meta itemprop="name" content="wangjunyi">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/19/MySQL(%E7%AC%94%E8%AE%B0)/" class="post-title-link" itemprop="url">MySQL（软件系统）总结</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          MySQL（软件系统）总结
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -210,7 +222,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="MySQL（软件系统）总结"><a href="#MySQL（软件系统）总结" class="headerlink" title="MySQL（软件系统）总结"></a>MySQL（软件系统）总结</h1><h2 id="软件架构"><a href="#软件架构" class="headerlink" title="软件架构"></a>软件架构</h2><p>MySQL是C/S架构的软件</p>
+        <h1 id="MySQL（软件系统）总结"><a href="#MySQL（软件系统）总结" class="headerlink" title="MySQL（软件系统）总结"></a>MySQL（软件系统）总结</h1><h2 id="软件架构"><a href="#软件架构" class="headerlink" title="软件架构"></a>软件架构</h2><p>MySQL是C/S架构的软件</p>
 <p>软件的架构有：B/S、C/S</p>
 <p>——B/S：B:浏览器，S:服务器（网页上直接能运行，如京东，淘宝）</p>
 <p>——C/S：C:客户端，S:服务器（需要安装或下载客户端的软件）</p>
@@ -518,545 +530,33 @@
 <p>​    统计最小值：MIN()</p>
 </blockquote>
 <h2 id="DDL操作"><a href="#DDL操作" class="headerlink" title="DDL操作"></a>DDL操作</h2>
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/C%E8%AF%AD%E8%A8%80%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="王均易">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjunyi">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/19/C%E8%AF%AD%E8%A8%80%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">C语言文件操作</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-11-19 18:57:39 / 修改时间：18:58:14" itemprop="dateCreated datePublished" datetime="2021-11-19T18:57:39+08:00">2021-11-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">方法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="C语言文件操作"><a href="#C语言文件操作" class="headerlink" title="C语言文件操作"></a>C语言文件操作</h1><h2 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h2><p> <strong>fopen( )</strong> 函数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FILE *fopen( const char * filename, const char * mode );</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/19/C%E8%AF%AD%E8%A8%80%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/docker%E5%AE%89%E8%A3%85%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%ACminio/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="王均易">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjunyi">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/19/docker%E5%AE%89%E8%A3%85%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%ACminio/" class="post-title-link" itemprop="url">docker安装指定版本minio</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-11-19 18:54:08 / 修改时间：18:54:40" itemprop="dateCreated datePublished" datetime="2021-11-19T18:54:08+08:00">2021-11-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="docker安装指定版本minio"><a href="#docker安装指定版本minio" class="headerlink" title="docker安装指定版本minio"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jiqing9006/p/15272722.html">docker安装指定版本minio</a></h1><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull minio/minio:RELEASE.2020-12-03T00-03-10Z</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/19/docker%E5%AE%89%E8%A3%85%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%ACminio/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/19/C%E8%AF%AD%E8%A8%80%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" rel="prev" title="C语言文件操作">
+      <i class="fa fa-chevron-left"></i> C语言文件操作
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/%E4%BD%BF%E7%94%A8egg%E6%93%8D%E4%BD%9Cminio%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="王均易">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjunyi">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/19/%E4%BD%BF%E7%94%A8egg%E6%93%8D%E4%BD%9Cminio%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD/" class="post-title-link" itemprop="url">使用egg操作minio，实现文件上传下载</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-11-19 18:51:22 / 修改时间：18:53:27" itemprop="dateCreated datePublished" datetime="2021-11-19T18:51:22+08:00">2021-11-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="使用egg操作minio，实现文件上传下载"><a href="#使用egg操作minio，实现文件上传下载" class="headerlink" title="使用egg操作minio，实现文件上传下载"></a>使用egg操作minio，实现文件上传下载</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const Minio = require(&#x27;minio&#x27;);//引用npm Minio包</span><br><span class="line">const bucket = &quot;test&quot;//使用的桶（test是公有的）（browse是私有的）</span><br><span class="line">//其中公有的能使用文件地址直接下载，私有的需要通过自己的下载接口</span><br><span class="line">const minioClient = new Minio.Client(&#123;//minio的参数</span><br><span class="line">    endPoint: &#x27;101.200.87.232&#x27;,</span><br><span class="line">    port: 9000,</span><br><span class="line">    useSSL: false,</span><br><span class="line">    accessKey: &#x27;账号&#x27;,</span><br><span class="line">    secretKey: &#x27;密码&#x27;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const metaData = &#123;//上传中的数据格式，根据文件类型，可能会有变化</span><br><span class="line">    &#x27;Content-Type&#x27;: &#x27;application/octet-stream&#x27;,</span><br><span class="line">    &#x27;X-Amz-Meta-Testing&#x27;: 1234,</span><br><span class="line">    example: 5678,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/19/%E4%BD%BF%E7%94%A8egg%E6%93%8D%E4%BD%9Cminio%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/js%E4%B8%AD%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="王均易">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjunyi">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/19/js%E4%B8%AD%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">js中判断数组中是否包含某元素的方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-11-19 18:38:25 / 修改时间：18:41:37" itemprop="dateCreated datePublished" datetime="2021-11-19T18:38:25+08:00">2021-11-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%96%B9%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">方法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="js中判断数组中是否包含某元素的方法"><a href="#js中判断数组中是否包含某元素的方法" class="headerlink" title="js中判断数组中是否包含某元素的方法"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yunshangwuyou/p/10539090.html">js中判断数组中是否包含某元素的方法</a></h1><h3 id="方法一：array-indexOf-item-start-："><a href="#方法一：array-indexOf-item-start-：" class="headerlink" title="方法一：array.indexOf(item,start)："></a><strong>方法一：array.indexOf(item,start)：</strong></h3><p><strong>元素在数组中的位置,如果没与搜索到则返回 -1。</strong><br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/19/js%E4%B8%AD%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B9%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/rabbitmq%20RPC%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="王均易">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjunyi">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/19/rabbitmq%20RPC%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B/" class="post-title-link" itemprop="url">rabbitmq RPC模式实例</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-11-19 13:50:58 / 修改时间：14:12:47" itemprop="dateCreated datePublished" datetime="2021-11-19T13:50:58+08:00">2021-11-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="rabbitmq-RPC模式实例"><a href="#rabbitmq-RPC模式实例" class="headerlink" title="rabbitmq RPC模式实例"></a>rabbitmq RPC模式实例</h1><p>rabbitmq RPC模式实例</p>
-<p>（由生产者发送斐波那契数列的个数，消费者回复对应个数的斐波那契数列的数字）</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/19/rabbitmq%20RPC%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/egg%20npm%E5%AE%89%E8%A3%85%E5%88%97%E8%A1%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="王均易">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjunyi">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/19/egg%20npm%E5%AE%89%E8%A3%85%E5%88%97%E8%A1%A8/" class="post-title-link" itemprop="url">egg npm安装列表</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-11-19 13:34:51 / 修改时间：14:12:59" itemprop="dateCreated datePublished" datetime="2021-11-19T13:34:51+08:00">2021-11-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="egg-npm安装列表"><a href="#egg-npm安装列表" class="headerlink" title="egg npm安装列表"></a>egg npm安装列表</h1><h2 id="mongoose"><a href="#mongoose" class="headerlink" title="mongoose"></a>mongoose</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install mongoose</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/19/egg%20npm%E5%AE%89%E8%A3%85%E5%88%97%E8%A1%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/18/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="王均易">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjunyi">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/18/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-18 21:07:53" itemprop="dateCreated datePublished" datetime="2021-11-18T21:07:53+08:00">2021-11-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-19 14:12:52" itemprop="dateModified" datetime="2021-11-19T14:12:52+08:00">2021-11-19</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/18/hello-world/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
@@ -1109,6 +609,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL%EF%BC%88%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%89%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">MySQL（软件系统）总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">软件架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.1.</span> <span class="nav-text">数据库的基本分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL%E8%84%9A%E6%9C%AC"><span class="nav-number">1.1.2.</span> <span class="nav-text">SQL脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8"><span class="nav-number">1.1.3.</span> <span class="nav-text">表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL%EF%BC%8C%E6%93%8D%E4%BD%9C%E6%88%96%E6%8E%A7%E5%88%B6%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88DB%EF%BC%89"><span class="nav-number">1.1.4.</span> <span class="nav-text">SQL，操作或控制数据库（DB）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.1.5.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%8F%A5%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.6.</span> <span class="nav-text">子句的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%8F%A5%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.7.</span> <span class="nav-text">子句的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%8F%A5%E7%9A%84%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.1.8.</span> <span class="nav-text">子句的书写顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%8F%A5%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.1.9.</span> <span class="nav-text">子句的执行顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C"><span class="nav-number">1.1.10.</span> <span class="nav-text">常见操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%92%8C%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.11.</span> <span class="nav-text">命令和关键字的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A2%9E%E5%88%A0%E6%94%B9-DML%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">增删改(DML操作)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E-INSERT"><span class="nav-number">2.1.</span> <span class="nav-text">增(INSERT)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.1.1.</span> <span class="nav-text">创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E8%A1%A8"><span class="nav-number">2.1.2.</span> <span class="nav-text">建表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E8%A1%A8%E5%88%97"><span class="nav-number">2.1.3.</span> <span class="nav-text">增加表列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E6%95%B0%E6%8D%AE-INSERT-INTO"><span class="nav-number">2.1.4.</span> <span class="nav-text">增加数据(INSERT INTO)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0-DELETE"><span class="nav-number">2.2.</span> <span class="nav-text">删(DELETE)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.2.1.</span> <span class="nav-text">删除数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="nav-number">2.2.2.</span> <span class="nav-text">删除表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8%E5%88%97"><span class="nav-number">2.2.3.</span> <span class="nav-text">删除表列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE-%E5%8D%B1%E9%99%A9%E6%93%8D%E4%BD%9C-%E5%B8%A6%E4%B8%8A%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.2.4.</span> <span class="nav-text">删除数据[危险操作-带上条件]</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9-UPDATE"><span class="nav-number">2.3.</span> <span class="nav-text">改(UPDATE)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D"><span class="nav-number">2.3.1.</span> <span class="nav-text">修改数据库名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-number">2.3.2.</span> <span class="nav-text">修改表结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE"><span class="nav-number">2.3.3.</span> <span class="nav-text">修改数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5-SELECT"><span class="nav-number">3.</span> <span class="nav-text">查(SELECT)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-number">3.0.1.</span> <span class="nav-text">查询表结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="nav-number">3.0.2.</span> <span class="nav-text">无条件查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%EF%BC%88WHERE%EF%BC%89"><span class="nav-number">3.0.3.</span> <span class="nav-text">条件查询（WHERE）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E5%8F%A5%EF%BC%9A"><span class="nav-number">3.0.3.1.</span> <span class="nav-text">1.基本语句：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">3.0.3.2.</span> <span class="nav-text">基本操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E6%83%85%E5%86%B5%EF%BC%9A"><span class="nav-number">3.0.3.2.0.1.</span> <span class="nav-text">错误情况：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BETWEEN%E2%80%A6%E2%80%A6AND%E2%80%A6%E2%80%A6"><span class="nav-number">3.0.3.3.</span> <span class="nav-text">BETWEEN……AND……</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%EF%BC%88LIKE%EF%BC%89"><span class="nav-number">3.0.3.4.</span> <span class="nav-text">模糊查询（LIKE）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IN%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">3.0.3.5.</span> <span class="nav-text">IN操作符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%EF%BC%88LIMIT%EF%BC%89"><span class="nav-number">3.0.4.</span> <span class="nav-text">分页查询（LIMIT）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2%EF%BC%88SELECT%E5%B5%8C%E5%A5%97%EF%BC%89"><span class="nav-number">3.0.5.</span> <span class="nav-text">子查询（SELECT嵌套）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%A1%A8%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="nav-number">3.0.6.</span> <span class="nav-text">多表联合查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2%EF%BC%88GROUP-BY%EF%BC%89"><span class="nav-number">3.0.7.</span> <span class="nav-text">分组查询（GROUP BY）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%9D%A1%E4%BB%B6-HAVING"><span class="nav-number">3.0.7.1.</span> <span class="nav-text">分组条件(HAVING)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">内置函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDL%E6%93%8D%E4%BD%9C"><span class="nav-number">3.2.</span> <span class="nav-text">DDL操作</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
