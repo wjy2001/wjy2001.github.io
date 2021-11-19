@@ -187,7 +187,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-19 18:38:25 / 修改时间：18:39:12" itemprop="dateCreated datePublished" datetime="2021-11-19T18:38:25+08:00">2021-11-19</time>
+              <time title="创建时间：2021-11-19 18:38:25 / 修改时间：18:41:37" itemprop="dateCreated datePublished" datetime="2021-11-19T18:38:25+08:00">2021-11-19</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -210,112 +210,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="js中判断数组中是否包含某元素的方法"><a href="#js中判断数组中是否包含某元素的方法" class="headerlink" title="js中判断数组中是否包含某元素的方法"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yunshangwuyou/p/10539090.html">js中判断数组中是否包含某元素的方法</a></h1><h3 id="方法一：array-indexOf-item-start-："><a href="#方法一：array-indexOf-item-start-：" class="headerlink" title="方法一：array.indexOf(item,start)："></a><strong>方法一：array.indexOf(item,start)：</strong></h3><p><strong>元素在数组中的位置,如果没与搜索到则返回 -1。</strong></p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>item</td>
-<td>必须。查找的元素。</td>
-</tr>
-<tr>
-<td>start</td>
-<td>可选的整数参数。规定在数组中开始检索的位置。它的合法取值是 0 到 stringObject.length - 1。如省略该参数，则将从字符串的首字符开始检索。</td>
-</tr>
-</tbody></table>
-<p>实际用法：if(arr.indexOf(某元素) &gt; -1){//则包含该元素}</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var fruits = [&quot;Banana&quot;, &quot;Orange&quot;, &quot;Apple&quot;, &quot;Mango&quot;];</span><br><span class="line"></span><br><span class="line">var a = fruits.indexOf(&quot;Apple&quot;); // 2//以上输出结果意味着 &quot;Apple&quot; 元素位于数组中的第 3 个位置。</span><br></pre></td></tr></table></figure>
-
-<p>　var fruits=[“Banana”,”Orange”,”Apple”,”Mango”,”Banana”,”Orange”,”Apple”];</p>
-<p>　var a = fruits.indexOf(“Apple”,4); //6</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//以上输出结果意味在数组的第四个位置开始检索：</span><br></pre></td></tr></table></figure>
-
-<p>　　注：string.indexOf()返回某个指定的字符串值在字符串中首次出现的位置。</p>
-<p>1.该方法将从头到尾地检索字符串 stringObject，看它是否含有子串 searchvalue。开始检索的位置在字符串的 fromindex 处或字符串的开头（没有指定 fromindex 时）。如果找到一个 searchvalue，则返回 searchvalue 的第一次出现的位置。</p>
-<p>\2. stringObject 中的字符位置是从 0 开始的。</p>
-<p>\3. 查找字符串最后出现的位置，使用 lastIndexOf() 方法。</p>
-<p><strong>JavaScript Array filter() 方法有类似的检索功能：</strong></p>
-<p>　　filter() 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。</p>
-<p>　　<strong>注意：</strong> filter() 不会对空数组进行检测。</p>
-<p>　　<strong>注意：</strong> filter() 不会改变原始数组。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">var ages = [32, 33, 16, 40];</span><br><span class="line">function checkAdult(age) &#123;</span><br><span class="line">    return age == 16;</span><br><span class="line">&#125;</span><br><span class="line">function myFunction() &#123;</span><br><span class="line">    ages.filter(checkAdult);</span><br><span class="line">  console.log(ages.filter(checkAdult))</span><br><span class="line">&#125;</span><br><span class="line">myFunction()</span><br><span class="line"></span><br><span class="line">//[16]</span><br><span class="line"></span><br><span class="line">var ages = [32, 33, 16, 40];</span><br><span class="line">function checkAdult(age) &#123;</span><br><span class="line">    return age &lt;= 14;</span><br><span class="line">&#125;</span><br><span class="line">function myFunction() &#123;</span><br><span class="line">    ages.filter(checkAdult);</span><br><span class="line">  console.log(ages.filter(checkAdult))</span><br><span class="line">&#125;</span><br><span class="line">myFunction()</span><br><span class="line">//[]</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法二：array-find"><a href="#方法二：array-find" class="headerlink" title="方法二：array.find()"></a><strong>方法二：array.find()</strong></h3><p>数组实例的find()用于找出第一个符合条件的数组元素。它的参数是一个回调函数，所有数组元素依次遍历该回调函数，直到找出第一个返回值为true的元素，然后返回该元素，否则返回undefined。</p>
-<p>find() 方法返回通过测试（函数内判断）的数组的第一个元素的值。</p>
-<p>find() 方法为数组中的每个元素都调用一次函数执行：</p>
-<ul>
-<li>当数组中的元素在测试条件时返回 <em>true</em> 时, find() 返回符合条件的元素，之后的值不会再调用执行函数。</li>
-<li>如果没有符合条件的元素返回 undefined</li>
-</ul>
-<p><strong>注意:</strong> find() 对于空数组，函数是不会执行的。</p>
-<p><strong>注意:</strong> find() 并没有改变数组的原始值。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[1, 5, 10, 15].find(function(value, index, arr) &#123;</span><br><span class="line">return value &gt; 9;</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line">// 10</span><br><span class="line"></span><br><span class="line">//实际用法：</span><br><span class="line"></span><br><span class="line">arr.find(function(value) &#123;</span><br><span class="line"></span><br><span class="line">if(value === 要查找的值) &#123;</span><br><span class="line"></span><br><span class="line">//则包含该元素</span><br><span class="line">&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="方法三：array-findIndex"><a href="#方法三：array-findIndex" class="headerlink" title="方法三：array.findIndex()"></a><strong>方法三：array.findIndex()</strong></h3><p>array.findIndex()和array.find()十分类似，返回第一个符合条件的数组元素的位置，如果所有元素都不符合条件，则返回-1。<br>findIndex() 方法为数组中的每个元素都调用一次函数执行：</p>
-<p>当数组中的元素在测试条件时返回 true 时, findIndex() 返回符合条件的元素的索引位置，之后的值不会再调用执行函数。<br>如果没有符合条件的元素返回 -1</p>
-<p>注意: findIndex() 对于空数组，函数是不会执行的。<br>注意: findIndex() 并没有改变数组的原始值</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var ages = [3, 10, 18, 20];</span><br><span class="line"> </span><br><span class="line">function checkAdult(age) &#123;</span><br><span class="line">    return age &gt;= 18;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">function myFunction() &#123;</span><br><span class="line">    console.log(ages.findIndex(checkAdult)) ;</span><br><span class="line">&#125;</span><br><span class="line">myFunction()</span><br><span class="line"></span><br><span class="line">//2</span><br></pre></td></tr></table></figure>
-
-<p>方法二和方法三，这两个方法都可以发现NaN，弥补了方法一IndexOf()的不足。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[NaN].2.dexOf(NaN) </span><br><span class="line">//-1</span><br><span class="line"></span><br><span class="line">[Na3..findIndex(y =&gt; Object.is(NaN, y))</span><br><span class="line">// 0</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法四：for-循环"><a href="#方法四：for-循环" class="headerlink" title="方法四：for()循环"></a><strong>方法四：for()循环</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">遍历数组，然后 if 判断</span><br><span class="line"></span><br><span class="line">var arr = [1, 5, 10, 15];</span><br><span class="line"></span><br><span class="line">//传统for</span><br><span class="line"></span><br><span class="line">for(let i=0; i&lt;arr.length; i++) &#123;</span><br><span class="line"></span><br><span class="line">if(arr[i] === 查找值) &#123;</span><br><span class="line"></span><br><span class="line">//则包含该元素</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">// for...of</span><br><span class="line"></span><br><span class="line">for(v of arr) &#123;</span><br><span class="line"></span><br><span class="line">if(v === 查找值) &#123;</span><br><span class="line"></span><br><span class="line">//则包含该元素</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">//forEach</span><br><span class="line"></span><br><span class="line">arr.forEach(v=&gt;&#123;</span><br><span class="line"></span><br><span class="line">if(v === 查找值) &#123;</span><br><span class="line"></span><br><span class="line">//则包含该元素</span><br><span class="line">&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法五：就是使用jquery的inArray方法"><a href="#方法五：就是使用jquery的inArray方法" class="headerlink" title="方法五：就是使用jquery的inArray方法"></a><strong>方法五：就是使用jquery的inArray方法</strong></h3><p><strong>该方法返回元素在数组中的下标，如果不存在与数组中，那么返回－１，代码如下所示：</strong></p>
-<p>/**<br>* 使用jquery的inArray方法判断元素是否存在于数组中<br>* @param {Object} arr 数组<br>* @param {Object} value 元素值<br>*/</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function isInArray2(arr,value)&#123;</span><br><span class="line">var index = $.inArray(value,arr);</span><br><span class="line">if(index &gt;= 0)&#123;</span><br><span class="line">return true;</span><br><span class="line">&#125;</span><br><span class="line">return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法六、include-方法："><a href="#方法六、include-方法：" class="headerlink" title="方法六、include()方法："></a><strong>方法六、include()方法：</strong></h3><p>arr.includes(searchElement)方法用来判断一个数组是否包含一个指定的值，如果是返回 true，否则false。searchElement:必须。需要查找的元素值。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let site = [&#x27;runoob&#x27;, &#x27;google&#x27;, &#x27;taobao&#x27;];</span><br><span class="line"> </span><br><span class="line">site.includes(&#x27;runoob&#x27;); </span><br><span class="line">// true </span><br><span class="line"> </span><br><span class="line">site.includes(&#x27;baidu&#x27;); </span><br><span class="line">// false</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>例子</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[1, 2, 3].includes(2);</td>
-<td>//true</td>
-</tr>
-<tr>
-<td>[1, 2, 3].includes(4);</td>
-<td>// false</td>
-</tr>
-<tr>
-<td>[1, 2, 3].includes(3, 3);</td>
-<td>// false</td>
-</tr>
-<tr>
-<td>[1, 2, 3].includes(3, -1);</td>
-<td>//true</td>
-</tr>
-<tr>
-<td>[1, 2, NaN].includes(NaN);</td>
-<td>//true</td>
-</tr>
-</tbody></table>
-<p>arr.includes(searchElement, fromIndex).fromIndex:可选。从该索引处开始查找 searchElement。如果为负值，则按升序从 array.length + fromIndex 的索引开始搜索。默认为 0。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var arr = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;];</span><br><span class="line">注意：如果fromIndex 大于等于数组长度 ，则返回 false 。该数组不会被搜索 </span><br><span class="line">arr.includes(&#x27;c&#x27;, 3);   //false</span><br><span class="line">arr.includes(&#x27;c&#x27;, 100); // false</span><br><span class="line"></span><br><span class="line">注意：如果 fromIndex 为负值，计算出的索引将作为开始搜索searchElement的位置。如果计算出的索引小于 0，则整个数组都会被搜索。</span><br><span class="line">// 数组长度是3</span><br><span class="line">// fromIndex 是 -100</span><br><span class="line">// computed index 是 3 + (-100) = -97</span><br><span class="line">arr.includes(&#x27;a&#x27;, -100); // true</span><br><span class="line">arr.includes(&#x27;b&#x27;, -100); // true</span><br><span class="line">arr.includes(&#x27;c&#x27;, -100); // true</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法七-Array-some-方法，类似于filter"><a href="#方法七-Array-some-方法，类似于filter" class="headerlink" title="方法七.Array some() 方法，类似于filter()"></a><strong>方法七.Array some() 方法，类似于filter()</strong></h3><p>some() 方法用于检测数组中的元素是否满足指定条件（函数提供）。</p>
-<p>some() 方法会依次执行数组的每个元素：</p>
-<p>如果有一个元素满足条件，则表达式返回true , 剩余的元素不会再执行检测。<br>如果没有满足条件的元素，则返回false。<br>注意： some() 不会对空数组进行检测。</p>
-<p>注意： some() 不会改变原始数组。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var ages = [3, 10, 18, 20];</span><br><span class="line">function checkAdult(age) &#123;</span><br><span class="line">    return age == 18;</span><br><span class="line">&#125;</span><br><span class="line">function myFunction() &#123;</span><br><span class="line">    console.log(ages.some(checkAdult));</span><br><span class="line">&#125;</span><br><span class="line">myFunction() </span><br><span class="line"></span><br><span class="line">//true</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法八、Jquery的-each"><a href="#方法八、Jquery的-each" class="headerlink" title="方法八、Jquery的$.each()"></a>方法八、Jquery的$.each()</h3><p><strong>each() 方法为每个匹配元素规定要运行的函数。</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var anArray = [&#x27;one&#x27;,&#x27;two&#x27;,&#x27;three&#x27;];</span><br><span class="line">      $.each(anArray,function(n,value)&#123;</span><br><span class="line">          if(value==&quot;one&quot;)&#123;</span><br><span class="line">           console.log(&quot;one存在于数组中&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<p>//one存在于数组中</p>
-
+          <h1 id="js中判断数组中是否包含某元素的方法"><a href="#js中判断数组中是否包含某元素的方法" class="headerlink" title="js中判断数组中是否包含某元素的方法"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yunshangwuyou/p/10539090.html">js中判断数组中是否包含某元素的方法</a></h1><h3 id="方法一：array-indexOf-item-start-："><a href="#方法一：array-indexOf-item-start-：" class="headerlink" title="方法一：array.indexOf(item,start)："></a><strong>方法一：array.indexOf(item,start)：</strong></h3><p><strong>元素在数组中的位置,如果没与搜索到则返回 -1。</strong><br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/19/js%E4%B8%AD%E5%88%A4%E6%96%AD%E6%95%B0%E7%BB%84%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B9%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
