@@ -187,7 +187,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-19 19:13:07 / 修改时间：19:13:39" itemprop="dateCreated datePublished" datetime="2021-11-19T19:13:07+08:00">2021-11-19</time>
+              <time title="创建时间：2021-11-19 19:13:07 / 修改时间：19:31:13" itemprop="dateCreated datePublished" datetime="2021-11-19T19:13:07+08:00">2021-11-19</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -211,66 +211,15 @@
 
       
           <h1 id="golang中BSON的使用方法"><a href="#golang中BSON的使用方法" class="headerlink" title="golang中BSON的使用方法"></a>golang中BSON的使用方法</h1><p>关于mongodb-go-driver这个包里面的BSOM</p>
-<p>bson是一种类似json的二进制存储形式，它就是mongodb的存储结构，它的数据结构要比json多，如 int, long, date, floating point, and decimal128。</p>
-<p>我在mongodb官网找到一个blog里面也写了我用的go的mongodb拓展中bson的介绍( <a target="_blank" rel="noopener" href="https://www.oschina.net/action/GoToLink?url=https://www.mongodb.com/blog/post/mongodb-go-driver-tutorial">https://www.mongodb.com/blog/post/mongodb-go-driver-tutorial</a> ),他是这样写的。</p>
-<p> The Go Driver has two families of types for representing BSON data: The <code>D</code> types and the <code>Raw</code> types.</p>
-<p>The <code>D</code> family of types is used to concisely build BSON objects using native Go types. This can be particularly useful for constructing commands passed to MongoDB. The <code>D</code> family consists of four types:</p>
-<ul>
-<li><code>D</code>: A BSON document. This type should be used in situations where order matters, such as MongoDB commands.</li>
-<li><code>M</code>: An unordered map. It is the same as <code>D</code>, except it does not preserve order.</li>
-<li><code>A</code>: A BSON array.</li>
-<li><code>E</code>: A single element inside a <code>D</code>.</li>
-</ul>
-<p>The <code>Raw</code> family of types is used for validating a slice of bytes. You can also retrieve single elements from Raw types using a <a target="_blank" rel="noopener" href="https://www.oschina.net/action/GoToLink?url=https://godoc.org/go.mongodb.org/mongo-driver/bson%23Raw.Lookup"><code>Lookup()</code></a>. This is useful if you don’t want the overhead of having to unmarshall the BSON into another type. </p>
-<p>大概意思是：这个mongodb GO版的拓展有两种族来使用bosn数据，一个D还有一个是RAW。</p>
-<p>D族是使用原生GO的形式来简单的构造一个BSON对象。这个对于使用命令来操作mongodb是十分有用的。D()由下面4种类型：</p>
-<p>D:一个BSON文档，这个类型应该被用在顺序比较重要的场合（言外之意就是有序的），比如说mongodb的命令。</p>
-<p>M:一个无序的map。它除了无序之外和D是一样的（可以理解为map和bson是可以转换）。</p>
-<p>A:一个BSON形式的数组。</p>
-<p>E:一个D里面的单独元素。(就是文档里的一个元素)</p>
-<p>RAW族是被用来判断是否为bytes的一个slice。你也可以用look up()方法从RAW取得一个元素。这可以在你将BSON转化为另一个形式的数据时是十分有用的(原文大概意思是可以节省你转化数据时的开销)。</p>
-<p>下面简单说下在操作D族时会有使用到一些条件参数。</p>
-<p>不等于!=($ne)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.Find(bson.M&#123;&quot;name&quot;: bson.M&#123;&quot;$ne&quot;: &quot;Tom&quot;&#125;&#125;).All(&amp;users)</span><br></pre></td></tr></table></figure>
-
-<p>大于&gt;($gt)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.Find(bson.M&#123;&quot;age&quot;: bson.M&#123;&quot;$gt&quot;: 10&#125;&#125;).All(&amp;users)</span><br></pre></td></tr></table></figure>
-
-<p>小于&lt;($lt)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.Find(bson.M&#123;&quot;age&quot;: bson.M&#123;&quot;$lt&quot;: 10&#125;&#125;).All(&amp;users)</span><br></pre></td></tr></table></figure>
-
-<p>大于等于&gt;=($gte)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.Find(bson.M&#123;&quot;age&quot;: bson.M&#123;&quot;$gte&quot;: 10&#125;&#125;).All(&amp;users)</span><br></pre></td></tr></table></figure>
-
-<p>小于等于&lt;=($lte)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.Find(bson.M&#123;&quot;age&quot;: bson.M&#123;&quot;$lte&quot;: 10&#125;&#125;).All(&amp;users)</span><br></pre></td></tr></table></figure>
-
-<p>in($in)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.Find(bson.M&#123;&quot;name&quot;: bson.M&#123;&quot;$in&quot;: []string&#123;&quot;Tom&quot;, &quot;Jerry&quot;&#125;&#125;&#125;).All(&amp;users)</span><br></pre></td></tr></table></figure>
-
-<p>no in(nin)同<em>n<strong>i</strong>n</em>)同in</p>
-<p>是否包含这个键($exists)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.Find(bson.M&#123;&quot;name&quot;: bson.M&#123;&quot;$exists&quot;: true&#125;&#125;).All(&amp;users)</span><br></pre></td></tr></table></figure>
-
-<p>查询键值为null的字段</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.Find(bson.M&#123;&quot;name&quot;: bson.M&#123;&quot;$in&quot;:[]interface&#123;&#125;&#123;null&#125;, &quot;$exists&quot;: true&#125;&#125;).All(&amp;users)</span><br></pre></td></tr></table></figure>
-
-<p>正则匹配($regex)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.Find(bson.M&#123;&quot;name&quot;: bson.M&#123;&quot;$regex&quot;: &quot;^[0-9]+&quot;&#125;&#125;).All(&amp;users)</span><br></pre></td></tr></table></figure>
-
-<p>$all查询所有</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.Find(bson.M&#123;&quot;name&quot;: bson.M&#123;&quot;$all&quot;: []int&#123;10,11,12&#125;&#125;&#125;).All(&amp;users</span><br></pre></td></tr></table></figure>
-
-<p>$or</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.Find(bson.M&#123;&quot;$or&quot;: []bson.M&#123;bson.M&#123;&quot;age&quot;: 11&#125;, bson.M&#123;&quot;sex&quot;: 1&#125;&#125;&#125;).All(&amp;users)</span><br></pre></td></tr></table></figure>
-
-<p>修改$set</p>
-<p>增加值$incr</p>
-<p>向数组增加一个元素$push</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">filter := bson.D&#123;&#123;&quot;name&quot;, &quot;Speike&quot;&#125;&#125;</span><br><span class="line"></span><br><span class="line">update := bson.D&#123;</span><br><span class="line">   &#123;&quot;$push&quot;, bson.D&#123;</span><br><span class="line">      &#123;&quot;interests&quot;, &quot;sing&quot;&#125;,</span><br><span class="line">   &#125;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">updateResult, err := collection.UpdateOne(context.TODO(), filter, update)</span><br></pre></td></tr></table></figure>
-
-<p>移除数组一个元素$pull</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">filter := bson.D&#123;&#123;&quot;name&quot;, &quot;Speike&quot;&#125;&#125;</span><br><span class="line"></span><br><span class="line">update := bson.D&#123;</span><br><span class="line">   &#123;&quot;$pull&quot;, bson.D&#123;</span><br><span class="line">      &#123;&quot;interests&quot;, &quot;sing&quot;&#125;,</span><br><span class="line">   &#125;&#125;,</span><br><span class="line">&#125;</span><br><span class="line">updateResult, err := collection.UpdateOne(context.TODO(), filter, update)</span><br></pre></td></tr></table></figure>
+<p>bson是一种类似json的二进制存储形式，它就是mongodb的存储结构，它的数据结构要比json多，如 int, long, date, floating point, and decimal128。<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/19/golang%E4%B8%ADBSON%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
