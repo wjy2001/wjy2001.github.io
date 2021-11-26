@@ -4,13 +4,75 @@
   
     
     <entry>
-      <title></title>
+      <title>mongo数据库连接问题</title>
+      <link href="/2021/11/26/mongo%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/"/>
+      <url>/2021/11/26/mongo%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h1 id="mongo数据库连接问题"><a href="#mongo数据库连接问题" class="headerlink" title="mongo数据库连接问题"></a>mongo数据库连接问题</h1><p>在服务器设置好mongo的账号密码后</p><p><img src="%5Cimagesimage-20211126144037696.png" alt="image-20211126144037696"><br> <span id="more"></span><br>直接输入mongo，进入操作时。会发现无法展示自己的数据库了。</p><p>这个其实是没有登录的原因</p><p><img src="%5Cimages%5Cimage-20211126144208185.png" alt="image-20211126144208185"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use admin</span><br><span class="line">db.auth(&quot;账号&quot;,&quot;密码&quot;)</span><br></pre></td></tr></table></figure><p>返回值为1代表登录成功</p><p><img src="%5Cimages%5Cimage-20211126144308939.png" alt="image-20211126144308939"></p><p>现在便可以正常的操作mongo了</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> mongo连接 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> mongo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>闭包</title>
+      <link href="/2021/11/25/%E9%97%AD%E5%8C%85/"/>
+      <url>/2021/11/25/%E9%97%AD%E5%8C%85/</url>
+      
+        <content type="html"><![CDATA[<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><h3 id="“官方”的解释是："><a href="#“官方”的解释是：" class="headerlink" title="“官方”的解释是："></a>“官方”的解释是：</h3><p>所谓“闭包”，指的是一个拥有许多变量和绑定了这些变量的环境的表达式（通常是一个函数），因而这些变量也是该表达式的一部分。<br> <span id="more"></span></p><h3 id="维基百科讲"><a href="#维基百科讲" class="headerlink" title="维基百科讲"></a>维基百科讲</h3><p>闭包（Closure），是引用了自由变量的函数。这个被引用的自由变量将和这个函数一同存在，即使已经离开了创造它的环境也不例外。所以，有另一种说法认为闭包是由函数和与其相关的引用环境组合而成的实体。闭包在运行时可以有多个实例，不同的引用环境和相同的函数组合可以产生不同的实例。</p><p>解析：</p><p>使用闭包主要是为了设计私有的方法和变量。</p><p>闭包的优点是可以避免全局变量的污染；缺点是闭包会常驻内存，增加内存使用量，使用不当很容易造成内存泄漏。在JavaScript中，函数即闭包，只有函数才会产生作用域。<br>闭包有3个特性：</p><p>（1）函数嵌套函数。<br>（2）在函数内部可以引用外部的参数和变量。<br>（3）参数和变量不会以垃圾回收机制回收。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 概念 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>golang发送邮件</title>
       <link href="/2021/11/25/golang%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/"/>
       <url>/2021/11/25/golang%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/</url>
       
-        <content type="html"><![CDATA[<h1 id="golang发送邮件"><a href="#golang发送邮件" class="headerlink" title="golang发送邮件"></a>golang发送邮件</h1><p>电子邮件在网络中传输和网页一样需要遵从特定的协议，常用的电子邮件协议包括 SMTP，POP3，IMAP。其中邮件的创建和发送只需要用到 SMTP协议，所以本文也只会涉及到SMTP协议。SMTP 是 Simple Mail Transfer Protocol 的简称，即简单邮件传输协议。</p><h3 id="1-1-2-特征"><a href="#1-1-2-特征" class="headerlink" title="1.1.2. 特征"></a>1.1.2. 特征</h3><ul><li><p>发件人，收件人，密件抄送和抄送字段</p></li><li><p>文字和HTML邮件正文</p></li><li><p>附件</p></li><li><p>阅读收据</p></li><li><p>自定义标题</p></li><li><p>首先我们登录QQ邮箱，设置-&gt;账户 找到图片的位置开启<code>POP3/SMTP/IMAP</code>并且按照要求生产授权码</p></li></ul><p><img src="/images/image_3.png" alt="img"></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="golang发送邮件"><a href="#golang发送邮件" class="headerlink" title="golang发送邮件"></a>golang发送邮件</h1><p>电子邮件在网络中传输和网页一样需要遵从特定的协议，常用的电子邮件协议包括 SMTP，POP3，IMAP。其中邮件的创建和发送只需要用到 SMTP协议，所以本文也只会涉及到SMTP协议。SMTP 是 Simple Mail Transfer Protocol 的简称，即简单邮件传输协议。<br> <span id="more"></span></p><h3 id="1-1-2-特征"><a href="#1-1-2-特征" class="headerlink" title="1.1.2. 特征"></a>1.1.2. 特征</h3><ul><li><p>发件人，收件人，密件抄送和抄送字段</p></li><li><p>文字和HTML邮件正文</p></li><li><p>附件</p></li><li><p>阅读收据</p></li><li><p>自定义标题</p></li><li><p>首先我们登录QQ邮箱，设置-&gt;账户 找到图片的位置开启<code>POP3/SMTP/IMAP</code>并且按照要求生产授权码</p></li></ul><p><img src="/images/image_3.png" alt="img"></p>]]></content>
       
       
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+        </tags>
       
     </entry>
     
