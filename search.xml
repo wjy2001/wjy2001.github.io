@@ -4,11 +4,36 @@
   
     
     <entry>
+      <title>Typora历史版本下载地址</title>
+      <link href="/2021/11/29/Typora%E5%8E%86%E5%8F%B2%E7%89%88%E6%9C%AC%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80/"/>
+      <url>/2021/11/29/Typora%E5%8E%86%E5%8F%B2%E7%89%88%E6%9C%AC%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Typora历史版本下载地址"><a href="#Typora历史版本下载地址" class="headerlink" title="Typora历史版本下载地址"></a>Typora历史版本下载地址</h1><p>Typora开始收费了</p><p><a href="https://typora.io/windows/dev_release.html">Typora for windows — beta version release</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 软件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> typora </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>git生成ssh</title>
       <link href="/2021/11/29/git%E7%94%9F%E6%88%90ssh/"/>
       <url>/2021/11/29/git%E7%94%9F%E6%88%90ssh/</url>
       
-        <content type="html"><![CDATA[<h1 id="git生成ssh"><a href="#git生成ssh" class="headerlink" title="git生成ssh"></a>git生成ssh</h1><p>输入 ssh 命令，查看本机是否安装 SSH：</p><p><img src="D:\WorkSpace\github\hexo\themes\next\source\images\v2-b4792b227defc69aa7927ca9b73e4316_720w.jpg" alt="img"><br> <span id="more"></span><br>如上图所示，即已安装 SSH. 然后，输入 ssh-keygen -t rsa 命令<em><strong>（注意空格）</strong></em>，表示我们指定 RSA 算法生成密钥，然后敲四次回车键，之后就就会生成两个文件，分别为秘钥 id_rsa 和公钥 id_rsa.pub. ***（注意：git中的复制粘贴不是 Ctrl+C 和 Ctrl+V，而是 Ctrl+insert 和 Shift+insert.）***文件的位置在 Git Bash 上面都有显示，默认生成在以下目录：</p><ul><li>Linux 系统：~/.ssh</li><li>Mac 系统：~/.ssh</li><li>Windows 10 ：C:/Users/ASUS/.ssh</li></ul><p>接下来我们要做的事情就是把公钥 id_rsa.pub 的内容添加到 GitHub。复制公钥 id_rsa.pub 文件里的内容，你可以通过目录找到 id_rsa.pub 文件的位置，用记事本打开文件复制。如果你实在找不到文件也没有关系，按照以下步骤直接在 Git Bash 上打开就行：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/.ssh </span><br><span class="line">$ ls</span><br><span class="line">$ cat id_rsa.pub</span><br></pre></td></tr></table></figure><p><img src="D:\WorkSpace\github\hexo\themes\next\source\images\v2-692b1cd8e719dac8012afe6fda775209_720w.jpg" alt="img"></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="git生成ssh"><a href="#git生成ssh" class="headerlink" title="git生成ssh"></a>git生成ssh</h1><p>输入 ssh 命令，查看本机是否安装 SSH：</p><p><img src="/images/v2-b4792b227defc69aa7927ca9b73e4316_720w.jpg" alt="img"><br> <span id="more"></span><br>如上图所示，即已安装 SSH. 然后，输入 ssh-keygen -t rsa 命令<em><strong>（注意空格）</strong></em>，表示我们指定 RSA 算法生成密钥，然后敲四次回车键，之后就就会生成两个文件，分别为秘钥 id_rsa 和公钥 id_rsa.pub. ***（注意：git中的复制粘贴不是 Ctrl+C 和 Ctrl+V，而是 Ctrl+insert 和 Shift+insert.）***文件的位置在 Git Bash 上面都有显示，默认生成在以下目录：</p><ul><li>Linux 系统：~/.ssh</li><li>Mac 系统：~/.ssh</li><li>Windows 10 ：C:/Users/ASUS/.ssh</li></ul><p>接下来我们要做的事情就是把公钥 id_rsa.pub 的内容添加到 GitHub。复制公钥 id_rsa.pub 文件里的内容，你可以通过目录找到 id_rsa.pub 文件的位置，用记事本打开文件复制。如果你实在找不到文件也没有关系，按照以下步骤直接在 Git Bash 上打开就行：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/.ssh </span><br><span class="line">$ ls</span><br><span class="line">$ cat id_rsa.pub</span><br></pre></td></tr></table></figure><p><img src="D:\WorkSpace\github\hexo\themes\next\source\images\v2-692b1cd8e719dac8012afe6fda775209_720w.jpg" alt="img"></p>]]></content>
       
       
       <categories>
