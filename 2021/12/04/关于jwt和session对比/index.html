@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="关于jwt和session对比在权限的理解中我提到了jwt和session两种认证的方法，现在我们来进行对比 jwt的详细介绍JWT概念JSON Web Token（缩写 JWT）是目前最流行的跨域认证解决方案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="权限管理之Casbin">
+<meta property="og:url" content="http://example.com/2021/12/04/%E5%85%B3%E4%BA%8Ejwt%E5%92%8Csession%E5%AF%B9%E6%AF%94/index.html">
+<meta property="og:site_name" content="wangjunyi">
+<meta property="og:description" content="关于jwt和session对比在权限的理解中我提到了jwt和session两种认证的方法，现在我们来进行对比 jwt的详细介绍JWT概念JSON Web Token（缩写 JWT）是目前最流行的跨域认证解决方案。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/12/themes/next/source/images/Center.png">
+<meta property="og:image" content="http://example.com/2021/12/themes/next/source/images/v2-75d3d54a13e5ff882f55f932db4e6249_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/50/v2-36bbaea261ab09dc07ce0fc33fa851b6_720w.jpg?source=1940ef5c">
+<meta property="og:image" content="http://example.com/2021/12/themes/next/source/images/v2-7c43c11f9679bb9267c72dfb028cada6_720w.jpg">
+<meta property="article:published_time" content="2021-12-04T07:30:26.082Z">
+<meta property="article:modified_time" content="2021-12-04T14:40:07.386Z">
+<meta property="article:author" content="王均易">
+<meta property="article:tag" content="权限管理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/12/themes/next/source/images/Center.png">
+
+<link rel="canonical" href="http://example.com/2021/12/04/%E5%85%B3%E4%BA%8Ejwt%E5%92%8Csession%E5%AF%B9%E6%AF%94/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>权限管理之Casbin | wangjunyi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">wangjunyi</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/04/%E5%85%B3%E4%BA%8Ejwt%E5%92%8Csession%E5%AF%B9%E6%AF%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="王均易">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangjunyi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          权限管理之Casbin
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-12-04 15:30:26 / 修改时间：22:40:07" itemprop="dateCreated datePublished" datetime="2021-12-04T15:30:26+08:00">2021-12-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="关于jwt和session对比"><a href="#关于jwt和session对比" class="headerlink" title="关于jwt和session对比"></a>关于jwt和session对比</h1><p>在权限的理解中我提到了jwt和session两种认证的方法，现在我们来进行对比</p>
+<h2 id="jwt的详细介绍"><a href="#jwt的详细介绍" class="headerlink" title="jwt的详细介绍"></a>jwt的详细介绍</h2><h3 id="JWT概念"><a href="#JWT概念" class="headerlink" title="JWT概念"></a>JWT概念</h3><p><code>JSON Web Token</code>（缩写 <code>JWT</code>）是目前最流行的跨域认证解决方案。</p>
+<span id="more"></span>
+<h3 id="header"><a href="#header" class="headerlink" title="header"></a>header</h3><p>jwt的头部承载两部分信息：</p>
+<ul>
+<li>声明类型，这里是jwt</li>
+<li>声明加密的算法 通常直接使用 HMAC SHA256</li>
+</ul>
+<p>完整的头部就像下面这样的JSON：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &#x27;typ&#x27;: &#x27;JWT&#x27;,</span><br><span class="line">  &#x27;alg&#x27;: &#x27;HS256&#x27;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="playload"><a href="#playload" class="headerlink" title="playload"></a>playload</h3><p>载荷就是存放有效信息的地方。这个名字像是特指飞机上承载的货品，这些有效信息包含三个部分</p>
+<ul>
+<li>标准中注册的声明</li>
+<li>公共的声明</li>
+<li>私有的声明</li>
+</ul>
+<p><strong>标准中注册的声明 (建议但不强制使用) ：</strong></p>
+<ul>
+<li>iss: jwt签发者</li>
+<li>sub: jwt所面向的用户</li>
+<li>aud: 接收jwt的一方</li>
+<li>exp: jwt的过期时间，这个过期时间必须要大于签发时间</li>
+<li>nbf: 定义在什么时间之前，该jwt都是不可用的</li>
+<li>iat: jwt的签发时间</li>
+<li>jti: jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击</li>
+<li>aud：用户</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> StandardClaims <span class="keyword">struct</span> &#123;</span><br><span class="line">	Audience  <span class="keyword">string</span> <span class="string">`json:&quot;aud,omitempty&quot;`</span><span class="comment">//jwt用户</span></span><br><span class="line">	ExpiresAt <span class="keyword">int64</span>  <span class="string">`json:&quot;exp,omitempty&quot;`</span><span class="comment">// jwt的过期时间，这个过期时间必须要大于签发时间</span></span><br><span class="line">	Id        <span class="keyword">string</span> <span class="string">`json:&quot;jti,omitempty&quot;`</span><span class="comment">//jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击</span></span><br><span class="line">	IssuedAt  <span class="keyword">int64</span>  <span class="string">`json:&quot;iat,omitempty&quot;`</span><span class="comment">//jwt的签发时间</span></span><br><span class="line">	Issuer    <span class="keyword">string</span> <span class="string">`json:&quot;iss,omitempty&quot;`</span><span class="comment">//jwt签发者</span></span><br><span class="line">	NotBefore <span class="keyword">int64</span>  <span class="string">`json:&quot;nbf,omitempty&quot;`</span><span class="comment">//定义在什么时间之前，该jwt都是不可用的</span></span><br><span class="line">	Subject   <span class="keyword">string</span> <span class="string">`json:&quot;sub,omitempty&quot;`</span><span class="comment">//jwt所面向的用户</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>公共的声明</strong> ：<br>公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息.但不建议添加敏感信息，因为该部分在客户端可解密.</p>
+<p><strong>私有的声明</strong> ：<br>私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解密的，意味着该部分信息可以归类为明文信息。</p>
+<p>定义一个payload:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;sub&quot;: &quot;1234567890&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">  &quot;admin&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="signature"><a href="#signature" class="headerlink" title="signature"></a>signature</h3><p>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：</p>
+<ul>
+<li>header (base64后的)</li>
+<li>payload (base64后的)</li>
+<li>secret</li>
+</ul>
+<p>这个部分需要base64加密后的header和base64加密后的payload使用<code>.</code>连接组成的字符串，然后通过header中声明的加密方式进行加盐<code>secret</code>组合加密，然后就构成了jwt的第三部分。</p>
+<blockquote>
+<p>注意：secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。</p>
+</blockquote>
+<h3 id="安全相关"><a href="#安全相关" class="headerlink" title="安全相关"></a>安全相关</h3><p>不应该在jwt的payload部分存放敏感信息，因为该部分是客户端可解密的部分。</p>
+<h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><p>客户端收到服务器返回的 JWT，可以储存在 Cookie里面，也可以储存在 localStorage<br>放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息 Authorization 字段里面</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>JWT 不仅可以用于认证，也可以用于交换信息。有效使用 JWT，可以降低服务器查询数据库的次数<br>JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑<br>JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证</p>
+<h2 id="session-cookie的详细介绍"><a href="#session-cookie的详细介绍" class="headerlink" title="session-cookie的详细介绍"></a>session-cookie的详细介绍</h2><blockquote>
+<ol>
+<li><p>session 在服务器端，cookie 在客户端（浏览器）</p>
+</li>
+<li><p> session 默认被存在在服务器的一个文件里（不是内存）</p>
+</li>
+<li><p> session 的运行依赖 session id，而 session id 是存在 cookie 中的，也就是说，如果浏览器禁用了 cookie ，同时 session 也会</p>
+</li>
+</ol>
+<p>   失效（但是可以通过其它方式实现，比如在 url 中传递 session_id）</p>
+<ol start="4">
+<li><p> session 可以放在 文件、数据库、或内存中都可以。</p>
+</li>
+<li><p> 用户验证这种场合一般会用 session</p>
+</li>
+</ol>
+</blockquote>
+<p><img src="../../themes/next/source/images/Center.png" alt="img"></p>
+<p>在设置 Cookie 值的同时，协议还支持许多参数来配置这个 Cookie 的传输、存储和权限。</p>
+<table>
+<thead>
+<tr>
+<th>maxAge</th>
+<th>Number</th>
+<th>设置这个键值对在浏览器的最长保存时间。是一个从服务器当前时刻开始的毫秒数。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>expires</td>
+<td>Date</td>
+<td>设置这个键值对的失效时间，如果设置了 maxAge，expires 将会被覆盖。如果 maxAge 和 expires 都没设置，Cookie 将会在浏览器的会话失效（一般是关闭浏览器时）的时候失效。</td>
+</tr>
+<tr>
+<td>path</td>
+<td>String</td>
+<td>设置键值对生效的 URL 路径，默认设置在根路径上（<code>/</code>），也就是当前域名下的所有 URL 都可以访问这个 Cookie。</td>
+</tr>
+<tr>
+<td>domain</td>
+<td>String</td>
+<td>设置键值对生效的域名，默认没有配置，可以配置成只在指定域名才能访问。</td>
+</tr>
+<tr>
+<td>httpOnly</td>
+<td>Boolean</td>
+<td>设置键值对是否可以被 js 访问，默认为 true，不允许被 js 访问。</td>
+</tr>
+<tr>
+<td>secure</td>
+<td>Boolean</td>
+<td>设置键值对只在 HTTPS 连接上传输，框架会帮我们判断当前是否在 HTTPS 连接上自动设置 secure 的值。</td>
+</tr>
+</tbody></table>
+<p><strong>默认的配置下，Cookie 是加签不加密的，浏览器可以看到明文，js 不能访问，不能被客户端（手工）篡改。</strong></p>
+<h2 id="使用jwt的优点"><a href="#使用jwt的优点" class="headerlink" title="使用jwt的优点"></a>使用jwt的优点</h2><h3 id="天然支持分布式验证；"><a href="#天然支持分布式验证；" class="headerlink" title="天然支持分布式验证；"></a>天然支持分布式验证；</h3><p>由于jwt是直接发给客户端的，服务端并没有进行保存。只要同一了secret，就可以实现分布式。服务器端可以<strong>无限扩展</strong>，负载均衡器可以将<strong>用户传递到任何服务器</strong>，服务器都能知道用户信息，因为jwt里面包含了。</p>
+<h3 id="高并发下降低服务器压力；"><a href="#高并发下降低服务器压力；" class="headerlink" title="高并发下降低服务器压力；"></a>高并发下降低服务器压力；</h3><p>因为token存储在客户端，服务器只负责解码。这样<strong>不需要占用服务器端资源</strong></p>
+<h3 id="无状态和可扩展性；"><a href="#无状态和可扩展性；" class="headerlink" title="无状态和可扩展性；"></a>无状态和可扩展性；</h3><p>Tokens存储在客户端。完全无状态，可扩展。我们的负载均衡器可以将用户传递到任意服务器，因为在任何地方都没有状态或会话信息。</p>
+<h3 id="更安全，可防止CSRF；（很大的误会）"><a href="#更安全，可防止CSRF；（很大的误会）" class="headerlink" title="更安全，可防止CSRF；（很大的误会）"></a>更安全，可防止CSRF；（很大的误会）</h3><blockquote>
+<p>大部分文章声称：jwt放入请求头提交，很好的<strong>防止了csrf攻击</strong>，</p>
+</blockquote>
+<p>但这里面有很大的问题</p>
+<p>首先来看cookie</p>
+<h4 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h4><p>cookie经常用来存储用户的会话信息。比如，用户登陆认证后的session，之后同域内发出的请求都会带上认证后的会话信息，非常方便。所以攻击者特别喜欢盗取cookie，这相当于盗取了在目标网站上的用户权限。</p>
+<p>但是！</p>
+<h5 id="Secure-Cookie机制"><a href="#Secure-Cookie机制" class="headerlink" title="Secure Cookie机制"></a>Secure Cookie机制</h5><p>Secure Cookie机制指的是设置了secure标志的cookie。Secure Cookie仅在https层面上安全传输，如果是http请求，就不会带上这个cookie。</p>
+<p>这样能降低重要的cookie被中间人截获的风险。<br>不过，也不是说可以万无一失。因为<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=secure+cookie&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:65558789%7D">secure cookie</a>对于客户端脚本来说是可读可写的，可读就意味着secure cookie能被盗取，可写意味着能被篡改，所以还是存在一定的风险。</p>
+<h5 id="HttpOnly属性"><a href="#HttpOnly属性" class="headerlink" title="HttpOnly属性"></a><strong>HttpOnly属性</strong></h5><p>Cookie的HttpOnly属性，指浏览器不要在除HTTP（和 HTTPS)请求之外暴露Cookie。</p>
+<p>一个有HttpOnly属性的Cookie，不能通过非HTTP方式来访问，例如通过调用JavaScript(例如，引用document.cookie），因此，不可能通过<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E8%B7%A8%E5%9F%9F%E8%84%9A%E6%9C%AC&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:65558789%7D">跨域脚本</a>（一种非常普通的攻击技术）来偷走这种Cookie。Facebook 和 Google 正在广泛地使用HttpOnly属性。<br>然而，目前的技术手段还是可以通过xss攻击获取httpOnly的cookie。有兴趣的朋友可以延伸阅读该篇：<a href="https://link.zhihu.com/?target=https://medium.com/@yassergersy/xss-to-session-hijack-6039e11e6a81">Stealing HttpOnly Cookie via XSS</a></p>
+<h4 id="LocalStorage"><a href="#LocalStorage" class="headerlink" title="LocalStorage"></a>LocalStorage</h4><p>LocalStorage也是浏览器本地存储数据的一个地方，是HTML5的特性。目前已经十分普及了。然而，localStorage并不会像cookie那样可以设置数据存活的时间限制。</p>
+<p>只要用户不主动删除，localstorage存储的数据就会永久存在。</p>
+<p>因此不建议将敏感信息存储在localstorage中，尤其用于身份验证的数据。localStorage没有对xss攻击做任何防御机制，一旦出现xss漏洞，存储在localstorage的数据及其容易被获取到。</p>
+<blockquote>
+<p>（1）sessionStorage：客户端用于存储变量的，仅在当前会话下有效，关闭页面或浏览器后被清楚</p>
+<p>（2）localStorage：除非被清除，否则永久保存</p>
+</blockquote>
+<h3 id="在移动设备上效果更好；"><a href="#在移动设备上效果更好；" class="headerlink" title="在移动设备上效果更好；"></a>在移动设备上效果更好；</h3><p>部分移动浏览器存在不支持cookie的情况（现在的手机浏览器貌似都支持了）</p>
+<h3 id="适用于阻止-cookie-的用户。"><a href="#适用于阻止-cookie-的用户。" class="headerlink" title="适用于阻止 cookie 的用户。"></a>适用于阻止 cookie 的用户。</h3><p>因为可以放在cookie之外，可以适用于阻止cookie的用户</p>
+<h2 id="使用jwt的缺点"><a href="#使用jwt的缺点" class="headerlink" title="使用jwt的缺点"></a>使用jwt的缺点</h2><h3 id="token失效问题"><a href="#token失效问题" class="headerlink" title="token失效问题"></a>token失效问题</h3><p>JWT方式最大的坏处就是<strong>无法主动让token失效</strong>，小伙伴们会说token不是有过期时间吗？是的，token本身是有过期时间，但<strong>token一旦发出，服务器就无法收回</strong>。</p>
+<blockquote>
+<p>如：一个jwt的token的失效时间是3天，但我们<strong>发现这个token有异常</strong>，有可能被人登录，那真实的用户可以修改密码。但是即使修改了密码，<strong>那个异常的token还是合法的</strong>，因为3天的失效时间未到，我们<strong>服务器是没法主动让异常token失效</strong>。</p>
+</blockquote>
+<h3 id="数据延时，不一致问题"><a href="#数据延时，不一致问题" class="headerlink" title="数据延时，不一致问题"></a>数据延时，不一致问题</h3><p>还有个问题就是因为jwt中<strong>包含了用户的部分信息</strong>，如果这些<strong>部分信息修改了</strong>，服务器获取的还是<strong>以前的jwt中的用户信息</strong>，导致数据不一致。</p>
+<h2 id="使用session的优点"><a href="#使用session的优点" class="headerlink" title="使用session的优点"></a>使用session的优点</h2><ul>
+<li>相比JWT，最大优势是可以主动清除session。</li>
+<li>session保存在服务器端相对安全。</li>
+<li>结合cookie使用，较为灵活，兼容性好</li>
+<li>不需要和前端协同。浏览器的每个请求都会在请求头中携带上cookie</li>
+</ul>
+<h2 id="使用session的缺点"><a href="#使用session的缺点" class="headerlink" title="使用session的缺点"></a>使用session的缺点</h2><h3 id="跨服务器"><a href="#跨服务器" class="headerlink" title="跨服务器"></a>跨服务器</h3><p>看起来通过 cookie + session 的方式是解决了问题， 但是我们忽略了一个问题，上述情况能正常工作是因为我们假设 server 是单机工作的，但实际在生产上，为了保障高可用，一般服务器至少需要两台机器，通过负载均衡的方式来决定到底请求该打到哪台机器上。</p>
+<p>假设登录请求打到了 A 机器，A 机器生成了 session 并在 cookie 里添加 sessionId 返回给了浏览器，那么问题来了：下次添加购物车时如果请求打到了 B 或者 C，由于 session 是在 A 机器生成的，此时的 B,C 是找不到 session 的，那么就会发生无法添加购物车的错误，就得重新登录了，此时请问该怎么办。主要有以下三种解决方案</p>
+<blockquote>
+<p> 1、session 复制</p>
+</blockquote>
+<p>A 生成 session 后复制到 B, C，这样每台机器都有一份 session，无论添加购物车的请求打到哪台机器，由于 session 都能找到，故不会有问题</p>
+<p><img src="../../themes/next/source/images/v2-75d3d54a13e5ff882f55f932db4e6249_720w.jpg" alt="img"></p>
+<p>这种方式虽然可行，但缺点也很明显：</p>
+<ol>
+<li>同一样的一份 session 保存了多份，数据冗余</li>
+<li>如果节点少还好，但如果节点多的话，特别是像阿里，微信这种由于 DAU 上亿，可能需要部署成千上万台机器，这样节点增多复制造成的性能消耗也会很大。</li>
+</ol>
+<blockquote>
+<p> 2、session 粘连</p>
+</blockquote>
+<p>这种方式是让每个客户端请求只打到固定的一台机器上，比如浏览器登录请求打到 A 机器后，后续所有的添加购物车请求也都打到 A 机器上，Nginx 的 sticky 模块可以支持这种方式，支持按 ip 或 cookie 粘连等等，如按 ip 粘连方式如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream tomcats &#123;</span><br><span class="line">　　ip_hash;</span><br><span class="line">　　server 10.1.1.107:88;</span><br><span class="line">　　server 10.1.1.132:80;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://pic3.zhimg.com/50/v2-36bbaea261ab09dc07ce0fc33fa851b6_720w.jpg?source=1940ef5c" alt="img"></p>
+<p>这样的话每个 client 请求到达 Nginx 后，只要它的 ip 不变，根据 ip hash 算出来的值会打到固定的机器上，也就不存在 session 找不到的问题了，当然不难看出这种方式缺点也是很明显，对应的机器挂了怎么办？</p>
+<blockquote>
+<p> 3、session 共享</p>
+</blockquote>
+<p>这种方式也是目前各大公司普遍采用的方案，将 session 保存在 redis，memcached 等中间件中，请求到来时，各个机器去这些中间件取一下 session 即可。</p>
+<p><img src="../../themes/next/source/images/v2-7c43c11f9679bb9267c72dfb028cada6_720w.jpg" alt="img"></p>
+<p>缺点其实也不难发现，就是每个请求都要去 redis 取一下 session，多了一次内部连接，消耗了一点性能，另外为了保证 redis 的高可用，必须做集群，当然了对于大公司来说, redis 集群基本都会部署，所以这方案可以说是大公司的首选了。</p>
+<h3 id="cookie跨域"><a href="#cookie跨域" class="headerlink" title="cookie跨域"></a>cookie跨域</h3><p>domain表示的是cookie所在的域，默认为请求的地址，如网址为<a target="_blank" rel="noopener" href="http://www.jb51.net/test/test.aspx%EF%BC%8C%E9%82%A3%E4%B9%88domain%E9%BB%98%E8%AE%A4%E4%B8%BAwww.jb51.net%E3%80%82%E8%80%8C%E8%B7%A8%E5%9F%9F%E8%AE%BF%E9%97%AE%EF%BC%8C%E5%A6%82%E5%9F%9FA%E4%B8%BAt1.test.com%EF%BC%8C%E5%9F%9FB%E4%B8%BAt2.test.com%EF%BC%8C%E9%82%A3%E4%B9%88%E5%9C%A8%E5%9F%9FA%E7%94%9F%E4%BA%A7%E4%B8%80%E4%B8%AA%E4%BB%A4%E5%9F%9FA%E5%92%8C%E5%9F%9FB%E9%83%BD%E8%83%BD%E8%AE%BF%E9%97%AE%E7%9A%84cookie%E5%B0%B1%E8%A6%81%E5%B0%86%E8%AF%A5cookie%E7%9A%84domain%E8%AE%BE%E7%BD%AE%E4%B8%BA.test.com%EF%BC%9B%E5%A6%82%E6%9E%9C%E8%A6%81%E5%9C%A8%E5%9F%9FA%E7%94%9F%E4%BA%A7%E4%B8%80%E4%B8%AA%E4%BB%A4%E5%9F%9FA%E4%B8%8D%E8%83%BD%E8%AE%BF%E9%97%AE%E8%80%8C%E5%9F%9FB%E8%83%BD%E8%AE%BF%E9%97%AE%E7%9A%84cookie%E5%B0%B1%E8%A6%81%E5%B0%86%E8%AF%A5cookie%E7%9A%84domain%E8%AE%BE%E7%BD%AE%E4%B8%BAt2.test.com%E3%80%82">www.jb51.net/test/test.aspx，那么domain默认为www.jb51.net。而跨域访问，如域A为t1.test.com，域B为t2.test.com，那么在域A生产一个令域A和域B都能访问的cookie就要将该cookie的domain设置为.test.com；如果要在域A生产一个令域A不能访问而域B能访问的cookie就要将该cookie的domain设置为t2.test.com。</a></p>
+<p>很遗憾，浏览器对 Cookie 的跨域限制越来越严格。Chrome 浏览器还给 Cookie 新增了一个 SameSite 属性，此举几乎禁止了一切跨域请求的 Cookie 传递（超链接除外），并且只有当使用 HTTPs 协议时，才有可能被允许在 AJAX 跨域请求中接受服务器传来的 Cookie。</p>
+<h3 id="用户能禁止cookie"><a href="#用户能禁止cookie" class="headerlink" title="用户能禁止cookie"></a>用户能禁止cookie</h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" rel="tag"># 权限管理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/01/%E5%85%B3%E4%BA%8E%E6%9D%83%E9%99%90%E7%9A%84%E7%90%86%E8%A7%A3/" rel="prev" title="权限管理的理解">
+      <i class="fa fa-chevron-left"></i> 权限管理的理解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/04/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B9%8BCasbin/" rel="next" title="权限管理之Casbin">
+      权限管理之Casbin <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Ejwt%E5%92%8Csession%E5%AF%B9%E6%AF%94"><span class="nav-number">1.</span> <span class="nav-text">关于jwt和session对比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jwt%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">jwt的详细介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JWT%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.1.</span> <span class="nav-text">JWT概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#header"><span class="nav-number">1.1.2.</span> <span class="nav-text">header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#playload"><span class="nav-number">1.1.3.</span> <span class="nav-text">playload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#signature"><span class="nav-number">1.1.4.</span> <span class="nav-text">signature</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E7%9B%B8%E5%85%B3"><span class="nav-number">1.1.5.</span> <span class="nav-text">安全相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.6.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.7.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#session-cookie%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.</span> <span class="nav-text">session-cookie的详细介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8jwt%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">1.3.</span> <span class="nav-text">使用jwt的优点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A9%E7%84%B6%E6%94%AF%E6%8C%81%E5%88%86%E5%B8%83%E5%BC%8F%E9%AA%8C%E8%AF%81%EF%BC%9B"><span class="nav-number">1.3.1.</span> <span class="nav-text">天然支持分布式验证；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E9%99%8D%E4%BD%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8E%8B%E5%8A%9B%EF%BC%9B"><span class="nav-number">1.3.2.</span> <span class="nav-text">高并发下降低服务器压力；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%8A%B6%E6%80%81%E5%92%8C%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7%EF%BC%9B"><span class="nav-number">1.3.3.</span> <span class="nav-text">无状态和可扩展性；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E5%AE%89%E5%85%A8%EF%BC%8C%E5%8F%AF%E9%98%B2%E6%AD%A2CSRF%EF%BC%9B%EF%BC%88%E5%BE%88%E5%A4%A7%E7%9A%84%E8%AF%AF%E4%BC%9A%EF%BC%89"><span class="nav-number">1.3.4.</span> <span class="nav-text">更安全，可防止CSRF；（很大的误会）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cookie"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">Cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Secure-Cookie%E6%9C%BA%E5%88%B6"><span class="nav-number">1.3.4.1.1.</span> <span class="nav-text">Secure Cookie机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HttpOnly%E5%B1%9E%E6%80%A7"><span class="nav-number">1.3.4.1.2.</span> <span class="nav-text">HttpOnly属性</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LocalStorage"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">LocalStorage</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E4%B8%8A%E6%95%88%E6%9E%9C%E6%9B%B4%E5%A5%BD%EF%BC%9B"><span class="nav-number">1.3.5.</span> <span class="nav-text">在移动设备上效果更好；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E4%BA%8E%E9%98%BB%E6%AD%A2-cookie-%E7%9A%84%E7%94%A8%E6%88%B7%E3%80%82"><span class="nav-number">1.3.6.</span> <span class="nav-text">适用于阻止 cookie 的用户。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8jwt%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">1.4.</span> <span class="nav-text">使用jwt的缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#token%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.1.</span> <span class="nav-text">token失效问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BB%B6%E6%97%B6%EF%BC%8C%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.2.</span> <span class="nav-text">数据延时，不一致问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8session%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">1.5.</span> <span class="nav-text">使用session的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8session%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">1.6.</span> <span class="nav-text">使用session的缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%A8%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.6.1.</span> <span class="nav-text">跨服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie%E8%B7%A8%E5%9F%9F"><span class="nav-number">1.6.2.</span> <span class="nav-text">cookie跨域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%83%BD%E7%A6%81%E6%AD%A2cookie"><span class="nav-number">1.6.3.</span> <span class="nav-text">用户能禁止cookie</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="王均易"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">王均易</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王均易</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
