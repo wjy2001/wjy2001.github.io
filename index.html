@@ -450,10 +450,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-12-01 15:55:11 / 修改时间：16:35:56" itemprop="dateCreated datePublished" datetime="2021-12-01T15:55:11+08:00">2021-12-01</time>
+              <time title="创建时间：2021-12-01 15:55:11" itemprop="dateCreated datePublished" datetime="2021-12-01T15:55:11+08:00">2021-12-01</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-05 18:18:16" itemprop="dateModified" datetime="2021-12-05T18:18:16+08:00">2021-12-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -475,7 +481,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h1 id="copy函数"><a href="#copy函数" class="headerlink" title="copy函数"></a>copy函数</h1><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">copy</span>(dst, src []<span class="type">Type</span>)</span> int</span><br><span class="line"><span class="comment">//dst 复制的切片</span></span><br><span class="line"><span class="comment">//src 被复制的切片</span></span><br></pre></td></tr></table></figure>
+
+<p>基本认识：</p>
+<ul>
+<li>它只能用于切片，不能用于 map 等任何其他类型</li>
+<li>它返回结果为一个 int 型值，表示 copy 的长度</li>
+</ul>
+<h2 id="坑位一：切片-dst-需要先初始化长度"><a href="#坑位一：切片-dst-需要先初始化长度" class="headerlink" title="坑位一：切片 dst 需要先初始化长度"></a>坑位一：切片 dst 需要先初始化长度</h2><p>不是你定义好类型，就能将 src 完全 copy 到 dst 的，你需要初始化长度。</p>
+<ul>
+<li>如果 dst 长度小于 src 的长度，则 copy 部分；</li>
+<li>如果大于，则全部拷贝过来，只是没占满 dst 的坑位而已；</li>
+<li>相等时刚好不多不少 copy 过来。</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/01/copy%E5%87%BD%E6%95%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
