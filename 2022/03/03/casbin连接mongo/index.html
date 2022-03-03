@@ -22,19 +22,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="选择有时候比努力更重要">
+  <meta name="description" content="casbin连接mongocasbin中的Policy（策略）可以存储在数据库中  其中连接mongodb的方式是第三方库 github.com&#x2F;casbin&#x2F;mongodb-adapter&#x2F;v3  普通连接方式代码1234567891011121314151617181920package configimport (	&quot;github.com&#x2F;casbin&#x2F;casbin&quot;	m">
 <meta property="og:type" content="article">
-<meta property="og:title" content="wangjunyi">
-<meta property="og:url" content="http://example.com/2022/03/03/Untitled/index.html">
+<meta property="og:title" content="casbin连接mongo">
+<meta property="og:url" content="http://example.com/2022/03/03/casbin%E8%BF%9E%E6%8E%A5mongo/index.html">
 <meta property="og:site_name" content="wangjunyi">
-<meta property="og:description" content="选择有时候比努力更重要">
+<meta property="og:description" content="casbin连接mongocasbin中的Policy（策略）可以存储在数据库中  其中连接mongodb的方式是第三方库 github.com&#x2F;casbin&#x2F;mongodb-adapter&#x2F;v3  普通连接方式代码1234567891011121314151617181920package configimport (	&quot;github.com&#x2F;casbin&#x2F;casbin&quot;	m">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-03T13:01:21.050Z">
-<meta property="article:modified_time" content="2022-03-03T13:01:21.050Z">
+<meta property="article:modified_time" content="2022-03-03T13:15:42.256Z">
 <meta property="article:author" content="王均易">
+<meta property="article:tag" content="golang">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2022/03/03/Untitled/">
+<link rel="canonical" href="http://example.com/2022/03/03/casbin%E8%BF%9E%E6%8E%A5mongo/">
 
 
 <script id="page-configurations">
@@ -47,7 +48,7 @@
   };
 </script>
 
-  <title> | wangjunyi</title>
+  <title>casbin连接mongo | wangjunyi</title>
   
 
 
@@ -195,7 +196,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/03/Untitled/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/03/casbin%E8%BF%9E%E6%8E%A5mongo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -208,7 +209,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          casbin连接mongo
         </h1>
 
         <div class="post-meta">
@@ -217,8 +218,18 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-03-03 21:01:21" itemprop="dateCreated datePublished" datetime="2022-03-03T21:01:21+08:00">2022-03-03</time>
+              <time title="创建时间：2022-03-03 21:01:21 / 修改时间：21:15:42" itemprop="dateCreated datePublished" datetime="2022-03-03T21:01:21+08:00">2022-03-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                </span>
             </span>
 
           
@@ -232,7 +243,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="casbin连接mongo"><a href="#casbin连接mongo" class="headerlink" title="casbin连接mongo"></a>casbin连接mongo</h1><p>casbin中的Policy（策略）可以存储在数据库中</p>
+<blockquote>
+<p>其中连接mongodb的方式是第三方库</p>
+<p>github.com/casbin/mongodb-adapter/v3</p>
+</blockquote>
+<h4 id="普通连接方式代码"><a href="#普通连接方式代码" class="headerlink" title="普通连接方式代码"></a>普通连接方式代码</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> config</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/casbin/casbin&quot;</span></span><br><span class="line">	mongodbadapter <span class="string">&quot;github.com/casbin/mongodb-adapter&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> E *casbin.SyncedEnforcer</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CasbinSetup</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 要使用自己定义的数据库rbac_db,最后的true很重要.默认为false,使用缺省的数据库名casbin,不存在则创建</span></span><br><span class="line"></span><br><span class="line">	a := mongodbadapter.NewAdapter(<span class="string">&quot;127.0.0.1:27017/casbin&quot;</span>)</span><br><span class="line"></span><br><span class="line">	E = casbin.NewSyncedEnforcer(<span class="string">&quot;./rbac_models.conf&quot;</span>, a)</span><br><span class="line">	<span class="comment">//从DB加载策略</span></span><br><span class="line">	_ = E.LoadPolicy()</span><br><span class="line">	<span class="comment">//E.StartAutoLoadPolicy(time.Hour)</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当尝试将连接mongodb的url替换成带有账号密码的url时报错</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">panic</span>: server returned error on SASL authentication step: Authentication failed.</span><br><span class="line"><span class="comment">//服务器在SASL身份验证步骤上返回错误：身份验证失败。</span></span><br></pre></td></tr></table></figure>
+
+ <span id="more"></span>
+
+<h4 id="高级的连接方式代码"><a href="#高级的连接方式代码" class="headerlink" title="高级的连接方式代码"></a>高级的连接方式代码</h4><p>使用这种连接方式时没有报错</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> config</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/casbin/casbin/v2&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/casbin/mongodb-adapter/v3&quot;</span></span><br><span class="line">	mongooptions <span class="string">&quot;go.mongodb.org/mongo-driver/mongo/options&quot;</span></span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"><span class="keyword">var</span> E *casbin.SyncedEnforcer</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CasbinSetup</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	mongoClientOption := mongooptions.Client().ApplyURI(<span class="string">&quot;mongodb://admin:sdl%40admin@101.200.55.232:27017&quot;</span>)</span><br><span class="line">	databaseName := <span class="string">&quot;ProjectProMax&quot;</span></span><br><span class="line">	a,err := mongodbadapter.NewAdapterWithClientOption(mongoClientOption, databaseName)</span><br><span class="line">	<span class="comment">// Or you can use NewAdapterWithCollectionName for custom collection name.</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	E, err := casbin.NewSyncedEnforcer(<span class="string">&quot;./rbac_models.conf&quot;</span>, a)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	E.LoadPolicy()</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     
@@ -240,6 +266,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/golang/" rel="tag"># golang</a>
+          </div>
 
         
 
@@ -309,6 +338,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#casbin%E8%BF%9E%E6%8E%A5mongo"><span class="nav-number">1.</span> <span class="nav-text">casbin连接mongo</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E8%BF%9E%E6%8E%A5%E6%96%B9%E5%BC%8F%E4%BB%A3%E7%A0%81"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">普通连接方式代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E7%9A%84%E8%BF%9E%E6%8E%A5%E6%96%B9%E5%BC%8F%E4%BB%A3%E7%A0%81"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">高级的连接方式代码</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
