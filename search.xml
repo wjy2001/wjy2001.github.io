@@ -4,6 +4,69 @@
   
     
     <entry>
+      <title></title>
+      <link href="/2022/03/03/Untitled/"/>
+      <url>/2022/03/03/Untitled/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>mongo-driver中objectid转换</title>
+      <link href="/2022/03/03/mongo-driver%E4%B8%ADobjectid%E8%BD%AC%E6%8D%A2/"/>
+      <url>/2022/03/03/mongo-driver%E4%B8%ADobjectid%E8%BD%AC%E6%8D%A2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="mongo-driver中objectid转换"><a href="#mongo-driver中objectid转换" class="headerlink" title="mongo-driver中objectid转换"></a>mongo-driver中objectid转换</h1><p>由于每次都忘记，特地记录</p><p><strong>string-&gt;objectid</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objectid, err := primitive.ObjectIDFromHex(strig)</span><br></pre></td></tr></table></figure><p><strong>objectid-&gt;string</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string=objectid.Hex()</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>使用zap的问题</title>
+      <link href="/2022/03/03/%E4%BD%BF%E7%94%A8zap%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+      <url>/2022/03/03/%E4%BD%BF%E7%94%A8zap%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h1 id="使用zap的问题"><a href="#使用zap的问题" class="headerlink" title="使用zap的问题"></a>使用zap的问题</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">&quot;io/ioutil&quot;</span></span><br><span class="line">    <span class="string">&quot;net/http&quot;</span></span><br><span class="line">    <span class="string">&quot;log&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    resp, err := http.Get(<span class="string">&quot;www.baidu.com&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatalln(err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    body, err := ioutil.ReadAll(resp.Body)</span><br><span class="line">    <span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatalln(err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    log.Println(<span class="keyword">string</span>(body))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在运行之后会报错</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get www.google.com: unsupported protocol scheme &quot;&quot;</span><br></pre></td></tr></table></figure><p>原因是</p><blockquote><p>Get的网址有误，应在其前面添加”http://“或”https://“，具体添加哪个要看你要打开的网站使用哪个协议</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>linux上运行编译后的go程序</title>
       <link href="/2021/12/29/linux%E4%B8%8A%E8%BF%90%E8%A1%8C%E7%BC%96%E8%AF%91%E5%90%8E%E7%9A%84go%E7%A8%8B%E5%BA%8F/"/>
       <url>/2021/12/29/linux%E4%B8%8A%E8%BF%90%E8%A1%8C%E7%BC%96%E8%AF%91%E5%90%8E%E7%9A%84go%E7%A8%8B%E5%BA%8F/</url>
