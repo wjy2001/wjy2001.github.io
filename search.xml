@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>权限管理之Casbin（二）</title>
+      <link href="/2022/03/03/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B9%8BCasbin%20(%E4%BA%8C)/"/>
+      <url>/2022/03/03/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B9%8BCasbin%20(%E4%BA%8C)/</url>
+      
+        <content type="html"><![CDATA[<h1 id="权限管理之Casbin（二）"><a href="#权限管理之Casbin（二）" class="headerlink" title="权限管理之Casbin（二）"></a>权限管理之Casbin（二）</h1><p>在阅读gin-vue-admin的代码后发现完整的使用casbin再将其整合进原有的权限是一个繁琐的工作。</p><p>比如角色和用户的管理，在casbin中这个会使用专门的g来记录角色和用户之间的关系，但由于casbin的简约，单纯使用casbin无法获取到用户的角色的全部信息，需要同时使用casbin的api和自己实现的辅助的api，在这种方面，权限管理加上casbin反而会拖累编写速度。</p><p>Casbin官网：<a href="https://casbin.org/zh-CN/">Casbin</a>（有中文翻译）</p><h2 id="现在的想法"><a href="#现在的想法" class="headerlink" title="现在的想法"></a>现在的想法</h2><p>使用casbin记录角色与其拥有的权限，不在使用casbin记录角色和用户之间的关系。角色与用户由自己来实现关联。</p><p>并且casbin中有方法可以直接拿到用户所拥有的api列表。</p><blockquote><p><strong>GetFilteredPolicy()</strong></p><p>GetFilteredPolicy 获取策略中的所有授权规则，我们可以指定字段筛选器。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filteredPolicy := e.GetFilteredPolicy(<span class="number">0</span>, <span class="string">&quot;alice&quot;</span>)</span><br></pre></td></tr></table></figure></blockquote><p>现在权限结构是</p><blockquote><p><strong>利用casbin来过滤请求和管理角色能调用的api</strong></p><p><strong>其他部分由用户自己实现</strong></p></blockquote><table><thead><tr><th>表名</th><th>作用</th></tr></thead><tbody><tr><td>casbin</td><td>记录角色和api之间的关系</td></tr><tr><td>role</td><td>记录role的名字</td></tr><tr><td>user</td><td>记录用户基本信息和角色的_id</td></tr><tr><td>api</td><td>记录api的基本信息</td></tr></tbody></table><span id="more"></span>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 权限管理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>casbin连接mongo</title>
       <link href="/2022/03/03/casbin%E8%BF%9E%E6%8E%A5mongo/"/>
       <url>/2022/03/03/casbin%E8%BF%9E%E6%8E%A5mongo/</url>
