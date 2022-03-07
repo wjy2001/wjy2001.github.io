@@ -4,6 +4,69 @@
   
     
     <entry>
+      <title>Gin Mode的选择</title>
+      <link href="/2022/03/07/gin%20Mode%E7%9A%84%E9%80%89%E6%8B%A9/"/>
+      <url>/2022/03/07/gin%20Mode%E7%9A%84%E9%80%89%E6%8B%A9/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Gin-Mode的选择"><a href="#Gin-Mode的选择" class="headerlink" title="Gin Mode的选择"></a>Gin Mode的选择</h1><h4 id="我在阅读别人的代码的时候，发现下列这行代码。"><a href="#我在阅读别人的代码的时候，发现下列这行代码。" class="headerlink" title="我在阅读别人的代码的时候，发现下列这行代码。"></a>我在阅读别人的代码的时候，发现下列这行代码。</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gin.SetMode(gin.ReleaseMode)</span><br></pre></td></tr></table></figure><h4 id="本来不懂为什么需要设定模式，查看了gin源码，发现该框架提供了下列三种模式。"><a href="#本来不懂为什么需要设定模式，查看了gin源码，发现该框架提供了下列三种模式。" class="headerlink" title="本来不懂为什么需要设定模式，查看了gin源码，发现该框架提供了下列三种模式。"></a>本来不懂为什么需要设定模式，查看了gin源码，发现该框架提供了下列三种模式。</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line"><span class="comment">// DebugMode indicates gin mode is debug.</span></span><br><span class="line">DebugMode = <span class="string">&quot;debug&quot;</span></span><br><span class="line"><span class="comment">// ReleaseMode indicates gin mode is release.</span></span><br><span class="line">ReleaseMode = <span class="string">&quot;release&quot;</span></span><br><span class="line"><span class="comment">// TestMode indicates gin mode is test.</span></span><br><span class="line">TestMode = <span class="string">&quot;test&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure><h4 id="而且我们每次启动gin服务器，如果不加"><a href="#而且我们每次启动gin服务器，如果不加" class="headerlink" title="而且我们每次启动gin服务器，如果不加"></a>而且我们每次启动gin服务器，如果不加</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gin.SetMode(gin.ReleaseMode)</span><br></pre></td></tr></table></figure><h4 id="这一段，就会输出一段提示"><a href="#这一段，就会输出一段提示" class="headerlink" title="这一段，就会输出一段提示"></a>这一段，就会输出一段提示</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[WARNING] Running in <span class="string">&quot;debug&quot;</span> mode. Switch to <span class="string">&quot;release&quot;</span> mode in production.</span><br><span class="line"></span><br><span class="line"> - using env:   export GIN_MODE=release</span><br><span class="line"> - using code:  gin.SetMode(gin.ReleaseMode)</span><br></pre></td></tr></table></figure><h4 id="所以，现在我们就可以明白了，这三种mode分别对应了不同的场景。在我们开发调试过程中，使用debug模式就可以了。在上线的时候，一定要选择release模式。而test可以用在测试场景中。"><a href="#所以，现在我们就可以明白了，这三种mode分别对应了不同的场景。在我们开发调试过程中，使用debug模式就可以了。在上线的时候，一定要选择release模式。而test可以用在测试场景中。" class="headerlink" title="所以，现在我们就可以明白了，这三种mode分别对应了不同的场景。在我们开发调试过程中，使用debug模式就可以了。在上线的时候，一定要选择release模式。而test可以用在测试场景中。"></a>所以，现在我们就可以明白了，这三种mode分别对应了不同的场景。在我们开发调试过程中，使用debug模式就可以了。在上线的时候，一定要选择release模式。而test可以用在测试场景中。</h4>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>查找算法</title>
+      <link href="/2022/03/06/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/"/>
+      <url>/2022/03/06/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<h1 id="查找算法"><a href="#查找算法" class="headerlink" title="查找算法"></a>查找算法</h1><h2 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h2><p>算法：当数据量很大适宜采用该方法。采用二分法查找时，数据需是排好序的。</p><p>基本思想：假设数据是按升序排序的，对于给定值x，从序列的中间位置开始比较，如果当前位置值等于x，则查找成功；若x小于当前位置值，则在数列的前半段中查找；若x大于当前位置值则在数列的后半段中继续查找，直到找到为止。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">//二分法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">a := [<span class="number">7</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;</span><br><span class="line">find := <span class="number">7</span></span><br><span class="line">low := <span class="number">0</span></span><br><span class="line">high := <span class="built_in">len</span>(a)</span><br><span class="line">    <span class="comment">//int类型做除法会自动向下取整，结果还是int类型</span></span><br><span class="line"><span class="keyword">for</span> a[(low+high)/<span class="number">2</span>] != find &#123;</span><br><span class="line"><span class="keyword">if</span> a[(low+high)/<span class="number">2</span>] &gt; find &#123;</span><br><span class="line">high = (low + high) / <span class="number">2</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">low = (low + high) / <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(a[(low+high)/<span class="number">2</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/2022/03/04/GO%E8%AF%AD%E8%A8%80%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/"/>
+      <url>/2022/03/04/GO%E8%AF%AD%E8%A8%80%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>权限管理之Casbin（二）</title>
       <link href="/2022/03/03/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B9%8BCasbin%20(%E4%BA%8C)/"/>
       <url>/2022/03/03/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B9%8BCasbin%20(%E4%BA%8C)/</url>
