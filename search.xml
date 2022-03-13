@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Gin 中间件</title>
+      <link href="/2022/03/13/gin%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+      <url>/2022/03/13/gin%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%B6/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Gin-中间件"><a href="#Gin-中间件" class="headerlink" title="Gin 中间件"></a>Gin 中间件</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义中间件第1种定义方式</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CustomRouterMiddle1</span><span class="params">(c *gin.Context)</span></span>  &#123;</span><br><span class="line">t := time.Now()</span><br><span class="line">fmt.Println(<span class="string">&quot;我是自定义中间件第1种定义方式---请求之前&quot;</span>)</span><br><span class="line"><span class="comment">//在gin上下文中定义一个变量</span></span><br><span class="line">c.Set(<span class="string">&quot;example&quot;</span>, <span class="string">&quot;CustomRouterMiddle1&quot;</span>)</span><br><span class="line"><span class="comment">//请求之前</span></span><br><span class="line">c.Next()</span><br><span class="line">fmt.Println(<span class="string">&quot;我是自定义中间件第1种定义方式---请求之后&quot;</span>)</span><br><span class="line"><span class="comment">//请求之后</span></span><br><span class="line"><span class="comment">//计算整个请求过程耗时</span></span><br><span class="line">t2 := time.Since(t)</span><br><span class="line">log.Println(t2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义中间件第2种定义方式</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CustomRouterMiddle2</span><span class="params">()</span> <span class="title">gin</span>.<span class="title">HandlerFunc</span></span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">t := time.Now()</span><br><span class="line">fmt.Println(<span class="string">&quot;我是自定义中间件第2种定义方式---请求之前&quot;</span>)</span><br><span class="line"><span class="comment">//在gin上下文中定义一个变量</span></span><br><span class="line">c.Set(<span class="string">&quot;example&quot;</span>, <span class="string">&quot;CustomRouterMiddle2&quot;</span>)</span><br><span class="line"><span class="comment">//请求之前</span></span><br><span class="line">c.Next()</span><br><span class="line">fmt.Println(<span class="string">&quot;我是自定义中间件第2种定义方式---请求之后&quot;</span>)</span><br><span class="line"><span class="comment">//请求之后</span></span><br><span class="line"><span class="comment">//计算整个请求过程耗时</span></span><br><span class="line">t2 := time.Since(t)</span><br><span class="line">log.Println(t2)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在egg中写这个有滞后处理的中间件</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">responseTime</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line">  <span class="keyword">await</span> next();</span><br><span class="line">  <span class="keyword">const</span> ms = <span class="built_in">Date</span>.now() - start;</span><br><span class="line">  ctx.set(<span class="string">&#x27;X-Response-Time&#x27;</span>, <span class="string">`<span class="subst">$&#123;ms&#125;</span>ms`</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Gin Mode的选择</title>
       <link href="/2022/03/07/gin%20Mode%E7%9A%84%E9%80%89%E6%8B%A9/"/>
       <url>/2022/03/07/gin%20Mode%E7%9A%84%E9%80%89%E6%8B%A9/</url>
