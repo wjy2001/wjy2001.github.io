@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>golang使用redis</title>
+      <link href="/2022/03/25/golang%E4%BD%BF%E7%94%A8redis/"/>
+      <url>/2022/03/25/golang%E4%BD%BF%E7%94%A8redis/</url>
+      
+        <content type="html"><![CDATA[<h1 id="golang使用redis"><a href="#golang使用redis" class="headerlink" title="golang使用redis"></a>golang使用redis</h1><h3 id="使用的库为"><a href="#使用的库为" class="headerlink" title="使用的库为"></a>使用的库为</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;github.com/go-redis/redis/v8&quot;</span></span><br></pre></td></tr></table></figure><h3 id="redis连接"><a href="#redis连接" class="headerlink" title="redis连接"></a>redis连接</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">&quot;github.com/go-redis/redis/v8&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rdb *redis.Client</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">RedisSetup</span><span class="params">()</span></span>  &#123;</span><br><span class="line">rdb = redis.NewClient(&amp;redis.Options&#123;</span><br><span class="line">Addr:     <span class="string">&quot;101.200.87.232:6379&quot;</span>,</span><br><span class="line">Password: <span class="string">&quot;sdl@admin&quot;</span>, <span class="comment">// no password set</span></span><br><span class="line">DB:       <span class="number">0</span>,           <span class="comment">// 使用的数据库名称</span></span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="写入数据"><a href="#写入数据" class="headerlink" title="写入数据"></a>写入数据</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">type</span> Cookie <span class="keyword">struct</span> &#123;</span><br><span class="line">UserId <span class="keyword">string</span></span><br><span class="line">RoleId <span class="keyword">string</span></span><br><span class="line">IP     <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">data := global.Cookie&#123;one.ID.Hex(), one.RoleID.Hex(), c.ClientIP()&#125;</span><br><span class="line"><span class="comment">//将对象序列化，redis不能直接存入对象，必须经过这个转化</span></span><br><span class="line">data2, _ := json.Marshal(data)</span><br><span class="line"><span class="comment">//这里最后的参数必须使用time包，因为他的格式是time.Duration，并且如果没有使用time包，直接使用数字，不会报错，但不会存人redis中</span></span><br><span class="line">err := rdb.Set(context.Background(), one.ID.Hex(), data2, time.Minute*<span class="number">30</span>).Err()</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        pianc(err)<span class="comment">//错误处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data *global.Cookie</span><br><span class="line">val, err := rdb.Get(context.Background(), session).Result()</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">pianc(err)<span class="comment">//错误处理</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> err := json.Unmarshal([]<span class="keyword">byte</span>(val), &amp;data); err != <span class="literal">nil</span> &#123;<span class="comment">//反序列化，将序列化的字节流转化成原来的对象</span></span><br><span class="line">pianc(err)<span class="comment">//错误处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="修改时长"><a href="#修改时长" class="headerlink" title="修改时长"></a>修改时长</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var data *global.Cookie</span><br><span class="line">val, err := rdb.Get(context.Background(), session).Result()</span><br><span class="line">if err != nil &#123;</span><br><span class="line">pianc(err)//错误处理</span><br><span class="line">&#125;</span><br><span class="line">if err := json.Unmarshal([]byte(val), &amp;data); err != nil &#123;//反序列化，将序列化的字节流转化成原来的对象</span><br><span class="line">pianc(err)//错误处理</span><br><span class="line">&#125;ppppppppppppqqwq</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>go-zero的学习（一）</title>
+      <link href="/2022/03/23/go-zero%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+      <url>/2022/03/23/go-zero%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h1 id="go-zero的学习（一）"><a href="#go-zero的学习（一）" class="headerlink" title="go-zero的学习（一）"></a>go-zero的学习（一）</h1><h3 id=""><a href="#" class="headerlink" title=""></a></h3>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Gin 中间件</title>
       <link href="/2022/03/13/gin%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
       <url>/2022/03/13/gin%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%B6/</url>

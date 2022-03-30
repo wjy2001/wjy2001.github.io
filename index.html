@@ -192,6 +192,150 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/25/golang%E4%BD%BF%E7%94%A8redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="王均易">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangjunyi">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/25/golang%E4%BD%BF%E7%94%A8redis/" class="post-title-link" itemprop="url">golang使用redis</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-25 20:30:47 / 修改时间：22:27:21" itemprop="dateCreated datePublished" datetime="2022-03-25T20:30:47+08:00">2022-03-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="golang使用redis"><a href="#golang使用redis" class="headerlink" title="golang使用redis"></a>golang使用redis</h1><h3 id="使用的库为"><a href="#使用的库为" class="headerlink" title="使用的库为"></a>使用的库为</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;github.com/go-redis/redis/v8&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="redis连接"><a href="#redis连接" class="headerlink" title="redis连接"></a>redis连接</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/go-redis/redis/v8&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rdb *redis.Client</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">RedisSetup</span><span class="params">()</span></span>  &#123;</span><br><span class="line">	rdb = redis.NewClient(&amp;redis.Options&#123;</span><br><span class="line">		Addr:     <span class="string">&quot;101.200.87.232:6379&quot;</span>,</span><br><span class="line">		Password: <span class="string">&quot;sdl@admin&quot;</span>, <span class="comment">// no password set</span></span><br><span class="line">		DB:       <span class="number">0</span>,           <span class="comment">// 使用的数据库名称</span></span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="写入数据"><a href="#写入数据" class="headerlink" title="写入数据"></a>写入数据</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line"><span class="keyword">type</span> Cookie <span class="keyword">struct</span> &#123;</span><br><span class="line">	UserId <span class="keyword">string</span></span><br><span class="line">	RoleId <span class="keyword">string</span></span><br><span class="line">	IP     <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">	data := global.Cookie&#123;one.ID.Hex(), one.RoleID.Hex(), c.ClientIP()&#125;</span><br><span class="line">	<span class="comment">//将对象序列化，redis不能直接存入对象，必须经过这个转化</span></span><br><span class="line">	data2, _ := json.Marshal(data)</span><br><span class="line">	<span class="comment">//这里最后的参数必须使用time包，因为他的格式是time.Duration，并且如果没有使用time包，直接使用数字，不会报错，但不会存人redis中</span></span><br><span class="line">	err := rdb.Set(context.Background(), one.ID.Hex(), data2, time.Minute*<span class="number">30</span>).Err()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        pianc(err)<span class="comment">//错误处理</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data *global.Cookie</span><br><span class="line">val, err := rdb.Get(context.Background(), session).Result()</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	pianc(err)<span class="comment">//错误处理</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> err := json.Unmarshal([]<span class="keyword">byte</span>(val), &amp;data); err != <span class="literal">nil</span> &#123;<span class="comment">//反序列化，将序列化的字节流转化成原来的对象</span></span><br><span class="line">	pianc(err)<span class="comment">//错误处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改时长"><a href="#修改时长" class="headerlink" title="修改时长"></a>修改时长</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var data *global.Cookie</span><br><span class="line">val, err := rdb.Get(context.Background(), session).Result()</span><br><span class="line">if err != nil &#123;</span><br><span class="line">	pianc(err)//错误处理</span><br><span class="line">&#125;</span><br><span class="line">if err := json.Unmarshal([]byte(val), &amp;data); err != nil &#123;//反序列化，将序列化的字节流转化成原来的对象</span><br><span class="line">	pianc(err)//错误处理</span><br><span class="line">&#125;ppppppppppppqqwq</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/23/go-zero%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="王均易">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangjunyi">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/23/go-zero%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">go-zero的学习（一）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-23 20:29:17 / 修改时间：20:30:19" itemprop="dateCreated datePublished" datetime="2022-03-23T20:29:17+08:00">2022-03-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="go-zero的学习（一）"><a href="#go-zero的学习（一）" class="headerlink" title="go-zero的学习（一）"></a>go-zero的学习（一）</h1><h3 id=""><a href="#" class="headerlink" title=""></a></h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/13/gin%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -844,159 +988,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/04/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B9%8BCasbin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="王均易">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjunyi">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/04/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B9%8BCasbin/" class="post-title-link" itemprop="url">权限管理之Casbin</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-12-04 19:41:32 / 修改时间：22:39:47" itemprop="dateCreated datePublished" datetime="2021-12-04T19:41:32+08:00">2021-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="权限管理之Casbin"><a href="#权限管理之Casbin" class="headerlink" title="权限管理之Casbin"></a>权限管理之Casbin</h1><p>权限管理在几乎每个系统中都是必备的模块。如果项目开发每次都要实现一次权限管理，无疑会浪费开发时间，增加开发成本。因此，<code>casbin</code>库出现了。<code>casbin</code>是一个强大、高效的访问控制库。支持常用的多种访问控制模型，如<code>ACL/RBAC/ABAC</code>等。可以实现灵活的访问权限控制。同时，<code>casbin</code>支持多种编程语言，<code>Go/Java/Node/PHP/Python/.NET/Rust</code>。我们只需要<strong>一次学习，多处运用</strong>。</p>
-<p>Casbin官网：<a target="_blank" rel="noopener" href="https://casbin.org/zh-CN/">Casbin</a>（有中文翻译）</p>
-<h2 id="官方对casbin的说法"><a href="#官方对casbin的说法" class="headerlink" title="官方对casbin的说法"></a>官方对casbin的说法</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/12/04/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B9%8BCasbin/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/04/%E5%85%B3%E4%BA%8Ejwt%E5%92%8Csession%E5%AF%B9%E6%AF%94/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="王均易">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjunyi">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/04/%E5%85%B3%E4%BA%8Ejwt%E5%92%8Csession%E5%AF%B9%E6%AF%94/" class="post-title-link" itemprop="url">关于jwt和session对比</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-12-04 15:30:26 / 修改时间：22:44:31" itemprop="dateCreated datePublished" datetime="2021-12-04T15:30:26+08:00">2021-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="关于jwt和session对比"><a href="#关于jwt和session对比" class="headerlink" title="关于jwt和session对比"></a>关于jwt和session对比</h1><p>在权限的理解中我提到了jwt和session两种认证的方法，现在我们来进行对比</p>
-<h2 id="jwt的详细介绍"><a href="#jwt的详细介绍" class="headerlink" title="jwt的详细介绍"></a>jwt的详细介绍</h2><h3 id="JWT概念"><a href="#JWT概念" class="headerlink" title="JWT概念"></a>JWT概念</h3><p><code>JSON Web Token</code>（缩写 <code>JWT</code>）是目前最流行的跨域认证解决方案。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/12/04/%E5%85%B3%E4%BA%8Ejwt%E5%92%8Csession%E5%AF%B9%E6%AF%94/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1068,7 +1059,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
