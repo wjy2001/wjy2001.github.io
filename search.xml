@@ -29,11 +29,11 @@
     
     
     <entry>
-      <title>go-zero的学习（一）</title>
+      <title>go-zero的学习</title>
       <link href="/2022/03/23/go-zero%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
       <url>/2022/03/23/go-zero%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
       
-        <content type="html"><![CDATA[<h1 id="go-zero的学习（一）"><a href="#go-zero的学习（一）" class="headerlink" title="go-zero的学习（一）"></a>go-zero的学习（一）</h1><h3 id=""><a href="#" class="headerlink" title=""></a></h3>]]></content>
+        <content type="html"><![CDATA[<h1 id="go-zero的学习"><a href="#go-zero的学习" class="headerlink" title="go-zero的学习"></a>go-zero的学习</h1><h3 id="在学习go-micro的过程中无意间看见了go-zero这个微服务框架。go-zero有着完善的文档"><a href="#在学习go-micro的过程中无意间看见了go-zero这个微服务框架。go-zero有着完善的文档" class="headerlink" title="在学习go micro的过程中无意间看见了go-zero这个微服务框架。go-zero有着完善的文档"></a>在学习go micro的过程中无意间看见了go-zero这个微服务框架。go-zero有着完善的文档</h3><h3 id="主要技术"><a href="#主要技术" class="headerlink" title="主要技术"></a>主要技术</h3><p>go-zero使用了etcd实现了服务发现与治理，使用grpc作为rpc框架，protoc作为rpc传输的格式。</p><p>还支持k8s集群，jenkins持续集成。</p><p>另外框架提供了一个辅助工具goctl，借助这个工具我们可以快速的完成微服务项目的搭建。</p><h3 id="微服务项目快速搭建"><a href="#微服务项目快速搭建" class="headerlink" title="微服务项目快速搭建"></a>微服务项目快速搭建</h3><h3 id="微服务思路"><a href="#微服务思路" class="headerlink" title="微服务思路"></a>微服务思路</h3><p>借助go-zero官网的例子，我对微服务的了解更加深刻了。</p><p>对于直接面向客户的模块就暴露api供客户使用，与其他模块之间的通信使用rpc。模块的切割需要慎重，最好是单向通信，不要有多余的耦合。</p><h3 id="微服务的特点"><a href="#微服务的特点" class="headerlink" title="微服务的特点"></a>微服务的特点</h3><ul><li>单一职责，此时项目专注于登录和注册</li><li>轻量级的通信，通信与平台和语言无关，http是轻量的，例如java的RMI属于重量的</li><li>隔离性，数据隔离</li><li>有自己的数据</li><li>技术多样性</li></ul>]]></content>
       
       
       <categories>
