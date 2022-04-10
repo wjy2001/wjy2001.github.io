@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>二维数组使用切片</title>
+      <link href="/2022/04/10/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%BD%BF%E7%94%A8%E5%88%87%E7%89%87/"/>
+      <url>/2022/04/10/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%BD%BF%E7%94%A8%E5%88%87%E7%89%87/</url>
+      
+        <content type="html"><![CDATA[<h1 id="二维数组使用切片"><a href="#二维数组使用切片" class="headerlink" title="二维数组使用切片"></a>二维数组使用切片</h1><p>在leecode做题时遇见</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">levelOrder</span><span class="params">(root *TreeNode)</span> [][]<span class="title">int</span></span> &#123;……&#125;</span><br></pre></td></tr></table></figure><p>本想着直接写</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res:= [][]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">res[<span class="number">0</span>] = <span class="built_in">append</span>(res[<span class="number">0</span>], <span class="keyword">int</span>)</span><br></pre></td></tr></table></figure><p>结果报错为</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">panic: runtime error: index out of range [0] with length 0</span><br><span class="line">//运行时错误：索引超出范围[0]，长度为0</span><br></pre></td></tr></table></figure><p>解决方法</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">res:= [][]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">res = <span class="built_in">append</span>(res, []<span class="keyword">int</span>&#123;&#125;)</span><br><span class="line">res[<span class="number">0</span>] = <span class="built_in">append</span>(res[<span class="number">0</span>], <span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> golang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>docker安装apisix</title>
+      <link href="/2022/04/09/docker%E5%AE%89%E8%A3%85apisix/"/>
+      <url>/2022/04/09/docker%E5%AE%89%E8%A3%85apisix/</url>
+      
+        <content type="html"><![CDATA[<h1 id="docker安装apisix"><a href="#docker安装apisix" class="headerlink" title="docker安装apisix"></a>docker安装apisix</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> 运维 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> apisix </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ubantu安装lua和luarocks</title>
       <link href="/2022/04/09/ubantu%E5%AE%89%E8%A3%85lua%E5%92%8Cluarocks/"/>
       <url>/2022/04/09/ubantu%E5%AE%89%E8%A3%85lua%E5%92%8Cluarocks/</url>
@@ -154,11 +204,11 @@
     
     
     <entry>
-      <title>查找算法</title>
+      <title>数据结构</title>
       <link href="/2022/03/06/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/"/>
       <url>/2022/03/06/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/</url>
       
-        <content type="html"><![CDATA[<h1 id="查找算法"><a href="#查找算法" class="headerlink" title="查找算法"></a>查找算法</h1><h2 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h2><p>算法：当数据量很大适宜采用该方法。采用二分法查找时，数据需是排好序的。</p><p>基本思想：假设数据是按升序排序的，对于给定值x，从序列的中间位置开始比较，如果当前位置值等于x，则查找成功；若x小于当前位置值，则在数列的前半段中查找；若x大于当前位置值则在数列的后半段中继续查找，直到找到为止。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">//二分法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">a := [<span class="number">7</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;</span><br><span class="line">find := <span class="number">7</span></span><br><span class="line">low := <span class="number">0</span></span><br><span class="line">high := <span class="built_in">len</span>(a)</span><br><span class="line">    <span class="comment">//int类型做除法会自动向下取整，结果还是int类型</span></span><br><span class="line"><span class="keyword">for</span> a[(low+high)/<span class="number">2</span>] != find &#123;</span><br><span class="line"><span class="keyword">if</span> a[(low+high)/<span class="number">2</span>] &gt; find &#123;</span><br><span class="line">high = (low + high) / <span class="number">2</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">low = (low + high) / <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(a[(low+high)/<span class="number">2</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><h3 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h3><p>算法：当数据量很大适宜采用该方法。采用二分法查找时，数据需是排好序的。</p><p>基本思想：假设数据是按升序排序的，对于给定值x，从序列的中间位置开始比较，如果当前位置值等于x，则查找成功；若x小于当前位置值，则在数列的前半段中查找；若x大于当前位置值则在数列的后半段中继续查找，直到找到为止。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">//二分法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">a := [<span class="number">7</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;</span><br><span class="line">find := <span class="number">7</span></span><br><span class="line">low := <span class="number">0</span></span><br><span class="line">high := <span class="built_in">len</span>(a)</span><br><span class="line">    <span class="comment">//int类型做除法会自动向下取整，结果还是int类型</span></span><br><span class="line"><span class="keyword">for</span> a[(low+high)/<span class="number">2</span>] != find &#123;</span><br><span class="line"><span class="keyword">if</span> a[(low+high)/<span class="number">2</span>] &gt; find &#123;</span><br><span class="line">high = (low + high) / <span class="number">2</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">low = (low + high) / <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(a[(low+high)/<span class="number">2</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><h4 id="定义："><a href="#定义：" class="headerlink" title="定义："></a><strong>定义：</strong></h4><blockquote><p><strong>二叉树( Binary Tree )是n( n≥0 )个结点的有限集合，该集合或者空集( 称为空二叉树 )，或者由一个根节点和两棵互不相交的，分别称为根节点的左子树和右子树的二叉树组成。例如：图中就是一颗二叉树。</strong><img src="/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_16,color_FFFFFF,t_70,g_se,x_16.png" alt="img"></p></blockquote><h4 id="特点："><a href="#特点：" class="headerlink" title="特点："></a><strong>特点：</strong></h4><ul><li>每个结点最多有两棵子树。</li><li>左子树和右子树是有顺序的。</li><li>即使树中某结点只有一棵子树，也要区分左右。</li></ul><h4 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况:"></a><strong>特殊情况:</strong></h4><ol><li> <strong>斜树：所有的结点都只有左子树的二叉树叫左斜树。所有结点都只有右子树的二叉树叫右斜树 所以在极端情况下二叉树会退化成线性表（线性表是树的特殊表现形式），这种情况也称之为非平衡树。例如：</strong><img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_20,color_FFFFFF,t_70,g_se,x_16.png" alt="img"></li><li><strong>满二叉树：在一棵二叉树中，如果所有分支结点都存在左子树和右子树，并且所有叶子都在同一层上，这样的二叉树称为满二叉树 满二叉树是一种平衡二叉树。例如：</strong><img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_20,color_FFFFFF,t_70,g_se,x_16-16495757345303.png" alt="img"></li><li><strong>完全二叉树：对一棵具有n个结点的二叉树按层序编号，如果编号为i（1≤i≤n）的结点与同样深度的满二叉树中编号为i的结点在二叉树中位置完全相同，( 即树中结点的分布从左到右依次布满 )则这颗二叉树称为完全二叉树 完全二叉树也是一种平衡二叉树。例如：</strong><img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_19,color_FFFFFF,t_70,g_se,x_16.png" alt="img"></li></ol><h4 id="二叉树的顺序存储结构："><a href="#二叉树的顺序存储结构：" class="headerlink" title="二叉树的顺序存储结构："></a><strong>二叉树的顺序存储结构：</strong></h4><p><strong>二叉树的顺序存储结构就是用一维数组存储二叉树中的结点，并且结点的存储位置，也就是数组的下标要能体现出之间的逻辑关系。如：</strong></p><p><img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_20,color_FFFFFF,t_70,g_se,x_16-16495759995786.png" alt="img"></p><blockquote><p><em><strong>*但是顺序存储结构在极端情况下浪费空间，只适合平衡树的存储。*</strong></em></p></blockquote><p><img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_20,color_FFFFFF,t_70,g_se,x_16-16495759995797.png" alt="img"></p><p><strong>二叉树的链式存储结构：</strong></p><p><strong>二叉树每个结点最多有两个孩子，所以设计为一个数据域和两个指针域的结点进行链接，这种链表也叫作二叉链表。</strong></p><p><strong>如图是二叉链表结点的定义：</strong></p><p><img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_20,color_FFFFFF,t_70,g_se,x_16-164957603032210.png" alt="img"></p><p><strong>如图是二叉树的链式存储结构：</strong> </p><p> <img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_20,color_FFFFFF,t_70,g_se,x_16-164957603032311.png" alt="img"></p><h4 id="遍历："><a href="#遍历：" class="headerlink" title="遍历："></a><strong>遍历：</strong></h4><p><strong>主要分为两类：*<em>深度优先遍历DFS和广度优先遍历BFS*</em></strong>  </p><ol><li><strong>深度优先遍历：前序遍历，中序遍历，后序遍历</strong>      </li><li><strong>广度优先遍历：层序遍历</strong></li></ol><p><strong>链式存储的结构</strong></p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> TreeNode <span class="keyword">struct</span> &#123;</span><br><span class="line">Val   <span class="keyword">int</span></span><br><span class="line">Left  *TreeNode</span><br><span class="line">Right *TreeNode</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="深度优先遍历："><a href="#深度优先遍历：" class="headerlink" title="深度优先遍历："></a>深度优先遍历：</h4><ol><li><p><strong>前序遍历( DLR )：规则是若二叉树为空，则空操作返回，否则先访问根节点，然后前序遍历左子树，再前序遍历右子树。</strong></p></li><li><p><strong>中序遍历( LDR )：规则是若二叉树为空，则空操作返回，否则从根结点开始，中序遍历根节点的左子树，然后访问根节点，最后中序遍历右子树。</strong></p></li><li><p><strong>后序遍历( LRD )：规则是若二叉树为空，则空操作返回，否则从根结点开始，后序遍历根节点的左子树，然后后序遍历右子树，最后访问根节点。</strong></p></li></ol><h4 id="广度优先遍历："><a href="#广度优先遍历：" class="headerlink" title="广度优先遍历："></a><strong>广度优先遍历：</strong></h4><p><strong>层序遍历：规则是若树为空，则空操作返回，否则从树的第一层，也就是根结点开始访问，从上而下逐层遍历，在同一层中，按从左到右的顺序对结点逐个访问。</strong></p>]]></content>
       
       
       <categories>

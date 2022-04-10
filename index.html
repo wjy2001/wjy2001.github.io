@@ -192,6 +192,152 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/10/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%BD%BF%E7%94%A8%E5%88%87%E7%89%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="王均易">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangjunyi">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/10/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%BD%BF%E7%94%A8%E5%88%87%E7%89%87/" class="post-title-link" itemprop="url">二维数组使用切片</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-10 14:54:01 / 修改时间：14:58:57" itemprop="dateCreated datePublished" datetime="2022-04-10T14:54:01+08:00">2022-04-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="二维数组使用切片"><a href="#二维数组使用切片" class="headerlink" title="二维数组使用切片"></a>二维数组使用切片</h1><p>在leecode做题时遇见</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">levelOrder</span><span class="params">(root *TreeNode)</span> [][]<span class="title">int</span></span> &#123;……&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本想着直接写</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res:= [][]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">res[<span class="number">0</span>] = <span class="built_in">append</span>(res[<span class="number">0</span>], <span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果报错为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">panic: runtime error: index out of range [0] with length 0</span><br><span class="line">//运行时错误：索引超出范围[0]，长度为0</span><br></pre></td></tr></table></figure>
+
+<p>解决方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">res:= [][]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">res = <span class="built_in">append</span>(res, []<span class="keyword">int</span>&#123;&#125;)</span><br><span class="line">res[<span class="number">0</span>] = <span class="built_in">append</span>(res[<span class="number">0</span>], <span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/09/docker%E5%AE%89%E8%A3%85apisix/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="王均易">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangjunyi">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/09/docker%E5%AE%89%E8%A3%85apisix/" class="post-title-link" itemprop="url">docker安装apisix</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-09 19:08:45 / 修改时间：19:09:59" itemprop="dateCreated datePublished" datetime="2022-04-09T19:08:45+08:00">2022-04-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">运维</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="docker安装apisix"><a href="#docker安装apisix" class="headerlink" title="docker安装apisix"></a>docker安装apisix</h1>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/09/ubantu%E5%AE%89%E8%A3%85lua%E5%92%8Cluarocks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -687,7 +833,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/06/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">查找算法</a>
+            <a href="/2022/03/06/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">数据结构</a>
         </h2>
 
         <div class="post-meta">
@@ -704,7 +850,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-07 11:08:33" itemprop="dateModified" datetime="2022-03-07T11:08:33+08:00">2022-03-07</time>
+                <time title="修改时间：2022-04-10 15:49:56" itemprop="dateModified" datetime="2022-04-10T15:49:56+08:00">2022-04-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -727,10 +873,52 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="查找算法"><a href="#查找算法" class="headerlink" title="查找算法"></a>查找算法</h1><h2 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h2><p>算法：当数据量很大适宜采用该方法。采用二分法查找时，数据需是排好序的。</p>
+          <h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><h3 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h3><p>算法：当数据量很大适宜采用该方法。采用二分法查找时，数据需是排好序的。</p>
 <p>基本思想：假设数据是按升序排序的，对于给定值x，从序列的中间位置开始比较，如果当前位置值等于x，则查找成功；若x小于当前位置值，则在数列的前半段中查找；若x大于当前位置值则在数列的后半段中继续查找，直到找到为止。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">//二分法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	a := [<span class="number">7</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;</span><br><span class="line">	find := <span class="number">7</span></span><br><span class="line">	low := <span class="number">0</span></span><br><span class="line">	high := <span class="built_in">len</span>(a)</span><br><span class="line">    <span class="comment">//int类型做除法会自动向下取整，结果还是int类型</span></span><br><span class="line">	<span class="keyword">for</span> a[(low+high)/<span class="number">2</span>] != find &#123;</span><br><span class="line">		<span class="keyword">if</span> a[(low+high)/<span class="number">2</span>] &gt; find &#123;</span><br><span class="line">			high = (low + high) / <span class="number">2</span></span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			low = (low + high) / <span class="number">2</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(a[(low+high)/<span class="number">2</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><h4 id="定义："><a href="#定义：" class="headerlink" title="定义："></a><strong>定义：</strong></h4><blockquote>
+<p><strong>二叉树( Binary Tree )是n( n≥0 )个结点的有限集合，该集合或者空集( 称为空二叉树 )，或者由一个根节点和两棵互不相交的，分别称为根节点的左子树和右子树的二叉树组成。例如：图中就是一颗二叉树。</strong><img src="/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_16,color_FFFFFF,t_70,g_se,x_16.png" alt="img"></p>
+</blockquote>
+<h4 id="特点："><a href="#特点：" class="headerlink" title="特点："></a><strong>特点：</strong></h4><ul>
+<li>每个结点最多有两棵子树。</li>
+<li>左子树和右子树是有顺序的。</li>
+<li>即使树中某结点只有一棵子树，也要区分左右。</li>
+</ul>
+<h4 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况:"></a><strong>特殊情况:</strong></h4><ol>
+<li> <strong>斜树：所有的结点都只有左子树的二叉树叫左斜树。所有结点都只有右子树的二叉树叫右斜树 所以在极端情况下二叉树会退化成线性表（线性表是树的特殊表现形式），这种情况也称之为非平衡树。例如：</strong><img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_20,color_FFFFFF,t_70,g_se,x_16.png" alt="img"></li>
+<li><strong>满二叉树：在一棵二叉树中，如果所有分支结点都存在左子树和右子树，并且所有叶子都在同一层上，这样的二叉树称为满二叉树 满二叉树是一种平衡二叉树。例如：</strong><img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_20,color_FFFFFF,t_70,g_se,x_16-16495757345303.png" alt="img"></li>
+<li><strong>完全二叉树：对一棵具有n个结点的二叉树按层序编号，如果编号为i（1≤i≤n）的结点与同样深度的满二叉树中编号为i的结点在二叉树中位置完全相同，( 即树中结点的分布从左到右依次布满 )则这颗二叉树称为完全二叉树 完全二叉树也是一种平衡二叉树。例如：</strong><img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_19,color_FFFFFF,t_70,g_se,x_16.png" alt="img"></li>
+</ol>
+<h4 id="二叉树的顺序存储结构："><a href="#二叉树的顺序存储结构：" class="headerlink" title="二叉树的顺序存储结构："></a><strong>二叉树的顺序存储结构：</strong></h4><p><strong>二叉树的顺序存储结构就是用一维数组存储二叉树中的结点，并且结点的存储位置，也就是数组的下标要能体现出之间的逻辑关系。如：</strong></p>
+<p><img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_20,color_FFFFFF,t_70,g_se,x_16-16495759995786.png" alt="img"></p>
+<blockquote>
+<p><em><strong>*但是顺序存储结构在极端情况下浪费空间，只适合平衡树的存储。*</strong></em></p>
+</blockquote>
+<p><img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_20,color_FFFFFF,t_70,g_se,x_16-16495759995797.png" alt="img"></p>
+<p><strong>二叉树的链式存储结构：</strong></p>
+<p><strong>二叉树每个结点最多有两个孩子，所以设计为一个数据域和两个指针域的结点进行链接，这种链表也叫作二叉链表。</strong></p>
+<p><strong>如图是二叉链表结点的定义：</strong></p>
+<p><img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_20,color_FFFFFF,t_70,g_se,x_16-164957603032210.png" alt="img"></p>
+<p><strong>如图是二叉树的链式存储结构：</strong> </p>
+<p> <img src="../../themes/next/source/images/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBATmFuY3lMQ0w=,size_20,color_FFFFFF,t_70,g_se,x_16-164957603032311.png" alt="img"></p>
+<h4 id="遍历："><a href="#遍历：" class="headerlink" title="遍历："></a><strong>遍历：</strong></h4><p><strong>主要分为两类：*<em>深度优先遍历DFS和广度优先遍历BFS*</em></strong>  </p>
+<ol>
+<li><strong>深度优先遍历：前序遍历，中序遍历，后序遍历</strong>      </li>
+<li><strong>广度优先遍历：层序遍历</strong></li>
+</ol>
+<p><strong>链式存储的结构</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> TreeNode <span class="keyword">struct</span> &#123;</span><br><span class="line">	Val   <span class="keyword">int</span></span><br><span class="line">	Left  *TreeNode</span><br><span class="line">	Right *TreeNode</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="深度优先遍历："><a href="#深度优先遍历：" class="headerlink" title="深度优先遍历："></a>深度优先遍历：</h4><ol>
+<li><p><strong>前序遍历( DLR )：规则是若二叉树为空，则空操作返回，否则先访问根节点，然后前序遍历左子树，再前序遍历右子树。</strong></p>
+</li>
+<li><p><strong>中序遍历( LDR )：规则是若二叉树为空，则空操作返回，否则从根结点开始，中序遍历根节点的左子树，然后访问根节点，最后中序遍历右子树。</strong></p>
+</li>
+<li><p><strong>后序遍历( LRD )：规则是若二叉树为空，则空操作返回，否则从根结点开始，后序遍历根节点的左子树，然后后序遍历右子树，最后访问根节点。</strong></p>
+</li>
+</ol>
+<h4 id="广度优先遍历："><a href="#广度优先遍历：" class="headerlink" title="广度优先遍历："></a><strong>广度优先遍历：</strong></h4><p><strong>层序遍历：规则是若树为空，则空操作返回，否则从树的第一层，也就是根结点开始访问，从上而下逐层遍历，在同一层中，按从左到右的顺序对结点逐个访问。</strong></p>
 
       
     </div>
@@ -865,163 +1053,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/03/casbin%E8%BF%9E%E6%8E%A5mongo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="王均易">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjunyi">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/03/casbin%E8%BF%9E%E6%8E%A5mongo/" class="post-title-link" itemprop="url">casbin连接mongo</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-03 21:01:21 / 修改时间：21:15:42" itemprop="dateCreated datePublished" datetime="2022-03-03T21:01:21+08:00">2022-03-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="casbin连接mongo"><a href="#casbin连接mongo" class="headerlink" title="casbin连接mongo"></a>casbin连接mongo</h1><p>casbin中的Policy（策略）可以存储在数据库中</p>
-<blockquote>
-<p>其中连接mongodb的方式是第三方库</p>
-<p>github.com/casbin/mongodb-adapter/v3</p>
-</blockquote>
-<h4 id="普通连接方式代码"><a href="#普通连接方式代码" class="headerlink" title="普通连接方式代码"></a>普通连接方式代码</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> config</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/casbin/casbin&quot;</span></span><br><span class="line">	mongodbadapter <span class="string">&quot;github.com/casbin/mongodb-adapter&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> E *casbin.SyncedEnforcer</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CasbinSetup</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 要使用自己定义的数据库rbac_db,最后的true很重要.默认为false,使用缺省的数据库名casbin,不存在则创建</span></span><br><span class="line"></span><br><span class="line">	a := mongodbadapter.NewAdapter(<span class="string">&quot;127.0.0.1:27017/casbin&quot;</span>)</span><br><span class="line"></span><br><span class="line">	E = casbin.NewSyncedEnforcer(<span class="string">&quot;./rbac_models.conf&quot;</span>, a)</span><br><span class="line">	<span class="comment">//从DB加载策略</span></span><br><span class="line">	_ = E.LoadPolicy()</span><br><span class="line">	<span class="comment">//E.StartAutoLoadPolicy(time.Hour)</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>当尝试将连接mongodb的url替换成带有账号密码的url时报错</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">panic</span>: server returned error on SASL authentication step: Authentication failed.</span><br><span class="line"><span class="comment">//服务器在SASL身份验证步骤上返回错误：身份验证失败。</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/03/casbin%E8%BF%9E%E6%8E%A5mongo/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/03/mongo-driver%E4%B8%ADobjectid%E8%BD%AC%E6%8D%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="王均易">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjunyi">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/03/mongo-driver%E4%B8%ADobjectid%E8%BD%AC%E6%8D%A2/" class="post-title-link" itemprop="url">mongo-driver中objectid转换</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-03 20:55:58 / 修改时间：21:01:04" itemprop="dateCreated datePublished" datetime="2022-03-03T20:55:58+08:00">2022-03-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="mongo-driver中objectid转换"><a href="#mongo-driver中objectid转换" class="headerlink" title="mongo-driver中objectid转换"></a>mongo-driver中objectid转换</h1><p>由于每次都忘记，特地记录</p>
-<p><strong>string-&gt;objectid</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objectid, err := primitive.ObjectIDFromHex(strig)</span><br></pre></td></tr></table></figure>
-
-<p><strong>objectid-&gt;string</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string=objectid.Hex()</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1093,7 +1124,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1106,7 +1137,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
