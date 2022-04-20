@@ -192,6 +192,125 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/03/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B9%8BCasbin%20(%E4%BA%8C)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="王均易">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangjunyi">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/03/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B9%8BCasbin%20(%E4%BA%8C)/" class="post-title-link" itemprop="url">权限管理之Casbin（二）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-03 21:18:40" itemprop="dateCreated datePublished" datetime="2022-03-03T21:18:40+08:00">2022-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-04 10:53:29" itemprop="dateModified" datetime="2022-03-04T10:53:29+08:00">2022-03-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="权限管理之Casbin（二）"><a href="#权限管理之Casbin（二）" class="headerlink" title="权限管理之Casbin（二）"></a>权限管理之Casbin（二）</h1><p>在阅读gin-vue-admin的代码后发现完整的使用casbin再将其整合进原有的权限是一个繁琐的工作。</p>
+<p>比如角色和用户的管理，在casbin中这个会使用专门的g来记录角色和用户之间的关系，但由于casbin的简约，单纯使用casbin无法获取到用户的角色的全部信息，需要同时使用casbin的api和自己实现的辅助的api，在这种方面，权限管理加上casbin反而会拖累编写速度。</p>
+<p>Casbin官网：<a target="_blank" rel="noopener" href="https://casbin.org/zh-CN/">Casbin</a>（有中文翻译）</p>
+<h2 id="现在的想法"><a href="#现在的想法" class="headerlink" title="现在的想法"></a>现在的想法</h2><p>使用casbin记录角色与其拥有的权限，不在使用casbin记录角色和用户之间的关系。角色与用户由自己来实现关联。</p>
+<p>并且casbin中有方法可以直接拿到用户所拥有的api列表。</p>
+<blockquote>
+<p><strong>GetFilteredPolicy()</strong></p>
+<p>GetFilteredPolicy 获取策略中的所有授权规则，我们可以指定字段筛选器。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filteredPolicy := e.GetFilteredPolicy(<span class="number">0</span>, <span class="string">&quot;alice&quot;</span>)</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>现在权限结构是</p>
+<blockquote>
+<p><strong>利用casbin来过滤请求和管理角色能调用的api</strong></p>
+<p><strong>其他部分由用户自己实现</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>表名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>casbin</td>
+<td>记录角色和api之间的关系</td>
+</tr>
+<tr>
+<td>role</td>
+<td>记录role的名字</td>
+</tr>
+<tr>
+<td>user</td>
+<td>记录用户基本信息和角色的_id</td>
+</tr>
+<tr>
+<td>api</td>
+<td>记录api的基本信息</td>
+</tr>
+</tbody></table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/03/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%B9%8BCasbin%20(%E4%BA%8C)/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/03/casbin%E8%BF%9E%E6%8E%A5mongo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -903,88 +1022,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/01/%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E7%90%86%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="王均易">
-      <meta itemprop="description" content="选择有时候比努力更重要">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjunyi">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/01/%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">结构体的理解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-12-01 13:55:10 / 修改时间：14:43:36" itemprop="dateCreated datePublished" datetime="2021-12-01T13:55:10+08:00">2021-12-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="结构体的理解"><a href="#结构体的理解" class="headerlink" title="结构体的理解"></a>结构体的理解</h1><p>Go语言中没有“类”的概念，也不支持“类”的继承等面向对象的概念。Go语言中通过结构体的内嵌再配合接口比面向对象具有更高的扩展性和灵活性。</p>
-<h2 id="1-1-类型别名和自定义类型"><a href="#1-1-类型别名和自定义类型" class="headerlink" title="1.1. 类型别名和自定义类型"></a>1.1. 类型别名和自定义类型</h2><h3 id="1-1-1-自定义类型"><a href="#1-1-1-自定义类型" class="headerlink" title="1.1.1. 自定义类型"></a>1.1.1. 自定义类型</h3><p>在Go语言中有一些基本的数据类型，如string、整型、浮点型、布尔等数据类型，Go语言中可以使用type关键字来定义自定义类型。</p>
-<p>自定义类型是定义了一个全新的类型。我们可以基于内置的基本类型定义，也可以通过struct定义。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//将MyInt定义为int类型</span><br><span class="line">type MyInt int</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/12/01/%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E7%90%86%E8%A7%A3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1052,7 +1093,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
