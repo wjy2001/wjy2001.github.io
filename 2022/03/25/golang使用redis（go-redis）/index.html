@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="golang使用redis（go-redis）使用的库为1&quot;github.com&#x2F;go-redis&#x2F;redis&#x2F;v8&quot;  redis连接1234567891011121314import (	&quot;github.com&#x2F;go-redis&#x2F;redis&#x2F;v8&quot;)var rdb *redis.Clientfunc RedisSetup()  &amp;#123;	rdb &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang使用redis（go-redis）">
+<meta property="og:url" content="http://example.com/2022/03/25/golang%E4%BD%BF%E7%94%A8redis%EF%BC%88go-redis%EF%BC%89/index.html">
+<meta property="og:site_name" content="wangjunyi">
+<meta property="og:description" content="golang使用redis（go-redis）使用的库为1&quot;github.com&#x2F;go-redis&#x2F;redis&#x2F;v8&quot;  redis连接1234567891011121314import (	&quot;github.com&#x2F;go-redis&#x2F;redis&#x2F;v8&quot;)var rdb *redis.Clientfunc RedisSetup()  &amp;#123;	rdb &#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-25T12:30:47.798Z">
+<meta property="article:modified_time" content="2022-04-29T08:33:17.891Z">
+<meta property="article:author" content="王均易">
+<meta property="article:tag" content="golang">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/03/25/golang%E4%BD%BF%E7%94%A8redis%EF%BC%88go-redis%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>golang使用redis（go-redis） | wangjunyi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">wangjunyi</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/25/golang%E4%BD%BF%E7%94%A8redis%EF%BC%88go-redis%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="王均易">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangjunyi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          golang使用redis（go-redis）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-25 20:30:47" itemprop="dateCreated datePublished" datetime="2022-03-25T20:30:47+08:00">2022-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-29 16:33:17" itemprop="dateModified" datetime="2022-04-29T16:33:17+08:00">2022-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="golang使用redis（go-redis）"><a href="#golang使用redis（go-redis）" class="headerlink" title="golang使用redis（go-redis）"></a>golang使用redis（go-redis）</h1><h3 id="使用的库为"><a href="#使用的库为" class="headerlink" title="使用的库为"></a>使用的库为</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;github.com/go-redis/redis/v8&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="redis连接"><a href="#redis连接" class="headerlink" title="redis连接"></a>redis连接</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/go-redis/redis/v8&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rdb *redis.Client</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">RedisSetup</span><span class="params">()</span></span>  &#123;</span><br><span class="line">	rdb = redis.NewClient(&amp;redis.Options&#123;</span><br><span class="line">		Addr:     <span class="string">&quot;101.200.87.232:6379&quot;</span>,</span><br><span class="line">		Password: <span class="string">&quot;sdl@admin&quot;</span>, <span class="comment">// no password set</span></span><br><span class="line">		DB:       <span class="number">0</span>,           <span class="comment">// 使用的数据库名称</span></span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h3 id="写入数据（string格式）"><a href="#写入数据（string格式）" class="headerlink" title="写入数据（string格式）"></a>写入数据（string格式）</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line"><span class="keyword">type</span> Cookie <span class="keyword">struct</span> &#123;</span><br><span class="line">	UserId <span class="keyword">string</span></span><br><span class="line">	RoleId <span class="keyword">string</span></span><br><span class="line">	IP     <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">	data := global.Cookie&#123;one.ID.Hex(), one.RoleID.Hex(), c.ClientIP()&#125;</span><br><span class="line">	<span class="comment">//将对象序列化，redis不能直接存入对象，必须经过这个转化</span></span><br><span class="line">	data2, _ := json.Marshal(data)</span><br><span class="line">	<span class="comment">//这里最后的参数必须使用time包，因为他的格式是time.Duration，并且如果没有使用time包，直接使用数字，不会报错，但不会存人redis中</span></span><br><span class="line">	err := rdb.Set(context.Background(), one.ID.Hex(), data2, time.Minute*<span class="number">30</span>).Err()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        pianc(err)<span class="comment">//错误处理</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="读取数据（string格式）"><a href="#读取数据（string格式）" class="headerlink" title="读取数据（string格式）"></a>读取数据（string格式）</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data *global.Cookie</span><br><span class="line">val, err := rdb.Get(context.Background(), session).Result()</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	pianc(err)<span class="comment">//错误处理</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> err := json.Unmarshal([]<span class="keyword">byte</span>(val), &amp;data); err != <span class="literal">nil</span> &#123;<span class="comment">//反序列化，将序列化的字节流转化成原来的对象</span></span><br><span class="line">	pianc(err)<span class="comment">//错误处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改时长"><a href="#修改时长" class="headerlink" title="修改时长"></a>修改时长</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdb.Expire(context.Background(), session, time.Hour*<span class="number">1</span>)<span class="comment">//其中session是key，后面的是修改后的有效时长。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="hash散列"><a href="#hash散列" class="headerlink" title="hash散列"></a>hash散列</h3><h4 id="写入"><a href="#写入" class="headerlink" title="写入"></a>写入</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rdb.HSet(context.Background(), <span class="string">&quot;key&quot;</span>, <span class="string">&quot;key1&quot;</span>, <span class="string">&quot;value1&quot;</span>, <span class="string">&quot;key2&quot;</span>, <span class="string">&quot;value2&quot;</span>)<span class="comment">//方式一</span></span><br><span class="line">rdb.HSet(context.Background(), <span class="string">&quot;key&quot;</span>, []<span class="keyword">string</span>&#123;<span class="string">&quot;key1&quot;</span>, <span class="string">&quot;value1&quot;</span>, <span class="string">&quot;key2&quot;</span>, <span class="string">&quot;value2&quot;</span>&#125;)<span class="comment">//方式二</span></span><br><span class="line">rdb.HSet(context.Background(), <span class="string">&quot;key&quot;</span>, <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;<span class="string">&quot;key1&quot;</span>: <span class="string">&quot;value1&quot;</span>, <span class="string">&quot;key2&quot;</span>: <span class="string">&quot;value2&quot;</span>&#125;)<span class="comment">//方式三</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="读取"><a href="#读取" class="headerlink" title="读取"></a>读取</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rdb.HGet(context.Background(), <span class="string">&quot;key&quot;</span>, <span class="string">&quot;key1&quot;</span>)<span class="comment">//读取hash中的单个数据，即得到value1</span></span><br><span class="line">rdb.HGetAll(context.Background(), <span class="string">&quot;key&quot;</span>)<span class="comment">//读取hash中的全部数据</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="list列表"><a href="#list列表" class="headerlink" title="list列表"></a>list列表</h3><h3 id="set集合"><a href="#set集合" class="headerlink" title="set集合"></a>set集合</h3><h3 id="zset有序集合"><a href="#zset有序集合" class="headerlink" title="zset有序集合"></a>zset有序集合</h3><h3 id="PubSub发布订阅"><a href="#PubSub发布订阅" class="headerlink" title="PubSub发布订阅"></a>PubSub发布订阅</h3><h4 id="写入-1"><a href="#写入-1" class="headerlink" title="写入"></a>写入</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rdb.Publish(context.Background(), <span class="string">&quot;testChannel&quot;</span>, <span class="string">&quot;hello&quot;</span>)</span><br><span class="line"><span class="comment">//testChannel是channel的名称，hello是发送的消息</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="读取-1"><a href="#读取-1" class="headerlink" title="读取"></a>读取</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;<span class="comment">//使用携程</span></span><br><span class="line">		pubsub := rdb.Subscribe(context.Background(), <span class="string">&quot;testChannel&quot;</span>)</span><br><span class="line">		ch := pubsub.Channel()</span><br><span class="line">		<span class="comment">//同时接收消息的Go通道。该频道与PubSub一起关闭。如果Go频道被完全阻止30秒，消息被丢弃。创建通道后，无法使用、、Receive*API。</span></span><br><span class="line">		<span class="keyword">for</span> msg := <span class="keyword">range</span> ch &#123;</span><br><span class="line">			fmt.Println(msg.Channel, msg.Payload)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Redis发布订阅模式-与-消息中间件（rabbitmq）-进行对比"><a href="#Redis发布订阅模式-与-消息中间件（rabbitmq）-进行对比" class="headerlink" title="Redis发布订阅模式 与 消息中间件（rabbitmq） 进行对比"></a>Redis发布订阅模式 与 消息中间件（rabbitmq） 进行对比</h4><h5 id="可靠性"><a href="#可靠性" class="headerlink" title="可靠性"></a>可靠性</h5><p>Redis虽然可以实现发布订阅，其功能与常见的消息中间件类似（例如RabbitMQ），但是 <strong>Redis的发布订阅模式不支持持久化，而且发布者发布一条消息，没有对应的消费者时，消息会丢失。</strong></p>
+<p>而RabbitMQ具有消息消费的确认机制，发布者发布一条消息，一直在队列中，直到消息被消费。</p>
+<h5 id="实时性"><a href="#实时性" class="headerlink" title="实时性"></a>实时性</h5><p>Redis作为高效的缓存服务器，基于内存，发布的消息不需要持久化，具备更高的实时性。</p>
+<h5 id="消费者的负载均衡"><a href="#消费者的负载均衡" class="headerlink" title="消费者的负载均衡"></a>消费者的负载均衡</h5><p>rabbitmq队列可以被多个消费者同时监控消费，但是每一条消息只能被消费一次，由于rabbitmq的消费确认机制，因此它能够根据消费者的消费能力而调整它的负载；</p>
+<p><strong>redis发布订阅模式</strong>，一个队列可以被多个消费者同时订阅，当有消息到达时，会将该消息依次发送给每个订阅者；</p>
+<h5 id="持久性"><a href="#持久性" class="headerlink" title="持久性"></a>持久性</h5><p><strong>redis</strong>：redis的持久化是针对于整个redis缓存的内容，它有RDB和AOF两种持久化方式（redis持久化方式，后续更新），可以将整个redis实例持久化到磁盘，以此来做数据备份，防止异常情况下导致数据丢失。</p>
+<p><strong>rabbitmq</strong>：队列，消息都可以选择性持久化，持久化粒度更小，更灵活；</p>
+<h5 id="队列监控"><a href="#队列监控" class="headerlink" title="队列监控"></a>队列监控</h5><p><strong>rabbitmq实现了后台监控平台</strong>，可以在该平台上看到所有创建的队列的详细情况，良好的后台管理平台可以方面我们更好的使用；<strong>redis没有所谓的监控平台</strong>。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><blockquote>
+<p><strong>redis</strong>： 轻量级，低延迟，高并发，低可靠性；</p>
+<p><strong>rabbitmq</strong>：重量级，高可靠，异步，不保证实时；</p>
+<p>rabbitmq是一个专门的AMQP协议队列，他的优势就在于提供可靠的队列服务，并且可做到异步，而redis主要是用于缓存的，redis的发布订阅模块，可用于实现及时性，且可靠性低的功能。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/golang/" rel="tag"># golang</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/23/go-zero%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="go-zero的学习">
+      <i class="fa fa-chevron-left"></i> go-zero的学习
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/09/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/" rel="next" title="redis的使用场景">
+      redis的使用场景 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#golang%E4%BD%BF%E7%94%A8redis%EF%BC%88go-redis%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">golang使用redis（go-redis）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%9A%84%E5%BA%93%E4%B8%BA"><span class="nav-number">1.0.1.</span> <span class="nav-text">使用的库为</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.0.2.</span> <span class="nav-text">redis连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE%EF%BC%88string%E6%A0%BC%E5%BC%8F%EF%BC%89"><span class="nav-number">1.0.3.</span> <span class="nav-text">写入数据（string格式）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%EF%BC%88string%E6%A0%BC%E5%BC%8F%EF%BC%89"><span class="nav-number">1.0.4.</span> <span class="nav-text">读取数据（string格式）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%97%B6%E9%95%BF"><span class="nav-number">1.0.5.</span> <span class="nav-text">修改时长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hash%E6%95%A3%E5%88%97"><span class="nav-number">1.0.6.</span> <span class="nav-text">hash散列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%99%E5%85%A5"><span class="nav-number">1.0.6.1.</span> <span class="nav-text">写入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96"><span class="nav-number">1.0.6.2.</span> <span class="nav-text">读取</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list%E5%88%97%E8%A1%A8"><span class="nav-number">1.0.7.</span> <span class="nav-text">list列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set%E9%9B%86%E5%90%88"><span class="nav-number">1.0.8.</span> <span class="nav-text">set集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zset%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88"><span class="nav-number">1.0.9.</span> <span class="nav-text">zset有序集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PubSub%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85"><span class="nav-number">1.0.10.</span> <span class="nav-text">PubSub发布订阅</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%99%E5%85%A5-1"><span class="nav-number">1.0.10.1.</span> <span class="nav-text">写入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96-1"><span class="nav-number">1.0.10.2.</span> <span class="nav-text">读取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F-%E4%B8%8E-%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6%EF%BC%88rabbitmq%EF%BC%89-%E8%BF%9B%E8%A1%8C%E5%AF%B9%E6%AF%94"><span class="nav-number">1.0.10.3.</span> <span class="nav-text">Redis发布订阅模式 与 消息中间件（rabbitmq） 进行对比</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="nav-number">1.0.10.3.1.</span> <span class="nav-text">可靠性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E6%97%B6%E6%80%A7"><span class="nav-number">1.0.10.3.2.</span> <span class="nav-text">实时性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B6%88%E8%B4%B9%E8%80%85%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">1.0.10.3.3.</span> <span class="nav-text">消费者的负载均衡</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E6%80%A7"><span class="nav-number">1.0.10.3.4.</span> <span class="nav-text">持久性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%98%9F%E5%88%97%E7%9B%91%E6%8E%A7"><span class="nav-number">1.0.10.3.5.</span> <span class="nav-text">队列监控</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.0.10.3.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="王均易"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">王均易</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王均易</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
