@@ -1,0 +1,1447 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="MySQL（软件系统）总结, wangjunyi">
+    <meta name="description" content="MySQL（软件系统）总结软件架构MySQL是C/S架构的软件
+软件的架构有：B/S、C/S
+——B/S：B:浏览器，S:服务器（网页上直接能运行，如京东，淘宝）
+——C/S：C:客户端，S:服务器（需要安装或下载客户端的软件） 
+数据库的">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    
+
+    <title>MySQL（软件系统）总结 | wangjunyi</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">wangjunyi</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">wangjunyi</div>
+        <div class="logo-desc">
+            
+            选择有时候比努力更重要
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">MySQL（软件系统）总结</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/mysql/">
+                                <span class="chip bg-color">mysql</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-11-19
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2021-11-25
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    10 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="MySQL（软件系统）总结"><a href="#MySQL（软件系统）总结" class="headerlink" title="MySQL（软件系统）总结"></a>MySQL（软件系统）总结</h1><h2 id="软件架构"><a href="#软件架构" class="headerlink" title="软件架构"></a>软件架构</h2><p>MySQL是C/S架构的软件</p>
+<p>软件的架构有：B/S、C/S</p>
+<p>——B/S：B:浏览器，S:服务器（网页上直接能运行，如京东，淘宝）</p>
+<p>——C/S：C:客户端，S:服务器（需要安装或下载客户端的软件）<br> <span id="more"></span></p>
+<h3 id="数据库的基本分类"><a href="#数据库的基本分类" class="headerlink" title="数据库的基本分类"></a>数据库的基本分类</h3><p>关系型数据库：MySQL、Oracle、DB2……</p>
+<p>非关系型数据库：Mongo dB、Redis……</p>
+<h3 id="SQL脚本"><a href="#SQL脚本" class="headerlink" title="SQL脚本"></a>SQL脚本</h3><p>1、一堆SQL代码，后缀为.sql的文件</p>
+<p>DB、DBMS、SQL</p>
+<p>DB： Database 数据库</p>
+<p>​        主要是表，表是数据库基本组成单元</p>
+<p>DBMS： Database Management System，数据库管理系统</p>
+<p>SQL：结构化查询语言，标准的关系型数据库语言</p>
+<p>三者的关系：DBMS—执行–&gt;SQL–操作–&gt;DB</p>
+<h3 id="表"><a href="#表" class="headerlink" title="表"></a>表</h3><p>（1）行：记录/数据，存储一条完整的信息</p>
+<p>​        —-数据</p>
+<p>​        —-数据类型</p>
+<p>​        —-数据约束</p>
+<p>（2）列：列名，存储列的相关信息</p>
+<h3 id="SQL，操作或控制数据库（DB）"><a href="#SQL，操作或控制数据库（DB）" class="headerlink" title="SQL，操作或控制数据库（DB）"></a>SQL，操作或控制数据库（DB）</h3><p>​        —-DQL（数据查询语言）：主要是对SELECT操作的支持</p>
+<p>​        —-DML（数据操作语言）：数据库对增（INSERT）删（DELETE）改（UPDATE）</p>
+<p>​        —-TCL（事务控制语言）：提交（COMMIT）回滚（ROLLBACK）</p>
+<p>​        —-DCL（数据控制语言）：授权（GRANT）等</p>
+<p>​        —-DDL（数据定义语言）：创建（CREATE）删除（DROP）修改（ALTER）等支持</p>
+<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><p>SELECT————-查询</p>
+<p>FROM—————来自</p>
+<p>DISTINCT———-去除重复（行）</p>
+<h3 id="子句的概念"><a href="#子句的概念" class="headerlink" title="子句的概念"></a>子句的概念</h3><p>​        关键字+后面写的代码</p>
+<h3 id="子句的作用"><a href="#子句的作用" class="headerlink" title="子句的作用"></a>子句的作用</h3><p>SELECT子句：控制列的显示，有的时候也可称之为“数据投影”</p>
+<p>FROM子句：确定数据的来源</p>
+<h3 id="子句的书写顺序"><a href="#子句的书写顺序" class="headerlink" title="子句的书写顺序"></a>子句的书写顺序</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span>……<span class="token keyword">FROM</span>……<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="子句的执行顺序"><a href="#子句的执行顺序" class="headerlink" title="子句的执行顺序"></a>子句的执行顺序</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">FROM</span>……<span class="token keyword">SELECT</span>……<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="常见操作"><a href="#常见操作" class="headerlink" title="常见操作"></a>常见操作</h3><p>显示所有</p>
+<p>​        面试题</p>
+<p>​            问题：使用*号好还是使用所有列名好？——-要能自圆其说</p>
+<p>​            目的：二者谁的执行效率高？———————列名</p>
+<p>四则运算</p>
+<p>​        注意空值参与运算    如果没有处理，结果一定是空值</p>
+<p>别名的使用</p>
+<p>​        表名+空格+表别名</p>
+<p>数据排序（新的子句）</p>
+<p>​        关键字：ORDER BY</p>
+<p>​        子句：ORDER BY 子句</p>
+<p>​        子句的作用：按指定的列或者多个列进行排序</p>
+<p>​        子句的书写顺序：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT……FROM……ORDER BY……<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>​        子句执行顺序：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">FROM……SELECT……ORDER BY……<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>​        注意：排序</p>
+<p>​            数字，字典……</p>
+<p>​            升序、降序</p>
+<p>​                升序：ASC</p>
+<p>​                降序：DESC</p>
+<p>​        面试题：</p>
+<p>​            （1）可以使用列别名排序吗？——可以</p>
+<p><img src="/images/image-20210102140918977.png" alt="image-20210102140918977"></p>
+<p>​            （2）可以使用序号排序吗？———可以</p>
+<p><img src="/images/image-20210102140841660.png" alt="image-20210102140841660"></p>
+<h3 id="命令和关键字的区别"><a href="#命令和关键字的区别" class="headerlink" title="命令和关键字的区别"></a>命令和关键字的区别</h3><p>功能作用：</p>
+<p>​    DESC：作为关键字是降序，作为命令是查询表结构。</p>
+<p>是否可以缩写：</p>
+<p>​    命令是可以缩写的，如：DESC全命令是DESCRIBE</p>
+<p>​    关键字是不能缩写的</p>
+<h1 id="增删改-DML操作"><a href="#增删改-DML操作" class="headerlink" title="增删改(DML操作)"></a>增删改(DML操作)</h1><h2 id="增-INSERT"><a href="#增-INSERT" class="headerlink" title="增(INSERT)"></a>增(INSERT)</h2><p>关键字：INSERT INTO,VALUES</p>
+<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><h3 id="建表"><a href="#建表" class="headerlink" title="建表"></a>建表</h3><h3 id="增加表列"><a href="#增加表列" class="headerlink" title="增加表列"></a>增加表列</h3><h3 id="增加数据-INSERT-INTO"><a href="#增加数据-INSERT-INTO" class="headerlink" title="增加数据(INSERT INTO)"></a>增加数据(INSERT INTO)</h3><p>方法一：列名与value一一对应，能自定义列</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">INSERT INTO 表名(列名1,列名2,列名3……)
+VALUES(values1,values2,values3……)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>方法二：省略列名但，需要按表中列的顺序一一写上数据，不能少</p>
+<pre class="line-numbers language-none"><code class="language-none">INSERT INTO 表名
+VALUES(values1,values2,values3……);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="删-DELETE"><a href="#删-DELETE" class="headerlink" title="删(DELETE)"></a>删(DELETE)</h2><h3 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h3><h3 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h3><h3 id="删除表列"><a href="#删除表列" class="headerlink" title="删除表列"></a>删除表列</h3><h3 id="删除数据-危险操作-带上条件"><a href="#删除数据-危险操作-带上条件" class="headerlink" title="删除数据[危险操作-带上条件]"></a>删除数据[危险操作-带上条件]</h3><p>关键字：DELETE,FROM,WHERE</p>
+<pre class="line-numbers language-none"><code class="language-none">DELETE FROM 表名 
+WHERE 条件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>注意：删除操作，一定带上条件，否则删除表中所有数据</p>
+</blockquote>
+<h2 id="改-UPDATE"><a href="#改-UPDATE" class="headerlink" title="改(UPDATE)"></a>改(UPDATE)</h2><h3 id="修改数据库名"><a href="#修改数据库名" class="headerlink" title="修改数据库名"></a>修改数据库名</h3><h3 id="修改表结构"><a href="#修改表结构" class="headerlink" title="修改表结构"></a>修改表结构</h3><h3 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h3><p>关键字：UPDATE,SET,WHERE</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">UPDATE 表名
+SET column1&#x3D;value1,column2&#x3D;value2,...
+WHERE 条件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>注意：更新操作，一定带上条件，否则更新表中所有数据</p>
+</blockquote>
+<h1 id="查-SELECT"><a href="#查-SELECT" class="headerlink" title="查(SELECT)"></a>查(SELECT)</h1><p>SELECT语句完整语法</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">(7)  SELECT 
+(8)  DISTINCT &lt;select_list&gt;
+(1)  FROM &lt;left_table&gt;
+(3)  &lt;join_type&gt; JOIN &lt;right_table&gt;
+(2)  ON &lt;join_condition&gt;
+(4)  WHERE &lt;where_condition&gt;
+(5)  GROUP BY &lt;group_by_list&gt;
+(6)  HAVING &lt;having_condition&gt;
+(9)  ORDER BY &lt;order_by_condition&gt;
+(10) LIMIT &lt;limit_number&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>执行顺序</p>
+<p>FROM—&gt;ON—&gt;JOIN—&gt;WHERE—&gt;GROUP BY—&gt;HAVING—&gt;SELECT—&gt;DISTINCT—&gt;ORDER BY—&gt;LIMIT</p>
+<h3 id="查询表结构"><a href="#查询表结构" class="headerlink" title="查询表结构"></a>查询表结构</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DESC emp(表名)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="无条件查询"><a href="#无条件查询" class="headerlink" title="无条件查询"></a>无条件查询</h3><p>1.查询表的全部信息</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT  *
+FROM 表名(表别名);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>2.查询表对应列的全部信息</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT DISTINCT 列名1(表别名1)、列名2(表别名2)、列名3(表别名3)……
+FROM 表名(表别名);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>3.无重复的查询表的全部信息</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT  DISTINCT *
+FROM 表名(表别名);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>2.无重复的查询表对应列的全部信息</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT DISTINCT 列名1(列别名1)、列名2(列别名2)、列名3(列别名3)……
+FROM 表名(列别名);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="条件查询（WHERE）"><a href="#条件查询（WHERE）" class="headerlink" title="条件查询（WHERE）"></a>条件查询（WHERE）</h3><h4 id="1-基本语句："><a href="#1-基本语句：" class="headerlink" title="1.基本语句："></a>1.基本语句：</h4><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT……
+FROM……
+WHERE 条件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>关键字</p>
+<p>​    SELECT、FROM、WHERE</p>
+<p>子句</p>
+<p>​    </p>
+<p>子句的作用</p>
+<p>子句的书写顺序</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT……FROM……WHERE……<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>子句的执行顺序</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">FROM……WHERE……SELECT……<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="基本操作符"><a href="#基本操作符" class="headerlink" title="基本操作符"></a>基本操作符</h4><p>​    基本比较运算符</p>
+<blockquote>
+<p>​        &lt;、&gt;、=、!=(不等于)、&lt;&gt;(不等于)、&gt;=、&lt;=</p>
+</blockquote>
+<p>​    基本逻辑运算符</p>
+<p>​        能够进行多个条件的连接，这些条件之间构成一定的逻辑关系</p>
+<blockquote>
+<p>​        与    AND</p>
+<p>​        或    OR</p>
+<p>​        非    NOT</p>
+</blockquote>
+<p>特殊的比较运算符</p>
+<p>​    基本空值判断</p>
+<p>​        判断是NULL的情况：列名：列名(字段名) IS NULL;</p>
+<p><img src="/images/image-20210102145040748.png" alt="image-20210102145040748"></p>
+<h6 id="错误情况："><a href="#错误情况：" class="headerlink" title="错误情况："></a>错误情况：</h6><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE 列名(字段名) &#x3D; NULL;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/images/image-20210102145055883.png" alt="image-20210102145055883"></p>
+<p>​        判断不是NULL的情况：列名：列名(字段名) IS NOT NULL;</p>
+<h4 id="BETWEEN……AND……"><a href="#BETWEEN……AND……" class="headerlink" title="BETWEEN……AND……"></a>BETWEEN……AND……</h4><p>在value1到value2之间(包含这两个值，即[value1,value2])</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE 列名(字段名) BETWEEN value1 AND value2;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>​            等同于</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE 列名(字段名) &gt;&#x3D; value1 AND 列名(字段名) &lt;&#x3D; value2;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>​        可以对日期进行比较</p>
+<p><img src="/images/image-20210102145449359.png" alt="image-20210102145449359"></p>
+<h4 id="模糊查询（LIKE）"><a href="#模糊查询（LIKE）" class="headerlink" title="模糊查询（LIKE）"></a>模糊查询（LIKE）</h4><p>​            关键字like</p>
+<p>​            重要的符号（通配符）：</p>
+<blockquote>
+<p>​                ‘_’：代表一个字符</p>
+<p>​                ‘%’：代表的是任意个字符（包含0个）</p>
+</blockquote>
+<p>​            如查询倒数第二个字为A的信息</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE 列名 LIKE &#39;%A_&#39;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>注意：这两个字符可以重复使用</code></p>
+<h4 id="IN操作符"><a href="#IN操作符" class="headerlink" title="IN操作符"></a>IN操作符</h4><p>数据中不等于value1或value2……</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE 列名 NOT IN (value1,value2……)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>数据中等于value1或value2……</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE 列名 IN (value1,value2……)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>数据为NULL时有问题（看子查询）</p>
+<h3 id="分页查询（LIMIT）"><a href="#分页查询（LIMIT）" class="headerlink" title="分页查询（LIMIT）"></a>分页查询（LIMIT）</h3><p>显示查询结果的前number条数据</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT 列名
+FROM 表名
+LIMIT number;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>显示前指定页数的数据，size1是页数，number2是一页中的数据条数</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT 列名
+FROM 表名
+LIMIT size1,number2;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="子查询（SELECT嵌套）"><a href="#子查询（SELECT嵌套）" class="headerlink" title="子查询（SELECT嵌套）"></a>子查询（SELECT嵌套）</h3><p>​    子查询顾名思义一个查询（主查询，外部查询）中包含其他查询。</p>
+<p>​    单行子查询（简单子查询）</p>
+<blockquote>
+<p>子查询需要使用( )括起来</p>
+<p>单行子查询可以使用基本比较运算符</p>
+<p>子查询是可以脱离外部查询独立执行</p>
+<p>子查询的书写位置</p>
+<p>​    1.SELECT子句（罕见）</p>
+<p>​    2.FROM子句（可以用，注意别名）</p>
+<p>这样写会报错</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">1248 - Every derived table must have its own alias<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>错误原因 没有给子查询出来的表起别名</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *
+FROM (SELECT * FROM EMP WHERE DEPTNO&#x3D;&#39;20&#39;)
+where sal&gt;1500;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>正确写法</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT temp.*
+FROM (SELECT * FROM EMP WHERE DEPTNO&#x3D;&#39;20&#39;) temp
+where temp.sal&gt;1500;	<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>​    3.WHERE子句（常用）</p>
+<p>​    4.HAVING子句</p>
+</blockquote>
+<p>​    多行子查询</p>
+<blockquote>
+<p>多行子查询不能使基本比较运算符</p>
+<p>能使用</p>
+<p>IN</p>
+<p>NOT IN</p>
+<p>​    注意事项：( )里如果有NULL，相当于=NULL，无结果(返回值)。</p>
+<p>ALL：所有</p>
+<p>ANY：任何一个</p>
+<p>​    注意事项：使用ALL或ANY的效率比使用组函数，如MAX()和MIN()更高</p>
+</blockquote>
+<h3 id="多表联合查询"><a href="#多表联合查询" class="headerlink" title="多表联合查询"></a>多表联合查询</h3><p>我们需要的数据不可能都来自于一张表中</p>
+<p>交叉连接（笛卡尔积）（CROSS JOIM）</p>
+<blockquote>
+<p>笛卡尔积：是指数学中两个集合的乘积</p>
+<p>注意：多表查询的时候需要避免笛卡尔积（产生大量冗余数据）</p>
+<p>避免方法：一定要写多表连接的连接条件</p>
+<p>关键字：CROSS JOIM</p>
+</blockquote>
+<p>等值连接(必须会且熟练)(INNER JOIN……ON)</p>
+<blockquote>
+<p>使用不同表中的具有相同意义的字段(列)相等作为多表的连接条件</p>
+<p>方式一：使用WHERE子句添加多表的连接条件</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *
+FROM 表1,表2……
+WHERE 表1.列名&#x3D;表2.列名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>方式二(通用):使用INNER JOIN……ON(等价于 JOIN……ON)</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *
+FROM 表1
+INNER JOIN 表2 ON (表1.列名&#x3D;表2.列名);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>注意：1.可以使用表的别名，使用方式和列一样    </p>
+<p>​            2.如果不同表中的字段名一致，使用的时候需要区分</p>
+</blockquote>
+<p>不等值连接</p>
+<blockquote>
+<p>等值连接以外的那部分数据</p>
+</blockquote>
+<p>外连接</p>
+<blockquote>
+<p>左外连接:主要显示的是左边表所有行的数据</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *
+FROM 表1
+LEFT JOIN 表2 ON(表1.列名&#x3D;表2.列名);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>右外连接:主要显示的是右边表所有行的数据</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *
+FROM 表1
+RIGHT JOIN 表2 ON(表1.列名&#x3D;表2.列名);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>全外连接(MYSQL不支持,但Oracle支持):</p>
+<pre class="line-numbers language-Oracle" data-language="Oracle"><code class="language-Oracle">SELECT *
+FROM 表1
+FULL JOIN 表2 ON(表1.列名&#x3D;表2.列名);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</blockquote>
+<p>自连接</p>
+<blockquote>
+<p>自己连接自己(表中的A列和B列实际意义相同)</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT e.ENAME,e.EMPNO,m.ENAME,m.EMPNO
+FROM emp e,emp m
+WHERE e.MGR&#x3D;m.EMPNO<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</blockquote>
+<h3 id="分组查询（GROUP-BY）"><a href="#分组查询（GROUP-BY）" class="headerlink" title="分组查询（GROUP BY）"></a>分组查询（GROUP BY）</h3><p>​    显然用于进行统计时5个常用函数</p>
+<p>关键字group by（按照……分组）</p>
+<p>子句：GROUP BY+按照分组的列名（字段名）</p>
+<p>书写顺序：</p>
+<p>SELECT—&gt;FROM—&gt;WHERE—&gt;GROUP BY—&gt;ORDER BY</p>
+<blockquote>
+<p>注意：</p>
+<p>SELECT中可以有GROUP BY的对象</p>
+<p>mysql（5.x版本）中执行顺序</p>
+<p>FROM—&gt;WHERE—&gt;SELECT—&gt;GROUP BY—&gt;ORDER BY</p>
+<p>即分组查询可以使用列别名（只限于目前）</p>
+</blockquote>
+<h4 id="分组条件-HAVING"><a href="#分组条件-HAVING" class="headerlink" title="分组条件(HAVING)"></a>分组条件(HAVING)</h4><p>​    关键字：HAVING</p>
+<p>​    子句：HAVING + 分组条件</p>
+<p>​    子句作用：添加分组条件（WHERE语句中不支持分组函数的分组条件）</p>
+<p>​    书写顺序：SELECT—&gt;FROM—&gt;WHERE—&gt;GROUP BY—&gt;ORDER BY</p>
+<h2 id="内置函数"><a href="#内置函数" class="headerlink" title="内置函数"></a>内置函数</h2><p>​        函数：在计算机中通常称为方法、函数</p>
+<blockquote>
+<p>​        函数之间可以嵌套使用</p>
+</blockquote>
+<p>单行函数</p>
+<p>​    处理NULL值</p>
+<pre class="line-numbers language-none"><code class="language-none">IFNULL(value1, value2)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>​    如果value1为NULL，则返回值为value2</p>
+<p>​    如果value1不为NULL，则返回值为value1</p>
+</blockquote>
+<p>​    日期类型</p>
+<blockquote>
+<p>​        获取当前日期：CURDATE()</p>
+<p>​        获取当前时间：CURTIME()</p>
+<p>​        获取当前的日期+时间：NOW()</p>
+<p><img src="/images/image-20210102162950812.png" alt="image-20210102162950812"></p>
+</blockquote>
+<p>​    数值类型</p>
+<blockquote>
+<p>​        四舍五入：ROUND()</p>
+<p>​        向下取整：FLOOR()</p>
+<p>​        向上取整：CEIL()</p>
+<p><img src="/images/image-20210102162858473.png" alt="image-20210102162858473"></p>
+<p>面试时注意负数</p>
+<p><img src="/images/image-20210102163034641.png" alt="image-20210102163034641"></p>
+</blockquote>
+<p>​    字符串类型</p>
+<blockquote>
+<p>​    字符串拼接：CONCAT(string1，string2)–将string1与string2拼接</p>
+<p>​    字符串长度：LENGTAH(string)</p>
+<p>​    去除前后空格：TRIM(string)</p>
+<p>​    转成大写字母：UPPER(string)</p>
+<p>​    转成小写字母：LOWER(string)</p>
+</blockquote>
+<p>多行函数（分组函数）</p>
+<blockquote>
+<p>​    统计数据总条数：COUNT()</p>
+<p>注意：COUNT()括号中为数字或*</p>
+<p>面试题：</p>
+<p>​    给你一个陌生的数据库，有一张陌生的表，第一件事你干啥？</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">（1）SELECT * FROM 表名
+（2）SELECT COUNT(*) FORM 表名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>​    选（2）由于这个表的数据量可能会很大，（2）查询数据量更快</p>
+<p>​    统计平均数：AVG()</p>
+<p>​    统计总和：SUM()</p>
+<p>​    统计最大值：MAX()</p>
+<p>​    统计最小值：MIN()</p>
+</blockquote>
+<h2 id="DDL操作"><a href="#DDL操作" class="headerlink" title="DDL操作"></a>DDL操作</h2>
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">wangjunyi</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://wjunyi.top/2021/11/19/mysql-bi-ji/">http://wjunyi.top/2021/11/19/mysql-bi-ji/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">wangjunyi</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/mysql/">
+                                    <span class="chip bg-color">mysql</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/11/19/golang-zhong-bson-de-shi-yong-fang-fa/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="golang中BSON的使用方法">
+                        
+                        <span class="card-title">golang中BSON的使用方法</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            golang中BSON的使用方法关于mongodb-go-driver这个包里面的BSOM
+bson是一种类似json的二进制存储形式，它就是mongodb的存储结构，它的数据结构要比json多，如 int, long, date, flo
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-19
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                    后端
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/golang/">
+                        <span class="chip bg-color">golang</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/11/19/c-yu-yan-wen-jian-cao-zuo/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="C语言文件操作">
+                        
+                        <span class="card-title">C语言文件操作</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            C语言文件操作打开文件 fopen( ) 函数
+FILE *fopen( const char * filename, const char * mode );
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%96%B9%E6%B3%95/" class="post-category">
+                                    方法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/c/">
+                        <span class="chip bg-color">c</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2022</span>
+            
+            <a href="/about" target="_blank">wangjunyi</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">38.4k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "11";
+                        var startDate = "18";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/wjy2001" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:wjy2061529596@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2061529596" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2061529596" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+        
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/sakura.js"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

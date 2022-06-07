@@ -1,526 +1,509 @@
-<!DOCTYPE html>
-<html style="display: none;" lang="zh">
-    <head>
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
     <meta charset="utf-8">
-    <!--
-        © Material Theme
-        https://github.com/bollnh/hexo-theme-material
-        Version: 1.5.6 -->
-    <script>
-        window.materialVersion = "1.5.6"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1',
-            '1.5.0',
-            '1.5.2',
-            '1.5.5'
-        ]
-    </script>
+    <meta name="keywords" content="mongo-driver, wangjunyi">
+    <meta name="description" content="mongo-driverFind()使用golang操作mongoDB中 find中option参数
+option.Find()
 
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
+常用SetLimit(i int64)
+//要返回的最大文档数。默认值为0。
 
-
-
-
-
-    <link rel="dns-prefetch" href="https://.disqus.com"/>
-
-
-
-
-
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com"/>
-
-
-
-
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!-- Title -->
-    
-    <title>
-        
-            mongo-driver | 
-        
-        wangjunyi
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.svg">
-    <link rel="icon" href="/img/favicon.svg">
-
-    <meta name="format-detection" content="telephone=no"/>
-    <meta name="description" itemprop="description" content="mongo-driverFind()使用golang操作mongoDB中 find中option参数
-1option.Find()
-
-常用12345678SetLimit(i int64)//要返回的最大文档数。默认值为0。SetSkip(i int64)//将文档添加到结果之前要跳过的文档数。默认值为0。SetSort(sort interface&amp;#123;&amp;#125;)//一种文件，指定文件的归还顺序。如果排序参数是多键映射，则驱动程序将返回一个错误。">
-    <meta name="keywords" content=",golang">
-    <meta name="theme-color" content="#0097A7">
-
-    <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.zhCN.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?uVzgA6RLrOm13Ukw8Qgy+A==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-
-    
-
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-    overflow-x: hidden !important;
-  }
-  
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
-
-
-
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-
-
-<!-- Import Material Icons -->
-
-
-    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/js/jquery.min.js?ezyEvm8ST5CGfpA+kFFi1g==", true)</script>
-    
-
-    <!-- WebAPP Icons -->
+SetSkip(i int6">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="wangjunyi">
-    <meta name="msapplication-starturl" content="http://example.com/2022/04/15/mongo-driver/">
-    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="wangjunyi">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="/img/favicon.svg">
-
-    <!-- Site Verification -->
-    
-    
-
-    <!-- RSS -->
-    
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://example.com/2022/04/15/mongo-driver/">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="mongo-driver | wangjunyi">
-    <meta property="og:image" content="/img/favicon.svg">
-    <meta property="og:description" content="mongo-driverFind()使用golang操作mongoDB中 find中option参数
-1option.Find()
-
-常用12345678SetLimit(i int64)//要返回的最大文档数。默认值为0。SetSkip(i int64)//将文档添加到结果之前要跳过的文档数。默认值为0。SetSort(sort interface&amp;#123;&amp;#125;)//一种文件，指定文件的归还顺序。如果排序参数是多键映射，则驱动程序将返回一个错误。">
-    <meta property="og:article:tag" content="golang"> 
-
-    
-        <meta property="article:published_time" content="Fri Apr 15 2022 20:33:26 GMT+0800">
-        <meta property="article:modified_time" content="Wed Apr 20 2022 22:20:47 GMT+0800">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="http://example.com/2022/04/15/mongo-driver/index.html" />
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "mainEntityOfPage": "http://example.com/2022/04/15/mongo-driver/index.html",
-    "headline": "mongo-driver",
-    "datePublished": "Fri Apr 15 2022 20:33:26 GMT+0800",
-    "dateModified": "Wed Apr 20 2022 22:20:47 GMT+0800",
-    "author": {
-        "@type": "Person",
-        "name": "王均易",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/avatar.png"
-        },
-        "description": "Hi, nice to meet you"
-    },
-    "publisher": {
-        "@type": "Organization",
-        "name": "wangjunyi",
-        "logo": {
-            "@type":"ImageObject",
-            "url": "/img/favicon.svg"
-        }
-    },
-    "keywords": ",golang",
-    "description": "mongo-driverFind()使用golang操作mongoDB中 find中option参数
-1option.Find()
-
-常用12345678SetLimit(i int64)//要返回的最大文档数。默认值为0。SetSkip(i int64)//将文档添加到结果之前要跳过的文档数。默认值为0。SetSort(sort interface&amp;#123;&amp;#125;)//一种文件，指定文件的归还顺序。如果排序参数是多键映射，则驱动程序将返回一个错误。",
-}
-</script>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
     
 
-    <!-- Analytics -->
-    
-    
-    
+    <title>mongo-driver | wangjunyi</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
 
-    <!-- Custom Head -->
-    
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
-    
-        <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
-
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
-
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
-
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
                     
-                        <!-- Hamburger Button -->
-                        <button class="MD-burger-icon sidebar-toggle">
-                            <span id="MD-burger-id" class="MD-burger-layer"></span>
-                        </button>
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
+                    <span class="logo-span">wangjunyi</span>
+                </a>
+            </div>
+            
 
-                    <!-- Post TOC -->
-
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
     
-    <!-- Back Button -->
-    <!--
-    <div class="material-back" id="backhome-div" tabindex="0">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-           href="#" onclick="window.history.back();return false;"
-           target="_self"
-           role="button"
-           data-upgraded=",MaterialButton,MaterialRipple">
-            <i class="material-icons" role="presentation">arrow_back</i>
-            <span class="mdl-button__ripple-container">
-                <span class="mdl-ripple"></span>
-            </span>
-        </a>
-    </div>
-    -->
-
-
-    <!-- Left aligned menu below button -->
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
     
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
     
-    <button id="post-toc-trigger-btn"
-        class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">format_list_numbered</i>
-    </button>
-
-    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#mongo-driver"><span class="post-toc-number">1.</span> <span class="post-toc-text">mongo-driver</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Find"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Find()</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%B8%B8%E7%94%A8"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">常用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%89%80%E6%9C%89"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">所有</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Update"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Update()</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#rename"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">$rename</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Aggregate"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Aggregate()</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#project"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">project</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#group"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">group</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#arrayToObject"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">arrayToObject</span></a></li></ol></li></ol></li></ol>
-    </ul>
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
     
-
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
-                
-    <!-- Paradox Post Header -->
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
     
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-            <script type="text/ls-javascript" id="post-thumbnail-script">
-    var randomNum = Math.floor(Math.random() * 19 + 1);
-
-    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-</script>
-
-        
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
     
-            <p class="article-headline-p">
-                mongo-driver
-            </p>
-        </div>
-
-
-
-
-
-                
-                    <!-- Paradox Post Info -->
-                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
-
-    <!-- Author Avatar -->
-    <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
-    </div>
-    <!-- Author Name & Date -->
-    <div>
-        <strong>王均易</strong>
-        <span>4月 15, 2022</span>
-    </div>
-
-    <div class="section-spacer"></div>
-
-    <!-- Favorite -->
-    <!--
-        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
-            <i class="material-icons" role="presentation">favorite</i>
-            <span class="visuallyhidden">favorites</span>
-        </button>
-    -->
-
-    <!-- Qrcode -->
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
     
-
-    <!-- Tags (bookmark) -->
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
     
-    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-        <i class="material-icons" role="presentation">bookmark</i>
-        <span class="visuallyhidden">bookmark</span>
-    </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
-        <li class="mdl-menu__item">
-        <a class="post_tag-none-link" href="/tags/golang/" rel="tag">golang</a>
-    </ul>
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
     
-
-    <!-- Share -->
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
     
-        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-    <i class="material-icons" role="presentation">share</i>
-    <span class="visuallyhidden">share</span>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
-    
-
-    
-
-    <!-- Share Weibo -->
-    
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=mongo-driver&url=http://example.com/2022/04/15/mongo-driver/index.html&pic=http://example.com/img/favicon.svg&searchPic=false&style=simple" target="_blank">
-            <li class="mdl-menu__item">
-                分享到微博
-            </li>
-        </a>
-    
-
-    <!-- Share Twitter -->
-    
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=mongo-driver&url=http://example.com/2022/04/15/mongo-driver/index.html&via=王均易" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Twitter
-            </li>
-        </a>
-    
-
-    <!-- Share Facebook -->
-    
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/2022/04/15/mongo-driver/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Facebook
-            </li>
-        </a>
-    
-
-    <!-- Share Google+ -->
-    
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://example.com/2022/04/15/mongo-driver/index.html" target="_blank">
-            <li class="mdl-menu__item">
-                分享到 Google+
-            </li>
-        </a>
-    
-
-    <!-- Share LinkedIn -->
-    
-
-    <!-- Share QQ -->
-    
-
-    <!-- Share Telegram -->
-    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
 </ul>
 
-    
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">wangjunyi</div>
+        <div class="logo-desc">
+            
+            选择有时候比努力更重要
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
 </div>
 
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">mongo-driver</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/golang/">
+                                <span class="chip bg-color">golang</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                后端
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-04-15
+                </div>
                 
 
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-        <h1 id="mongo-driver"><a href="#mongo-driver" class="headerlink" title="mongo-driver"></a>mongo-driver</h1><h2 id="Find"><a href="#Find" class="headerlink" title="Find()"></a>Find()</h2><p>使用golang操作mongoDB中 find中option参数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">option.Find()</span><br></pre></td></tr></table></figure>
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-04-20
+                </div>
+                
 
-<h3 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SetLimit(i <span class="keyword">int64</span>)</span><br><span class="line"><span class="comment">//要返回的最大文档数。默认值为0。</span></span><br><span class="line"></span><br><span class="line">SetSkip(i <span class="keyword">int64</span>)</span><br><span class="line"><span class="comment">//将文档添加到结果之前要跳过的文档数。默认值为0。</span></span><br><span class="line"></span><br><span class="line">SetSort(sort <span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line"><span class="comment">//一种文件，指定文件的归还顺序。如果排序参数是多键映射，则驱动程序将返回一个错误。</span></span><br></pre></td></tr></table></figure>
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.1k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    9 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="mongo-driver"><a href="#mongo-driver" class="headerlink" title="mongo-driver"></a>mongo-driver</h1><h2 id="Find"><a href="#Find" class="headerlink" title="Find()"></a>Find()</h2><p>使用golang操作mongoDB中 find中option参数</p>
+<pre class="line-numbers language-none"><code class="language-none">option.Find()<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token function">SetLimit</span><span class="token punctuation">(</span>i <span class="token builtin">int64</span><span class="token punctuation">)</span>
+<span class="token comment">//要返回的最大文档数。默认值为0。</span>
+
+<span class="token function">SetSkip</span><span class="token punctuation">(</span>i <span class="token builtin">int64</span><span class="token punctuation">)</span>
+<span class="token comment">//将文档添加到结果之前要跳过的文档数。默认值为0。</span>
+
+<span class="token function">SetSort</span><span class="token punctuation">(</span>sort <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">//一种文件，指定文件的归还顺序。如果排序参数是多键映射，则驱动程序将返回一个错误。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <span id="more"></span>
 
-<h3 id="所有"><a href="#所有" class="headerlink" title="所有"></a>所有</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">SetAllowDiskUse(b <span class="keyword">bool</span>)</span><br><span class="line"><span class="comment">//如果为true，服务器可以在执行查找操作时将临时数据写入磁盘。此选项仅适用于MongoDB版本&gt;=4.4</span></span><br><span class="line"><span class="comment">//如果指定了此选项，服务器版本&gt;=3.2将报告错误。对于服务器版本&lt;3.2，驱动程序将返回客户端错误。</span></span><br><span class="line"><span class="comment">//默认值是false。</span></span><br><span class="line"></span><br><span class="line">SetAllowPartialResults(b <span class="keyword">bool</span>)</span><br><span class="line"><span class="comment">//如果为true，则如果某些碎片已关闭而不是已关闭，则对碎片群集的操作可能会返回部分结果</span></span><br><span class="line"><span class="comment">//返回一个错误。默认值为false。</span></span><br><span class="line"></span><br><span class="line">SetBatchSize(i <span class="keyword">int32</span>)</span><br><span class="line"><span class="comment">//服务器返回的每个批中包含的最大文档数。</span></span><br><span class="line"></span><br><span class="line">SetCollation(collation *collation)</span><br><span class="line"><span class="comment">//指定操作期间用于字符串比较的排序规则。此选项仅对MongoDB有效</span></span><br><span class="line"><span class="comment">//版本&gt;=3.4。对于以前的服务器版本，如果使用此选项，驱动程序将返回错误。这个</span></span><br><span class="line"><span class="comment">//默认值为nil，这意味着将使用集合的默认排序规则。</span></span><br><span class="line"></span><br><span class="line">SetComment(comment <span class="keyword">string</span>)</span><br><span class="line"><span class="comment">//一个字符串，将包含在服务器日志、分析日志和currentOp查询中，以帮助跟踪操作。</span></span><br><span class="line"><span class="comment">//默认值为空字符串，这意味着日志中不会包含任何注释。</span></span><br><span class="line"></span><br><span class="line">SetCursorType(ct CursorType)</span><br><span class="line"><span class="comment">//指定应为操作创建的光标类型。默认值是不可跟踪的，这意味着</span></span><br><span class="line"><span class="comment">//检索最后一批文档时，服务器将关闭光标。</span></span><br><span class="line"></span><br><span class="line">SetHint(hint <span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line"><span class="comment">//用于操作的索引。这应该是作为字符串的索引名或索引规范</span></span><br><span class="line"><span class="comment">//作为文件。如果提示参数是多键映射，驱动程序将返回一个错误。默认值为nil，</span></span><br><span class="line"><span class="comment">//这意味着不会发送任何提示。</span></span><br><span class="line"></span><br><span class="line">SetLet(let <span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line"><span class="comment">//指定查找表达式的参数。需要mongo版本大于等于5.0</span></span><br><span class="line"></span><br><span class="line">SetLimit(i <span class="keyword">int64</span>)</span><br><span class="line"><span class="comment">//要返回的最大文档数。默认值为0。</span></span><br><span class="line"></span><br><span class="line">SetMax(max <span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line"><span class="comment">//指定特定索引的排他性上界的文档。默认值为nil，这意味着没有最大值。</span></span><br><span class="line"></span><br><span class="line">SetMaxAwaitTime(d time.Duration)</span><br><span class="line"><span class="comment">//服务器等待新文档满足可定制游标查询的最长时间。</span></span><br><span class="line"><span class="comment">//此选项仅适用于可定制的等待游标（有关更多信息，请参阅游标类型选项）和</span></span><br><span class="line"><span class="comment">//MongoDB版本&gt;=3.2。对于其他游标类型或以前的服务器版本，此选项将被忽略。</span></span><br><span class="line"></span><br><span class="line">SetMaxTime(d time.Duration)</span><br><span class="line"><span class="comment">//查询可以在服务器上运行的最长时间。默认值为nil，这意味着</span></span><br><span class="line"><span class="comment">//查询执行没有时间限制。</span></span><br><span class="line"></span><br><span class="line">SetMin(min <span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line"><span class="comment">//指定特定索引的包含下限的文档。默认值为0，这意味着</span></span><br><span class="line"><span class="comment">//没有最小值。</span></span><br><span class="line"></span><br><span class="line">SetNoCursorTimeout(b <span class="keyword">bool</span>)</span><br><span class="line"><span class="comment">//如果为true，则操作创建的光标在一段时间不活动后不会超时。默认值为false</span></span><br><span class="line"></span><br><span class="line">SetOplogReplay(b <span class="keyword">bool</span>)</span><br><span class="line"><span class="comment">//此选项仅供内部复制使用，不应设置。</span></span><br><span class="line"><span class="comment">//已弃用：此选项在MongoDB 4.4版中已弃用，如果使用，服务器将忽略它</span></span><br><span class="line"></span><br><span class="line">SetProjection(projection <span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line"><span class="comment">//描述操作返回的文档中将包含哪些字段的文档。默认值</span></span><br><span class="line"><span class="comment">//是nil，这意味着将包括所有字段。</span></span><br><span class="line"></span><br><span class="line">SetReturnKey(b <span class="keyword">bool</span>)</span><br><span class="line"><span class="comment">//如果为true，操作返回的文档将只包含与所用索引对应的字段。这个</span></span><br><span class="line"><span class="comment">//默认值为false。</span></span><br><span class="line"></span><br><span class="line">SetShowRecordID(b <span class="keyword">bool</span>)</span><br><span class="line"><span class="comment">//如果为true，则操作返回的文档中将包含带有记录标识符的$recordId字段。</span></span><br><span class="line"><span class="comment">//默认值为false。</span></span><br><span class="line"></span><br><span class="line">SetSkip(i <span class="keyword">int64</span>)</span><br><span class="line"><span class="comment">//将文档添加到结果之前要跳过的文档数。默认值为0。</span></span><br><span class="line"></span><br><span class="line">SetSnapshot(b <span class="keyword">bool</span>)</span><br><span class="line"><span class="comment">//如果为true，则由于中间的写入操作，光标不会多次返回文档。这个默认值为false。</span></span><br><span class="line"><span class="comment">//已弃用：此选项在MongoDB 3.6版中已弃用，并在MongoDB 4.0版中删除。</span></span><br><span class="line"></span><br><span class="line">SetSort(sort <span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line"><span class="comment">//一种文件，指定文件的归还顺序。如果排序参数是多键映射，则驱动程序将返回一个错误。</span></span><br></pre></td></tr></table></figure>
+<h3 id="所有"><a href="#所有" class="headerlink" title="所有"></a>所有</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token function">SetAllowDiskUse</span><span class="token punctuation">(</span>b <span class="token builtin">bool</span><span class="token punctuation">)</span>
+<span class="token comment">//如果为true，服务器可以在执行查找操作时将临时数据写入磁盘。此选项仅适用于MongoDB版本>=4.4</span>
+<span class="token comment">//如果指定了此选项，服务器版本>=3.2将报告错误。对于服务器版本&lt;3.2，驱动程序将返回客户端错误。</span>
+<span class="token comment">//默认值是false。</span>
+
+<span class="token function">SetAllowPartialResults</span><span class="token punctuation">(</span>b <span class="token builtin">bool</span><span class="token punctuation">)</span>
+<span class="token comment">//如果为true，则如果某些碎片已关闭而不是已关闭，则对碎片群集的操作可能会返回部分结果</span>
+<span class="token comment">//返回一个错误。默认值为false。</span>
+
+<span class="token function">SetBatchSize</span><span class="token punctuation">(</span>i <span class="token builtin">int32</span><span class="token punctuation">)</span>
+<span class="token comment">//服务器返回的每个批中包含的最大文档数。</span>
+
+<span class="token function">SetCollation</span><span class="token punctuation">(</span>collation <span class="token operator">*</span>collation<span class="token punctuation">)</span>
+<span class="token comment">//指定操作期间用于字符串比较的排序规则。此选项仅对MongoDB有效</span>
+<span class="token comment">//版本>=3.4。对于以前的服务器版本，如果使用此选项，驱动程序将返回错误。这个</span>
+<span class="token comment">//默认值为nil，这意味着将使用集合的默认排序规则。</span>
+
+<span class="token function">SetComment</span><span class="token punctuation">(</span>comment <span class="token builtin">string</span><span class="token punctuation">)</span>
+<span class="token comment">//一个字符串，将包含在服务器日志、分析日志和currentOp查询中，以帮助跟踪操作。</span>
+<span class="token comment">//默认值为空字符串，这意味着日志中不会包含任何注释。</span>
+
+<span class="token function">SetCursorType</span><span class="token punctuation">(</span>ct CursorType<span class="token punctuation">)</span>
+<span class="token comment">//指定应为操作创建的光标类型。默认值是不可跟踪的，这意味着</span>
+<span class="token comment">//检索最后一批文档时，服务器将关闭光标。</span>
+
+<span class="token function">SetHint</span><span class="token punctuation">(</span>hint <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">//用于操作的索引。这应该是作为字符串的索引名或索引规范</span>
+<span class="token comment">//作为文件。如果提示参数是多键映射，驱动程序将返回一个错误。默认值为nil，</span>
+<span class="token comment">//这意味着不会发送任何提示。</span>
+
+<span class="token function">SetLet</span><span class="token punctuation">(</span>let <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">//指定查找表达式的参数。需要mongo版本大于等于5.0</span>
+
+<span class="token function">SetLimit</span><span class="token punctuation">(</span>i <span class="token builtin">int64</span><span class="token punctuation">)</span>
+<span class="token comment">//要返回的最大文档数。默认值为0。</span>
+
+<span class="token function">SetMax</span><span class="token punctuation">(</span>max <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">//指定特定索引的排他性上界的文档。默认值为nil，这意味着没有最大值。</span>
+
+<span class="token function">SetMaxAwaitTime</span><span class="token punctuation">(</span>d time<span class="token punctuation">.</span>Duration<span class="token punctuation">)</span>
+<span class="token comment">//服务器等待新文档满足可定制游标查询的最长时间。</span>
+<span class="token comment">//此选项仅适用于可定制的等待游标（有关更多信息，请参阅游标类型选项）和</span>
+<span class="token comment">//MongoDB版本>=3.2。对于其他游标类型或以前的服务器版本，此选项将被忽略。</span>
+
+<span class="token function">SetMaxTime</span><span class="token punctuation">(</span>d time<span class="token punctuation">.</span>Duration<span class="token punctuation">)</span>
+<span class="token comment">//查询可以在服务器上运行的最长时间。默认值为nil，这意味着</span>
+<span class="token comment">//查询执行没有时间限制。</span>
+
+<span class="token function">SetMin</span><span class="token punctuation">(</span>min <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">//指定特定索引的包含下限的文档。默认值为0，这意味着</span>
+<span class="token comment">//没有最小值。</span>
+
+<span class="token function">SetNoCursorTimeout</span><span class="token punctuation">(</span>b <span class="token builtin">bool</span><span class="token punctuation">)</span>
+<span class="token comment">//如果为true，则操作创建的光标在一段时间不活动后不会超时。默认值为false</span>
+
+<span class="token function">SetOplogReplay</span><span class="token punctuation">(</span>b <span class="token builtin">bool</span><span class="token punctuation">)</span>
+<span class="token comment">//此选项仅供内部复制使用，不应设置。</span>
+<span class="token comment">//已弃用：此选项在MongoDB 4.4版中已弃用，如果使用，服务器将忽略它</span>
+
+<span class="token function">SetProjection</span><span class="token punctuation">(</span>projection <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">//描述操作返回的文档中将包含哪些字段的文档。默认值</span>
+<span class="token comment">//是nil，这意味着将包括所有字段。</span>
+
+<span class="token function">SetReturnKey</span><span class="token punctuation">(</span>b <span class="token builtin">bool</span><span class="token punctuation">)</span>
+<span class="token comment">//如果为true，操作返回的文档将只包含与所用索引对应的字段。这个</span>
+<span class="token comment">//默认值为false。</span>
+
+<span class="token function">SetShowRecordID</span><span class="token punctuation">(</span>b <span class="token builtin">bool</span><span class="token punctuation">)</span>
+<span class="token comment">//如果为true，则操作返回的文档中将包含带有记录标识符的$recordId字段。</span>
+<span class="token comment">//默认值为false。</span>
+
+<span class="token function">SetSkip</span><span class="token punctuation">(</span>i <span class="token builtin">int64</span><span class="token punctuation">)</span>
+<span class="token comment">//将文档添加到结果之前要跳过的文档数。默认值为0。</span>
+
+<span class="token function">SetSnapshot</span><span class="token punctuation">(</span>b <span class="token builtin">bool</span><span class="token punctuation">)</span>
+<span class="token comment">//如果为true，则由于中间的写入操作，光标不会多次返回文档。这个默认值为false。</span>
+<span class="token comment">//已弃用：此选项在MongoDB 3.6版中已弃用，并在MongoDB 4.0版中删除。</span>
+
+<span class="token function">SetSort</span><span class="token punctuation">(</span>sort <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">//一种文件，指定文件的归还顺序。如果排序参数是多键映射，则驱动程序将返回一个错误。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="Update"><a href="#Update" class="headerlink" title="Update()"></a>Update()</h2><h3 id="rename"><a href="#rename" class="headerlink" title="$rename"></a>$rename</h3><blockquote>
 <p>修改字段名</p>
 </blockquote>
 <p><strong>官方写法</strong></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db.students.updateOne(</span><br><span class="line">   &#123; _id: <span class="number">1</span> &#125;,</span><br><span class="line">   &#123; $rename: &#123; &#x27;nickname&#x27;: &#x27;alias&#x27;, &#x27;cell&#x27;: &#x27;mobile&#x27; &#125; &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json">db.students.updateOne(
+   <span class="token punctuation">&#123;</span> _id<span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+   <span class="token punctuation">&#123;</span> $rename<span class="token operator">:</span> <span class="token punctuation">&#123;</span> 'nickname'<span class="token operator">:</span> 'alias'<span class="token punctuation">,</span> 'cell'<span class="token operator">:</span> 'mobile' <span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span>
+)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>golang写法</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo.Api.UpdateMany(context.Background(), bson.M&#123;&#125;, bson.M&#123;<span class="string">&quot;$rename&quot;</span>: bson.M&#123;<span class="string">&quot;explain&quot;</span>: <span class="string">&quot;group&quot;</span>&#125;&#125;)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">mongo<span class="token punctuation">.</span>Api<span class="token punctuation">.</span><span class="token function">UpdateMany</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>M<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>M<span class="token punctuation">&#123;</span><span class="token string">"$rename"</span><span class="token punctuation">:</span> bson<span class="token punctuation">.</span>M<span class="token punctuation">&#123;</span><span class="token string">"explain"</span><span class="token punctuation">:</span> <span class="token string">"group"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
 
@@ -528,511 +511,894 @@
 <p>修改字段</p>
 </blockquote>
 <p><strong>官方写法</strong></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; $project: &#123; &lt;specification(s)&gt; &#125; &#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span> $project<span class="token operator">:</span> <span class="token punctuation">&#123;</span> &lt;specification(s)> <span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><strong>golang写法</strong></p>
 <p>基础版本</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">filter := []bson.D&#123;</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$project&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;_id&quot;</span>, <span class="number">0</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;group&quot;</span>, <span class="string">&quot;$_id&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;apis&quot;</span>, <span class="number">1</span>&#125;&#125;&#125;&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">collection.Aggregate(context.Background(), filter)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">filter <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$project"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"_id"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"group"</span><span class="token punctuation">,</span> <span class="token string">"$_id"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"apis"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+collection<span class="token punctuation">.</span><span class="token function">Aggregate</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> filter<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>修改对象里面的</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">filter := []bson.D&#123;</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$project&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;_id&quot;</span>, <span class="number">0</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;group&quot;</span>, <span class="string">&quot;$_id&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;apis&quot;</span>, bson.D&#123;&#123;<span class="string">&quot;group&quot;</span>, <span class="number">0</span>&#125;&#125;&#125;&#125;,<span class="comment">//展示apis对象里面除group之外的，写1的话就是只展示group</span></span><br><span class="line">	&#125;</span><br><span class="line">collection.Aggregate(context.Background(), filter)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">filter <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$project"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"_id"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"group"</span><span class="token punctuation">,</span> <span class="token string">"$_id"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"apis"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"group"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token comment">//展示apis对象里面除group之外的，写1的话就是只展示group</span>
+	<span class="token punctuation">&#125;</span>
+collection<span class="token punctuation">.</span><span class="token function">Aggregate</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> filter<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>修改数组对象里面的</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">filter := []bson.D&#123;</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$project&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;_id&quot;</span>, <span class="number">0</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;group&quot;</span>, <span class="string">&quot;$_id&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;apis&quot;</span>, bson.D&#123;&#123;<span class="string">&quot;group&quot;</span>, <span class="number">1</span>&#125;&#125;&#125;&#125;,<span class="comment">//只展示apis数组的对象里面的group,不允许写0使用排除</span></span><br><span class="line">	&#125;</span><br><span class="line">collection.Aggregate(context.Background(), filter)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">
+filter <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$project"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"_id"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"group"</span><span class="token punctuation">,</span> <span class="token string">"$_id"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"apis"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"group"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token comment">//只展示apis数组的对象里面的group,不允许写0使用排除</span>
+	<span class="token punctuation">&#125;</span>
+collection<span class="token punctuation">.</span><span class="token function">Aggregate</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> filter<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="group"><a href="#group" class="headerlink" title="group"></a>group</h3><blockquote>
 <p>分组</p>
 </blockquote>
 <p><strong>官方写法</strong></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  $group:</span><br><span class="line">    &#123;</span><br><span class="line">      _id: &lt;expression&gt;, <span class="comment">// 按表达式分组</span></span><br><span class="line">      &lt;field1&gt;: &#123; &lt;accumulator1&gt; : &lt;expression1&gt; &#125;,</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  $group<span class="token operator">:</span>
+    <span class="token punctuation">&#123;</span>
+      _id<span class="token operator">:</span> &lt;expression><span class="token punctuation">,</span> <span class="token comment">// 按表达式分组</span>
+      &lt;field1><span class="token operator">:</span> <span class="token punctuation">&#123;</span> &lt;accumulator1> <span class="token operator">:</span> &lt;expression1> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      ...
+    <span class="token punctuation">&#125;</span>
+ <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>golang写法</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">filter := []bson.D&#123;</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$group&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;_id&quot;</span>, bson.D&#123;<span class="comment">//这里的_id是分组的依据</span></span><br><span class="line">				&#123;<span class="string">&quot;_id&quot;</span>, <span class="string">&quot;$_id&quot;</span>&#125;,</span><br><span class="line">				&#123;<span class="string">&quot;devicename&quot;</span>, <span class="string">&quot;$devicename&quot;</span>&#125;,</span><br><span class="line">				&#123;<span class="string">&quot;createTime&quot;</span>, <span class="string">&quot;$createTime&quot;</span>&#125;,</span><br><span class="line">			&#125;&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;key&quot;</span>, bson.D&#123;&#123;<span class="string">&quot;$push&quot;</span>, <span class="string">&quot;$key&quot;</span>&#125;&#125;&#125;,</span><br><span class="line">		&#125;&#125;&#125;,</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">filter <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$group"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"_id"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span><span class="token comment">//这里的_id是分组的依据</span>
+				<span class="token punctuation">&#123;</span><span class="token string">"_id"</span><span class="token punctuation">,</span> <span class="token string">"$_id"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+				<span class="token punctuation">&#123;</span><span class="token string">"devicename"</span><span class="token punctuation">,</span> <span class="token string">"$devicename"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+				<span class="token punctuation">&#123;</span><span class="token string">"createTime"</span><span class="token punctuation">,</span> <span class="token string">"$createTime"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"key"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$push"</span><span class="token punctuation">,</span> <span class="token string">"$key"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="arrayToObject"><a href="#arrayToObject" class="headerlink" title="arrayToObject"></a>arrayToObject</h3><p>将数组转化成对象</p>
 <p><strong>前提</strong></p>
 <blockquote>
 <p>一个双元素数组的数组，其中第一个元素是字段名称，第二个元素是字段值：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ [ <span class="string">&quot;item&quot;</span>, <span class="string">&quot;abc123&quot;</span>], [ <span class="string">&quot;qty&quot;</span>, <span class="number">25</span> ] ]</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">[</span> <span class="token punctuation">[</span> <span class="token string">"item"</span><span class="token punctuation">,</span> <span class="token string">"abc123"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span> <span class="token string">"qty"</span><span class="token punctuation">,</span> <span class="token number">25</span> <span class="token punctuation">]</span> <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><strong>或</strong></p>
 <p>包含两个字段的文档数组，</p>
 <p>该字段包含字段名称。k<br>该字段包含该字段的值。v</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ &#123; <span class="attr">&quot;k&quot;</span>: <span class="string">&quot;item&quot;</span>, <span class="attr">&quot;v&quot;</span>: <span class="string">&quot;abc123&quot;</span>&#125;, &#123; <span class="attr">&quot;k&quot;</span>: <span class="string">&quot;qty&quot;</span>, <span class="attr">&quot;v&quot;</span>: <span class="number">25</span> &#125; ]</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">[</span> <span class="token punctuation">&#123;</span> <span class="token property">"k"</span><span class="token operator">:</span> <span class="token string">"item"</span><span class="token punctuation">,</span> <span class="token property">"v"</span><span class="token operator">:</span> <span class="token string">"abc123"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token property">"k"</span><span class="token operator">:</span> <span class="token string">"qty"</span><span class="token punctuation">,</span> <span class="token property">"v"</span><span class="token operator">:</span> <span class="token number">25</span> <span class="token punctuation">&#125;</span> <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </blockquote>
 <p><strong>官方写法</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; $arrayToObject: &lt;expression&gt; &#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">&#123; $arrayToObject: &lt;expression&gt; &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>可以使用在$addFields，$project中</p>
 <p>$project</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   $project: &#123;</span><br><span class="line">      item: <span class="number">1</span>,</span><br><span class="line">      dimensions: &#123; $arrayToObject: <span class="string">&quot;$dimensions&quot;</span> &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+   $project<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      item<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      dimensions<span class="token operator">:</span> <span class="token punctuation">&#123;</span> $arrayToObject<span class="token operator">:</span> <span class="token string">"$dimensions"</span> <span class="token punctuation">&#125;</span>
+   <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>$addFields</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; $addFields: &#123; instock: &#123; $arrayToObject: <span class="string">&quot;$instock&quot;</span> &#125; &#125; &#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span> $addFields<span class="token operator">:</span> <span class="token punctuation">&#123;</span> instock<span class="token operator">:</span> <span class="token punctuation">&#123;</span> $arrayToObject<span class="token operator">:</span> <span class="token string">"$instock"</span> <span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><strong>golang写法</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">filter := []bson.D&#123;</span><br><span class="line">	&#123;&#123;<span class="string">&quot;$project&quot;</span>, bson.D&#123;</span><br><span class="line">		&#123;<span class="string">&quot;_id&quot;</span>, <span class="number">0</span>&#125;,</span><br><span class="line">		&#123;<span class="string">&quot;createTime&quot;</span>, <span class="string">&quot;$_id.createTime&quot;</span>&#125;,</span><br><span class="line">		&#123;<span class="string">&quot;devicename&quot;</span>, <span class="string">&quot;$_id.devicename&quot;</span>&#125;,</span><br><span class="line">		&#123;<span class="string">&quot;key&quot;</span>, bson.D&#123;&#123;<span class="string">&quot;$arrayToObject&quot;</span>, <span class="string">&quot;$key&quot;</span>&#125;&#125;&#125;,</span><br><span class="line">	&#125;&#125;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">filter <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+	<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$project"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+		<span class="token punctuation">&#123;</span><span class="token string">"_id"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token string">"createTime"</span><span class="token punctuation">,</span> <span class="token string">"$_id.createTime"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token string">"devicename"</span><span class="token punctuation">,</span> <span class="token string">"$_id.devicename"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token string">"key"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$arrayToObject"</span><span class="token punctuation">,</span> <span class="token string">"$key"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>特殊情况记录</strong></p>
 <p>如何把一个数组对象中对象的值作为键值对</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//把下面数组中name作为key，value作为value,组成键值对。</span></span><br><span class="line"><span class="string">&quot;devicename&quot;</span>: <span class="string">&quot;单向Z1c8&quot;</span></span><br><span class="line"><span class="string">&quot;dataset1&quot;</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;合相有功功率&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;unit&quot;</span>: <span class="string">&quot;W&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;value&quot;</span>: <span class="number">122866.4</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;合相无功功率&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;unit&quot;</span>: <span class="string">&quot;var&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;value&quot;</span>: <span class="number">149897</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;电流互感器倍率&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;unit&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;value&quot;</span>: <span class="number">1</span></span><br><span class="line">                &#125;,</span><br><span class="line">              ]</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token comment">//把下面数组中name作为key，value作为value,组成键值对。</span>
+<span class="token property">"devicename"</span><span class="token operator">:</span> <span class="token string">"单向Z1c8"</span>
+<span class="token property">"dataset1"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                <span class="token punctuation">&#123;</span>
+                    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"合相有功功率"</span><span class="token punctuation">,</span>
+                    <span class="token property">"unit"</span><span class="token operator">:</span> <span class="token string">"W"</span><span class="token punctuation">,</span>
+                    <span class="token property">"value"</span><span class="token operator">:</span> <span class="token number">122866.4</span>
+                <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                <span class="token punctuation">&#123;</span>
+                    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"合相无功功率"</span><span class="token punctuation">,</span>
+                    <span class="token property">"unit"</span><span class="token operator">:</span> <span class="token string">"var"</span><span class="token punctuation">,</span>
+                    <span class="token property">"value"</span><span class="token operator">:</span> <span class="token number">149897</span>
+                <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                <span class="token punctuation">&#123;</span>
+                    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"电流互感器倍率"</span><span class="token punctuation">,</span>
+                    <span class="token property">"unit"</span><span class="token operator">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+                    <span class="token property">"value"</span><span class="token operator">:</span> <span class="token number">1</span>
+                <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+              <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>使用的方法</p>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">filter := []bson.D&#123;</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$unwind&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;path&quot;</span>, <span class="string">&quot;$dataset1&quot;</span>&#125;,</span><br><span class="line">		&#125;&#125;&#125;,</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$project&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;_id&quot;</span>, <span class="number">0</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;devicename&quot;</span>, <span class="string">&quot;$device.name&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;key.k&quot;</span>, <span class="string">&quot;$dataset1.name&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;key.v&quot;</span>, <span class="string">&quot;$dataset1.value&quot;</span>&#125;,</span><br><span class="line">		&#125;&#125;&#125;,</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$group&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;_id&quot;</span>, <span class="string">&quot;$devicename&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;key&quot;</span>, bson.D&#123;&#123;<span class="string">&quot;$push&quot;</span>, <span class="string">&quot;$key&quot;</span>&#125;&#125;&#125;,</span><br><span class="line">		&#125;&#125;&#125;,</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$project&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;_id&quot;</span>, <span class="number">0</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;devicename&quot;</span>, <span class="string">&quot;$_id.devicename&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;key&quot;</span>, bson.D&#123;&#123;<span class="string">&quot;$arrayToObject&quot;</span>, <span class="string">&quot;$key&quot;</span>&#125;&#125;&#125;,</span><br><span class="line">		&#125;&#125;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-golang" data-language="golang"><code class="language-golang">filter :&#x3D; []bson.D&#123;
+		&#123;&#123;&quot;$unwind&quot;, bson.D&#123;
+			&#123;&quot;path&quot;, &quot;$dataset1&quot;&#125;,
+		&#125;&#125;&#125;,
+		&#123;&#123;&quot;$project&quot;, bson.D&#123;
+			&#123;&quot;_id&quot;, 0&#125;,
+			&#123;&quot;devicename&quot;, &quot;$device.name&quot;&#125;,
+			&#123;&quot;key.k&quot;, &quot;$dataset1.name&quot;&#125;,
+			&#123;&quot;key.v&quot;, &quot;$dataset1.value&quot;&#125;,
+		&#125;&#125;&#125;,
+		&#123;&#123;&quot;$group&quot;, bson.D&#123;
+			&#123;&quot;_id&quot;, &quot;$devicename&quot;&#125;,
+			&#123;&quot;key&quot;, bson.D&#123;&#123;&quot;$push&quot;, &quot;$key&quot;&#125;&#125;&#125;,
+		&#125;&#125;&#125;,
+		&#123;&#123;&quot;$project&quot;, bson.D&#123;
+			&#123;&quot;_id&quot;, 0&#125;,
+			&#123;&quot;devicename&quot;, &quot;$_id.devicename&quot;&#125;,
+			&#123;&quot;key&quot;, bson.D&#123;&#123;&quot;$arrayToObject&quot;, &quot;$key&quot;&#125;&#125;&#125;,
+		&#125;&#125;&#125;,
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>结果</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;devicename&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;单向Z1c8&quot;</span></span><br><span class="line">],</span><br><span class="line"><span class="string">&quot;key&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;合相功率因数&quot;</span>: <span class="number">122866.4</span>,</span><br><span class="line">    <span class="attr">&quot;合相无功功率&quot;</span>: <span class="number">149897</span>,</span><br><span class="line">    <span class="attr">&quot;电流互感器倍率&quot;</span>: <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"devicename"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token string">"单向Z1c8"</span>
+<span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token property">"key"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"合相功率因数"</span><span class="token operator">:</span> <span class="token number">122866.4</span><span class="token punctuation">,</span>
+    <span class="token property">"合相无功功率"</span><span class="token operator">:</span> <span class="token number">149897</span><span class="token punctuation">,</span>
+    <span class="token property">"电流互感器倍率"</span><span class="token operator">:</span> <span class="token number">1</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">filter := []bson.D&#123;</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$sort&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;_id&quot;</span>, <span class="number">-1</span>&#125;&#125;&#125;&#125;,</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$match&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;createTime&quot;</span>, bson.D&#123;&#123;<span class="string">&quot;$gte&quot;</span>, time2&#125;, &#123;<span class="string">&quot;$lte&quot;</span>, now&#125;&#125;&#125;,</span><br><span class="line">		&#125;&#125;&#125;,</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$skip&quot;</span>, skip&#125;&#125;,</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$limit&quot;</span>, limit&#125;&#125;,</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$lookup&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;from&quot;</span>, <span class="string">&quot;device&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;localField&quot;</span>, <span class="string">&quot;deviceId&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;foreignField&quot;</span>, <span class="string">&quot;_id&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;as&quot;</span>, <span class="string">&quot;device&quot;</span>&#125;,</span><br><span class="line">		&#125;&#125;&#125;,</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$unwind&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;path&quot;</span>, <span class="string">&quot;$device&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;path&quot;</span>, <span class="string">&quot;$dataset1&quot;</span>&#125;,</span><br><span class="line">		&#125;&#125;&#125;,</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$project&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;_id&quot;</span>, <span class="number">1</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;createTime&quot;</span>, <span class="number">1</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;devicename&quot;</span>, <span class="string">&quot;$device.name&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;key.k&quot;</span>, <span class="string">&quot;$dataset1.name&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;key.v&quot;</span>, <span class="string">&quot;$dataset1.value&quot;</span>&#125;,</span><br><span class="line">		&#125;&#125;&#125;,</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$group&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;_id&quot;</span>, bson.D&#123;</span><br><span class="line">				&#123;<span class="string">&quot;_id&quot;</span>, <span class="string">&quot;$_id&quot;</span>&#125;,</span><br><span class="line">				&#123;<span class="string">&quot;devicename&quot;</span>, <span class="string">&quot;$devicename&quot;</span>&#125;,</span><br><span class="line">				&#123;<span class="string">&quot;createTime&quot;</span>, <span class="string">&quot;$createTime&quot;</span>&#125;,</span><br><span class="line">			&#125;&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;key&quot;</span>, bson.D&#123;&#123;<span class="string">&quot;$push&quot;</span>, <span class="string">&quot;$key&quot;</span>&#125;&#125;&#125;,</span><br><span class="line">		&#125;&#125;&#125;,</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$sort&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;_id._id&quot;</span>, <span class="number">-1</span>&#125;&#125;&#125;&#125;,</span><br><span class="line">		&#123;&#123;<span class="string">&quot;$project&quot;</span>, bson.D&#123;</span><br><span class="line">			&#123;<span class="string">&quot;_id&quot;</span>, <span class="number">0</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;createTime&quot;</span>, <span class="string">&quot;$_id.createTime&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;devicename&quot;</span>, <span class="string">&quot;$_id.devicename&quot;</span>&#125;,</span><br><span class="line">			&#123;<span class="string">&quot;key&quot;</span>, bson.D&#123;&#123;<span class="string">&quot;$arrayToObject&quot;</span>, <span class="string">&quot;$key&quot;</span>&#125;&#125;&#125;,</span><br><span class="line">		&#125;&#125;&#125;,</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">filter <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$sort"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"_id"</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$match"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"createTime"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$gte"</span><span class="token punctuation">,</span> time2<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">"$lte"</span><span class="token punctuation">,</span> now<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$skip"</span><span class="token punctuation">,</span> skip<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$limit"</span><span class="token punctuation">,</span> limit<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$lookup"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"from"</span><span class="token punctuation">,</span> <span class="token string">"device"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"localField"</span><span class="token punctuation">,</span> <span class="token string">"deviceId"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"foreignField"</span><span class="token punctuation">,</span> <span class="token string">"_id"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"as"</span><span class="token punctuation">,</span> <span class="token string">"device"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$unwind"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"path"</span><span class="token punctuation">,</span> <span class="token string">"$device"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"path"</span><span class="token punctuation">,</span> <span class="token string">"$dataset1"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$project"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"_id"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"createTime"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"devicename"</span><span class="token punctuation">,</span> <span class="token string">"$device.name"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"key.k"</span><span class="token punctuation">,</span> <span class="token string">"$dataset1.name"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"key.v"</span><span class="token punctuation">,</span> <span class="token string">"$dataset1.value"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$group"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"_id"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+				<span class="token punctuation">&#123;</span><span class="token string">"_id"</span><span class="token punctuation">,</span> <span class="token string">"$_id"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+				<span class="token punctuation">&#123;</span><span class="token string">"devicename"</span><span class="token punctuation">,</span> <span class="token string">"$devicename"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+				<span class="token punctuation">&#123;</span><span class="token string">"createTime"</span><span class="token punctuation">,</span> <span class="token string">"$createTime"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"key"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$push"</span><span class="token punctuation">,</span> <span class="token string">"$key"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$sort"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"_id._id"</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$project"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"_id"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"createTime"</span><span class="token punctuation">,</span> <span class="token string">"$_id.createTime"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"devicename"</span><span class="token punctuation">,</span> <span class="token string">"$_id.devicename"</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span><span class="token string">"key"</span><span class="token punctuation">,</span> bson<span class="token punctuation">.</span>D<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token string">"$arrayToObject"</span><span class="token punctuation">,</span> <span class="token string">"$key"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-        
-    
-
-    
-</div>
-
-
-                
-
-                <!-- Post Comments -->
-                
-                    
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'http://example.com/2022/04/15/mongo-driver/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://example.com/2022/04/15/mongo-driver/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
-
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
 
                 
             </div>
+            <hr/>
 
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">wangjunyi</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://wjunyi.top/2022/04/15/mongo-driver/">http://wjunyi.top/2022/04/15/mongo-driver/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">wangjunyi</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/golang/">
+                                    <span class="chip bg-color">golang</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
     
-        <a href="/2022/04/23/%E5%B9%B6%E5%8F%91%E7%9B%B8%E5%85%B3/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
     
 
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
     
-        <a href="/2022/04/14/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6/" id="post_nav-older" class="next-content">
-            旧篇
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
 
+</div>
+
+                </div>
+            </div>
+            
         </div>
     </div>
 
+    
 
+    
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/04/23/bing-fa-xiang-guan/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="并发相关">
+                        
+                        <span class="card-title">并发相关</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-23
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%90%8E%E7%AB%AF/" class="post-category">
+                                    后端
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
                     
-                        <!-- Overlay For Active Sidebar -->
-<div class="sidebar-overlay"></div>
-
-<!-- Material sidebar -->
-<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
-    <div id="sidebar-main">
-        <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
-    <!-- Top bar -->
-    <div class="top-bar"></div>
-
-    <!-- Sidebar toggle button -->
-    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
-        <i class="material-icons">clear_all</i>
-        <span class="mdl-button__ripple-container">
-            <span class="mdl-ripple">
-            </span>
-        </span>
-    </button>
-
-    <!-- Sidebar Avatar -->
-    <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="王均易's avatar">
-    </div>
-
-    <!-- Sidebar Email -->
-    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
-        youremail@email.com
-        <b class="caret"></b>
-    </a>
-</div>
-
-
-        <!-- Sidebar Navigation  -->
-        <ul class="nav sidebar-nav">
-    <!-- User dropdown  -->
-    <li class="dropdown">
-        <ul id="settings-dropdown" class="dropdown-menu">
-            
-                <li>
-                    <a href="#" target="_blank" title="Email Me">
-                        
-                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
-                        
-                        Email Me
+                    <a href="/tags/%E6%A6%82%E5%BF%B5/">
+                        <span class="chip bg-color">概念</span>
                     </a>
-                </li>
-            
-        </ul>
-    </li>
-
-    <!-- Homepage -->
-    
-        <li id="sidebar-first-li">
-            <a href="/">
-                
-                    <i class="material-icons sidebar-material-icons">home</i>
-                
-                主页
-            </a>
-        </li>
-        
-    
-
-    <!-- Archives  -->
-    
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2022/05/">五月 2022<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2022/04/">四月 2022<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2022/03/">三月 2022<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/archives/2021/12/">十二月 2021<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2021/11/">十一月 2021<span class="sidebar_archives-count">19</span></a>
-            </ul>
-        </li>
-        
-    
-
-    <!-- Categories  -->
-    
-
-    <!-- Pages  -->
-    
-
-    <!-- Article Number  -->
-    
-</ul>
-
-
-        <!-- Sidebar Footer -->
-        <!--
-I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
-If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
-It will not impact the appearance and can give developers a lot of support :)
-
-很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
-如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
-它不会影响美观并可以给开发者很大的支持和动力。 :)
--->
-
-<!-- Sidebar Divider -->
-
-    <div class="sidebar-divider"></div>
-
-
-<!-- Theme Material -->
-
-    <a href="https://github.com/bollnh/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
-        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            主题 - Material
-            <span class="sidebar-badge badge-circle">i</span>
-        </div>
-    </a>
-
-
-<!-- Help & Support -->
-<!--
-
--->
-
-<!-- Feedback -->
-<!--
-
--->
-
-<!-- About Theme -->
-<!--
-
--->
-
-    </div>
-
-    <!-- Sidebar Image -->
-    
-
-</aside>
-
                     
-
-                    
-                        <!-- Footer Top Button -->
-                        <div id="back-to-top" class="toTop-wrap">
-    <a href="#top" class="toTop">
-        <i class="material-icons footer_top-i">expand_less</i>
-    </a>
-</div>
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
-    
-        <!-- Paradox Footer Left Section -->
-        <div class="mdl-mini-footer--left-section sns-list">
-    <!-- Twitter -->
-    
-        <a href="https://twitter.com/twitter" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
-                <span class="visuallyhidden">Twitter</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- Facebook -->
-    
-        <a href="https://www.facebook.com/facebook" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-facebook">
-                <span class="visuallyhidden">Facebook</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- Google + -->
-    
-        <a href="https://www.google.com/" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
-                <span class="visuallyhidden">Google Plus</span>
-            </button><!--
-     --></a>
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Zhihu -->
-    
-
-    <!-- Bilibili -->
-    
-
-    <!-- Telegram -->
-    
-
-    <!-- V2EX -->
-    
-
-    <!-- Segmentfault -->
-    
-</div>
-
-
-        <!--Copyright-->
-        <div id="copyright">
-            Copyright&nbsp;©&nbsp;<span year></span>&nbsp;wangjunyi
-            
-        </div>
-
-        <!-- Paradox Footer Right Section -->
-
-        <!--
-        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-        It will not impact the appearance and can give developers a lot of support :)
-
-        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-        它不会影响美观并可以给开发者很大的支持。 :)
-        -->
-
-        <div class="mdl-mini-footer--right-section">
-            <div>
-                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
-                <div class="footer-develop-div">Theme - <a href="https://github.com/bollnh/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+                </div>
+                
             </div>
         </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/04/14/fu-wu-qi-jiao-ben-wen-jian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="服务器脚本文件">
+                        
+                        <span class="card-title">服务器脚本文件</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            服务器脚本文件更新sh
+写法一
+cd /root/working/test-frame;//项目地址
+pid=$(ps -ef | grep "go-build" | grep -v grep | awk '&#123;print $2&#
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="post-category">
+                                    服务器
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/shell/">
+                        <span class="chip bg-color">shell</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
     
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2021-2022</span>
+            
+            <a href="/about" target="_blank">wangjunyi</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">38.4k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2021";
+                        var startMonth = "11";
+                        var startDate = "18";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/wjy2001" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:wjy2061529596@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2061529596" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2061529596" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
 </footer>
 
-
-                    <!-- Import JS File -->
-
-    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?wgjW/HuQG9JDgvPDPoRAng==", true)</script>
+<div class="progress-bar"></div>
 
 
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
 
-    <script>lsloader.load("js_js","/js/js.min.js?LT4t6iE6m8TO1BLGGiNJqA==", true)</script>
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
 
-
-
-    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
-
-
-
-
-
-
-
-
-
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//.disqus.com/count.js" async></script>
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<!-- <script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('
-<link rel="stylesheet" href="/css/uc.css">
-');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script> -->
-
-<!-- Import prettify js  -->
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
         });
-    });
+    };
 
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
 </script>
 
-<!-- Custom Footer -->
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
 
 
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+        
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/sakura.js"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
 
 <script>
-    var copyrightNow = new Date().getFullYear();
-    var textContent = document.querySelector('span[year]')
-
-    copyrightSince = 0000;
-    if (copyrightSince === copyrightNow||copyrightSince === 0000) {
-        textContent.textContent = copyrightNow
-    } else {
-        textContent.textContent = copyrightSince + ' - ' + copyrightNow
-    }
-
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
         }
-    })()
-console.log('\n %c © Material Theme | Version: 1.5.6 | https://github.com/bollnh/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
 </script>
 
-                </main>
-            </div>
-        </body>
     
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
 </html>
