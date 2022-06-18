@@ -357,7 +357,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-06-11
+                    2022-06-18
                 </div>
                 
 
@@ -421,14 +421,14 @@ slice7 :&#x3D; arr[start:]
 slice8 :&#x3D; arr[:]  
 slice9 :&#x3D; arr[:len(arr)-1] &#x2F;&#x2F;去掉切片的最后一个元素<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/images/0.jpg" alt="切片"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/greatblood/Image@main/img/202206181027422.jpg" alt="切片"></p>
 <h3 id="通过make来创建切片"><a href="#通过make来创建切片" class="headerlink" title="通过make来创建切片"></a>通过make来创建切片</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> slice <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token keyword">type</span> <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token keyword">type</span><span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">)</span>
 slice  <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token keyword">type</span><span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">)</span>
 slice  <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token keyword">type</span><span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">,</span> <span class="token builtin">cap</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/images/1.jpg" alt="切片"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/greatblood/Image@main/img/202206181027600.jpg" alt="切片"></p>
 <p>切片的内存布局</p>
-<p><img src="/images/2.jpg" alt="切片"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/greatblood/Image@main/img/202206181027818.jpg" alt="切片"></p>
 <p>读写操作实际目标是底层数组，只需注意索引号的差别。</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 

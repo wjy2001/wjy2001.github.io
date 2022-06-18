@@ -360,14 +360,14 @@ github.com/casbin/mongodb-adapter/v3
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-03
+                    2022-06-18
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    289
+                    288
                 </div>
                 
 
@@ -436,7 +436,7 @@ github.com/casbin/mongodb-adapter/v3
 <span class="token keyword">var</span> E <span class="token operator">*</span>casbin<span class="token punctuation">.</span>SyncedEnforcer
 <span class="token keyword">func</span> <span class="token function">CasbinSetup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 
-	mongoClientOption <span class="token operator">:=</span> mongooptions<span class="token punctuation">.</span><span class="token function">Client</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ApplyURI</span><span class="token punctuation">(</span><span class="token string">"mongodb://admin:sdl%40admin@101.200.55.232:27017"</span><span class="token punctuation">)</span>
+	mongoClientOption <span class="token operator">:=</span> mongooptions<span class="token punctuation">.</span><span class="token function">Client</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ApplyURI</span><span class="token punctuation">(</span><span class="token string">"mongodb://admin:admin@127.0.1.1:27017"</span><span class="token punctuation">)</span>
 	databaseName <span class="token operator">:=</span> <span class="token string">"ProjectProMax"</span>
 	a<span class="token punctuation">,</span>err <span class="token operator">:=</span> mongodbadapter<span class="token punctuation">.</span><span class="token function">NewAdapterWithClientOption</span><span class="token punctuation">(</span>mongoClientOption<span class="token punctuation">,</span> databaseName<span class="token punctuation">)</span>
 	<span class="token comment">// Or you can use NewAdapterWithCollectionName for custom collection name.</span>

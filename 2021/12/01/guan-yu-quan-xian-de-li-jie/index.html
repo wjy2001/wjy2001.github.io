@@ -357,7 +357,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-12-04
+                    2022-06-18
                 </div>
                 
 
@@ -390,13 +390,13 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="权限管理的理解"><a href="#权限管理的理解" class="headerlink" title="权限管理的理解"></a>权限管理的理解</h1><p>什么是<strong>权限管理</strong>：对用户访问系统进行控制，按照安全规则、安全策略控制用户只能访问被授权的资源，一般包含<strong>认证</strong>和<strong>授权</strong>两部分。</p>
-<p>权限管理基本流程图<br> <span id="more"></span><br><img src="/images/Center.png" alt="img"></p>
+<p>权限管理基本流程图<br> <span id="more"></span><br><img src="https://fastly.jsdelivr.net/gh/greatblood/Image@main/img/202206181021873.png" alt="img"></p>
 <p>用户认证：验证用户身份的合法性，即用户登录，常用的身份认证方法：1.帐号密码 2.指纹 3.证书</p>
 <p>用户授权：简单理解为访问控制，具有某种资源对应的权限才可以访问该资源</p>
 <p>我们的做法是</p>
 <p>认证：用户登录（jwt）</p>
 <p>授权：判断用户是否有操作该接口的权限（接口表和角色表）</p>
-<p><img src="/images/Center-16383473337565.png" alt="img"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/greatblood/Image@main/img/202206181022297.png" alt="img"></p>
 <h2 id="认证的方式"><a href="#认证的方式" class="headerlink" title="认证的方式"></a>认证的方式</h2><p>常见的有jwt，session-cookie</p>
 <h3 id="基于jwt的身份认证"><a href="#基于jwt的身份认证" class="headerlink" title="基于jwt的身份认证"></a>基于jwt的身份认证</h3><h4 id="JSON-Web-Token是什么"><a href="#JSON-Web-Token是什么" class="headerlink" title="JSON Web Token是什么"></a>JSON Web Token是什么</h4><blockquote>
 <p>JSON Web Token (JWT)是一个开放标准(RFC 7519)，它定义了一种紧凑的、自包含的方式，用于作为JSON对象在各方之间安全地传输信息。该信息可以被验证和信任，因为它是数字签名的。</p>
@@ -411,7 +411,7 @@
 <blockquote>
 <p>Header.Payload.Signature</p>
 </blockquote>
-<p><img src="/images/v2-5b8e7a496d1a44f0074331e7f7f1112f_720w.jpg" alt="img"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/greatblood/Image@main/img/202206181022670.jpg" alt="img"></p>
 <h4 id="基于Token的鉴权过程如下："><a href="#基于Token的鉴权过程如下：" class="headerlink" title="基于Token的鉴权过程如下："></a>基于Token的鉴权过程如下：</h4><ol>
 <li>用户使用用户名密码来请求服务器；</li>
 <li>服务器验证用户信息；</li>
@@ -471,7 +471,7 @@
 <p>MAC非常适合机密机构或者其他等级观念强烈的行业，但对于类似商业服务系统，则因为不够灵活而不能适用。</p>
 <h3 id="基于角色的访问控制（RBAC-Role-Based-Access-Control"><a href="#基于角色的访问控制（RBAC-Role-Based-Access-Control" class="headerlink" title="基于角色的访问控制（RBAC: Role-Based Access Control)"></a>基于角色的访问控制（RBAC: Role-Based Access Control)</h3><p><strong>一个用户拥有一个角色</strong></p>
 <p>在实际的团体业务中，都可以将用户分类。比如对于薪水管理系统，通常按照级别分类：经理、高级工程师、中级工程师、初级工程师。也就是按照一定的角色分类，通常具有同一角色的用户具有相同的权限。这样改变之后，就可以将针对用户赋权转换为针对角色赋权。</p>
-<p><img src="/images/8ad4b31c8701a18bd607cbc3953fcb0d2938fe60.jpeg" alt="img"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/greatblood/Image@main/img/202206181022807.jpeg" alt="img"></p>
 <p>一个用户拥有一个角色</p>
 <p>一个用户有一个角色</p>
 <p>一个角色有多个操作（菜单）权限</p>
@@ -482,9 +482,9 @@
 <p>一个角色包含多个用户</p>
 <p>一个角色有多种权限</p>
 <p>一个权限属于多个角色</p>
-<p><img src="/images/Center-16383473337565.png" alt="img"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/greatblood/Image@main/img/202206181022565.png" alt="img"></p>
 <p>我们可以用下图中的数据库设计模型，描述这样的关系。</p>
-<p><img src="/images/6a63f6246b600c337c92989b155c9d0ad8f9a194.jpeg" alt="img"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/greatblood/Image@main/img/202206181022075.jpeg" alt="img"></p>
 <p>一个用户一个或多个角色</p>
 <p><em><strong>二、页面访问权限与操作权限</strong></em></p>
 <p>**页面访问权限:**所有系统都是由一个个的页面组成，页面再组成模块，用户是否能看到这个页面的菜单、是否能进入这个页面就称为页面访问权限。</p>
